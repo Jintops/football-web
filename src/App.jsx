@@ -1,16 +1,22 @@
 import React from "react"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Body from "./components/Body"
+import Home from "./components/Home"
 
 
 function App() {
   
   return (
-    <>
+    <BrowserRouter>
       <div>
-       <h1 className="text-8xl text-amber-400">hellooo</h1>    </div>
-      <p >
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+        <Routes>
+          <Route path="/" element={<Body/>}>
+          <Route path="home" element={<Home/>}/>
+          
+          </Route>
+        </Routes>
+      </div>
+  </BrowserRouter>
   )
 }
 
