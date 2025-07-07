@@ -11,8 +11,8 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Body/>}>
-          <Route path="home" element={<Home/>}/>
-          
+          <Route index element={<Home/>}/>
+       
           </Route>
         </Routes>
       </div>
