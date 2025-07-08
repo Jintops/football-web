@@ -5,7 +5,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
-    <nav className="w-full border-b">
+    <nav className="w-full ">
     
       <div className="flex items-center justify-between h-16 px-4 md:px-10">
         <div className='flex '>

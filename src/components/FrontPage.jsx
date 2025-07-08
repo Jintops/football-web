@@ -1,17 +1,33 @@
 import React from 'react'
+import { ArrowRight } from 'lucide-react';
 
 const FrontPage = () => {
   return (
-    <div>
-        <div >
-           <h1>Elevate your </h1>
-           <span>soccer game</span>
-           <p>Professional soccer gear for players of all levels. From boots to jerseys, find everything you need to dominate the pitch.</p>
-           <div>
-            <button className='border bg-white hover:bg-green-200'>Shop Now</button>
-            <button>View Collections</button>
-           </div>
-        </div>
+    <div className='bg-gradient-to-r from-green-600 to-blue-700 w-full h-[600px]'>
+         
+       <div className="animate-fade-in flex flex-col items-center justify-center w-full md:w-1/2 text-center px-4  h-full">
+  
+  <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">Elevate Your
+     <span className="block text-yellow-300"> Soccer Game</span>
+  </h1>
+
+  
+  <p className="text-green-100 font-semibold text-xl md:text-xl mt-6 max-w-lg text-start ml-40">
+    Professional soccer gear for players of all levels. From boots to jerseys, find everything you need to dominate the pitch.
+  </p>
+
+  
+  <div className="mt-8 flex flex-col md:flex-row gap-4 ml-10">
+    <button className="w-48 h-16 bg-white rounded-lg hover:bg-green-200 text-green-500 font-bold  flex items-center justify-center hover:shadow-2xl transition-all duration-200 transform hover:scale-105">
+      Shop Now 
+        <ArrowRight className="ml-2 h-5 w-5" />
+    </button>
+    <button className="w-48 h-16 border-2 border-white rounded-lg bg-transparent hover:bg-white text-white hover:text-green-500 font-bold  transition-all duration-200 transform hover:scale-105">
+      View Collections
+    </button>
+  </div>
+</div>
+
         <div>
 
         </div>
