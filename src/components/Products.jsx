@@ -2,7 +2,7 @@ import React from 'react'
 import { Search, ShoppingCart, User, Menu, X } from 'lucide-react'
 const Products = () => {
   return (
-    <div className='grid overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-2 group'>
+    <div className='grid overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-2 group rounded-2xl'>
         <div className="card bg-base-100 w-80 shadow-lg">
   <figure className="px-10 pt-10 flex justify-center ">
     <img
@@ -11,7 +11,7 @@ const Products = () => {
       className="rounded-xl h-80 w-60 object-cover group-hover:scale-105 transition-transform duration-500" />
   </figure>
   <div className="card-body items-center text-center">
-    <h2 className="card-title font-bold text-lg">Football Jersey</h2>
+    <h2 className="card-title font-bold text-lg mt-5">Football Jersey</h2>
     <p>Authentic team jersey with moisture-wicking fabric and official team colors.</p>
     <span>⭐️ ⭐️ ⭐️ ⭐️ (4.6)</span>
    <div className="card-actions flex justify-center gap-4 ">
