@@ -12,21 +12,21 @@ const FrontPage = () => {
           <span className="block text-yellow-300">Soccer Game</span>
         </h1>
 
-        <p className="text-green-100 font-semibold text-base md:text-xl mt-6 max-w-md">
+        <p className="text-green-100  font-semibold text-base md:text-xl mt-6 max-w-md ">
           Professional soccer gear for players of all levels. From boots to jerseys, find everything you need to dominate the pitch.
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row gap-4 md:ml-6">
-          <button className="w-full sm:w-48 h-14 bg-white rounded-lg hover:bg-green-200 text-green-500 font-bold flex items-center justify-center hover:shadow-2xl transition-all duration-200 transform hover:scale-105">
+          <button className="w-full sm:w-48 h-12 md:h-18 bg-white rounded-lg hover:bg-green-200 text-green-500 font-bold flex items-center justify-center hover:shadow-2xl transition-all duration-200 transform hover:scale-105">
             Shop Now 
             <ArrowRight className="ml-2 h-5 w-5" />
           </button>
-          <button className="w-full sm:w-48 h-14 border-2 border-white rounded-lg bg-transparent hover:bg-white text-white hover:text-green-500 font-bold transition-all duration-200 transform hover:scale-105 p-2">
+          <button className="w-full sm:w-48 h-12 md:h-18 border-2 border-white rounded-lg bg-transparent hover:bg-white text-white hover:text-green-500 font-bold transition-all duration-200 transform hover:scale-105 p-2">
             View Collections
           </button>
         </div>
       </div>
-
+    
       {/* Right: Image Section */}
       <div className="relative animate-fade-in w-full md:w-1/2 flex justify-center md:justify-start mt-12 md:mt-0">
         <div className="grid grid-cols-2 gap-4">
