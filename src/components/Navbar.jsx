@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import { Search, ShoppingCart, User, Menu, X } from 'lucide-react'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+const cartCount=useSelector((store)=>store.cartCount.value)
+
 
   return (
-    <nav className="w-full ">
+  <nav className="w-full fixed top-0 left-0 z-50 bg-white shadow-md">
+
     
       <div className="flex items-center justify-between h-16 px-4 md:px-10">
         <div className='flex '>
@@ -38,7 +42,15 @@ const Navbar = () => {
         </div>
 
   <div className='flex '>
- <ShoppingCart className="w-6 h-6 text-gray-700 hover:text-green-500 mr-4 md:mr-6" />
+ <div className="relative mr-4 md:mr-6">
+  <ShoppingCart className="w-6 h-6 text-gray-700 hover:text-green-500" />
+  {cartCount > 0 && (
+    <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+      {cartCount}
+    </span>
+  )}
+</div>
+
             <User className="w-6 h-6 text-gray-700 mr-6 md:ml-0" />  
        
 
