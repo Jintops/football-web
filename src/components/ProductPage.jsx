@@ -12,7 +12,7 @@ const ProductPage = () => {
            
          {product.map((item)=>{
             return(
-                <div><Products key={product.id} product={item}/>  </div>
+                <div key={item.id}><Products  product={item}/>  </div>
             )
          })}
          
