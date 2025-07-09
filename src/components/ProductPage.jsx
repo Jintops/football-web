@@ -1,6 +1,6 @@
 import React from 'react'
 import Products from './Products'
-
+import product from '../utils/helper'
 const ProductPage = () => {
   return (
     <div className='my-20 '>
@@ -10,10 +10,11 @@ const ProductPage = () => {
         </div>
         <div className='flex  gap-10 items-center justify-center mt-10 flex-wrap'>
            
-         <Products/>
-         <Products/>
-         <Products/>
-         <Products/>
+         {product.map((item)=>{
+            return(
+                <div><Products key={product.id} product={item}/>  </div>
+            )
+         })}
          
         </div>
     </div>
