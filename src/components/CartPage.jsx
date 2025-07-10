@@ -1,6 +1,7 @@
 import React from "react";
 import { X, ShoppingCart } from "lucide-react";
 import { useSelector } from "react-redux";
+import CartProduct from "./CartProduct";
 
 
 const CartPage = ({ onClose }) => {
@@ -24,7 +25,11 @@ const CartPage = ({ onClose }) => {
   </div>
 ):(
     <div>
-        <h1>{cartItem[0].name}</h1>
+        {cartItem.map((item)=>{
+            return (
+                <div key={item.id}><CartProduct item={item}/> </div>
+            )
+        })}
     </div>
 )}
 
