@@ -2,7 +2,8 @@ import React from "react";
 import { X, ShoppingCart } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import CartProduct from "./CartProduct";
-// import { clearCart } from "../utils/cartCountSlice";
+import { clearCart } from "../utils/cartCountSlice";
+
 
 const CartPage = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -28,13 +29,13 @@ const CartPage = ({ onClose }) => {
       ) : (
         <div className="flex-1 overflow-y-auto px-3 pb-4">
           {cartItem.map((item, index) => (
-            <CartProduct key={index} item={item} />
+            <CartProduct key={index} item={item}  />
           ))}
 
         
           <div className="mt-4">
             <button
-              // onClick={() => dispatch(clearCart())}
+              onClick={()=>dispatch(clearCart())}
               className="w-full border border-red-500 text-red-500 px-4 py-2 rounded-md hover:bg-red-50 hover:text-red-700"
             >
               Clear cart

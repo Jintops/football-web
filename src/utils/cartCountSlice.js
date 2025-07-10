@@ -8,9 +8,12 @@ const cartCountSlice=createSlice({
     reducers:{
          addItem:(state,action)=>{
            state.items.push(action.payload)
-         }
+         },
+         clearCart:(state,action)=>{
+            state.items=[]
+         },
     }
 })
 
-export const {addItem}=cartCountSlice.actions;
+export const {addItem,clearCart}=cartCountSlice.actions;
 export default cartCountSlice.reducer
