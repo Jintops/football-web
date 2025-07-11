@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
+import { toast } from "react-toastify";
 
 const Products = ({ product }) => {
   const { name, price, image, description, rating } = product;
@@ -9,6 +10,13 @@ const Products = ({ product }) => {
   const dispatch = useDispatch();
   const cartItems = (product) => {
     dispatch(addItem(product));
+
+
+    toast.success("Item added to cart!", {
+      position: "bottom-right",
+      autoClose: 3000,
+      
+    });
   };
   return (
     <div className="grid overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-2 group rounded-2xl">
