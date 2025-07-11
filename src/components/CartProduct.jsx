@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { deleteItem } from "../utils/cartCountSlice";
+import { decrementQuantity, deleteItem, incrementQuantity } from "../utils/cartCountSlice";
 
 const CartProduct = ({ item }) => {
-  const {id, name, image, price } = item;
-  const [count, setCount] = useState(1);
+  const {id, name, image, price,count } = item;
+  
   const dispatch=useDispatch();
 
-  const decrement = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
-  };
+  
 
   const deleteItems=(id)=>{
     dispatch(deleteItem(id))
@@ -35,14 +31,14 @@ const CartProduct = ({ item }) => {
 
           <div className="flex gap-4 items-center mt-2">
             <span
-              onClick={decrement}
+              onClick={()=>count > 1 && dispatch(decrementQuantity(id))}
               className="text-xl font-bold cursor-pointer"
             >
               -
             </span>
             <h1>{count}</h1>
             <span
-              onClick={() => setCount(count + 1)}
+              onClick={()=>dispatch(incrementQuantity(id))}
               className="text-xl font-bold cursor-pointer"
             >
               +
