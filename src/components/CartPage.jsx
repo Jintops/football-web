@@ -40,6 +40,7 @@ const CartPage = ({ onClose }) => {
           </div>
         </div>
       )}
+      {cartItem.length>0 && <div>
       <div className="border-t h-12 flex justify-between items-center font-bold mb-2 text-base p-5">
         <h1 className="font-bold ">Total:</h1>
         <h1>${totalAmount.toFixed(2)}</h1>
@@ -49,6 +50,7 @@ const CartPage = ({ onClose }) => {
           Buy Now
         </button>
       </div>
+      </div>}
     </div>
   );
 };

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Trash2 } from "lucide-react";
+
 
 const CartProduct = ({ item }) => {
   const { name, image, price } = item;
@@ -42,9 +44,12 @@ const CartProduct = ({ item }) => {
           </div>
         </div>
 
-        <div className="font-bold ml-auto md:ml-0 text-sm sm:text-base">
-          ${(price * count).toFixed(2)}
-        </div>
+     <div className="flex flex-col items-end ml-auto text-sm sm:text-base font-bold">
+  <span className="">${(price * count).toFixed(2)}</span>
+  <Trash2 className="h-4 w-4 text-red-500 mt-4 cursor-pointer hover:text-red-700" />
+</div>
+
+
       </div>
     </div>
   );
