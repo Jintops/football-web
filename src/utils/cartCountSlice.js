@@ -12,8 +12,12 @@ const cartCountSlice=createSlice({
          clearCart:(state,action)=>{
             state.items=[]
          },
+         deleteItem:(state,action)=>{
+           let deleteid=action.payload;
+           state.items=state.items.filter((item)=>item.id !== deleteid)
+         }
     }
 })
 
-export const {addItem,clearCart}=cartCountSlice.actions;
+export const {addItem,clearCart,deleteItem}=cartCountSlice.actions;
 export default cartCountSlice.reducer

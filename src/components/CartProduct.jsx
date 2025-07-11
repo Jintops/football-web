@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { Trash2 } from "lucide-react";
-
+import { useDispatch } from "react-redux";
+import { deleteItem } from "../utils/cartCountSlice";
 
 const CartProduct = ({ item }) => {
-  const { name, image, price } = item;
+  const {id, name, image, price } = item;
   const [count, setCount] = useState(1);
+  const dispatch=useDispatch();
 
   const decrement = () => {
     if (count > 1) {
       setCount(count - 1);
     }
   };
+
+  const deleteItems=(id)=>{
+    dispatch(deleteItem(id))
+  }
 
   return (
     <div className="w-full px-2">
@@ -46,7 +52,7 @@ const CartProduct = ({ item }) => {
 
      <div className="flex flex-col items-end ml-auto text-sm sm:text-base font-bold">
   <span className="">${(price * count).toFixed(2)}</span>
-  <Trash2 className="h-4 w-4 text-red-500 mt-4 cursor-pointer hover:text-red-700" />
+  <Trash2 className="h-4 w-4 text-red-500 mt-4 cursor-pointer hover:text-red-700" onClick={()=>deleteItems(id)}/>
 </div>
 
 
