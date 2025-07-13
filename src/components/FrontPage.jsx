@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { PHOTO_1, PHOTO_2 } from '../utils/constants';
 
 const FrontPage = () => {
   return (
@@ -31,12 +32,12 @@ const FrontPage = () => {
       <div className="relative animate-fade-in w-full md:w-1/2 flex justify-center md:justify-start mt-12 md:mt-0">
         <div className="grid grid-cols-2 gap-4">
           <img 
-            src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=300&h=300&fit=crop" 
+            src={PHOTO_1}
             alt="Soccer Cleats"
             className="rounded-2xl shadow-2xl transform rotate-3  transition-transform duration-300 w-36 h-36 sm:w-56 sm:h-56 md:w-72 md:h-72"
           />
           <img 
-            src="https://i.pinimg.com/736x/0c/53/6a/0c536a7b58aa64438a38fac2c7c45f10.jpg" 
+            src={PHOTO_2} 
             alt="Soccer Ball"
             className="rounded-2xl shadow-2xl transform -rotate-3  transition-transform duration-300 mt-4 sm:mt-6 md:mt-8 w-36 h-36 sm:w-56 sm:h-56 md:w-72 md:h-72"
           />
