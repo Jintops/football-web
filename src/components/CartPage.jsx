@@ -14,8 +14,8 @@ const CartPage = ({ onClose }) => {
         className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
         onClick={onClose}
       />
-      <div className="fixed top-0 right-0 h-full w-full sm:w-[65%] md:w-[45%] lg:w-[35%] xl:w-[25%] bg-white shadow-lg z-50 transition-transform duration-300 rounded-l-2xl flex flex-col">
-        <div className="flex justify-between items-center bg-gray-200 px-4 py-3 border-b">
+      <div className="fixed top-0 right-0 h-full w-full sm:w-[60%] md:w-[40%] lg:w-[35%] xl:w-[25%] bg-white shadow-lg z-50 transition-transform duration-300 rounded-l-2xl flex flex-col">
+        <div className="flex justify-between items-center  px-4 py-3 border-b border-gray-300 bg-gray-100">
           <h1 className="font-bold text-lg">Shopping Cart</h1>
           <X
             className="w-6 h-6 text-gray-800 cursor-pointer hover:bg-gray-300 rounded"
@@ -23,7 +23,6 @@ const CartPage = ({ onClose }) => {
           />
         </div>
 
-        {/* Empty Cart */}
         {cartItem.length === 0 ? (
           <div className="flex flex-col items-center justify-center flex-1 text-gray-500 p-4">
             <ShoppingCart className="w-10 h-10 mb-2" />

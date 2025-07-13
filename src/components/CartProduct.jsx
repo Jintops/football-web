@@ -1,57 +1,60 @@
-import React, { useState } from "react";
+import React from "react";
 import { Trash2 } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { decrementQuantity, deleteItem, incrementQuantity } from "../utils/cartCountSlice";
+import {
+  decrementQuantity,
+  deleteItem,
+  incrementQuantity,
+} from "../utils/cartCountSlice";
 
 const CartProduct = ({ item }) => {
-  const {id, name, image, price,count } = item;
-  
-  const dispatch=useDispatch();
+  const { id, name, image, price, count } = item;
+  const dispatch = useDispatch();
 
-  
-
-  const deleteItems=(id)=>{
-    dispatch(deleteItem(id))
-  }
+  const deleteItems = (id) => {
+    dispatch(deleteItem(id));
+  };
 
   return (
-    <div className="w-full px-2">
-      <div className="flex flex-wrap md:flex-nowrap m-4 items-center bg-gray-50 p-4 rounded-lg gap-4 justify-between">
+    <div className="w-full px-2 ">
+      <div className="flex flex-row gap-4 items-center bg-gray-50 p-4 rounded-xl shadow-sm mt-6 h-28">
+        
         <img
-          className="w-20 h-20 object-cover rounded-lg"
+          className="w-20 h-20 sm:w-20 sm:h-20 object-cover rounded-lg"
           src={image}
           alt={name}
         />
 
-        <div className="flex flex-col flex-grow min-w-0">
-          <h1 className="line-clamp-2 text-sm sm:text-base font-semibold">
-            {name}
-          </h1>
-          <h2 className="text-gray-700">${price}</h2>
+        
+        <div className="flex-1 w-full sm:w-auto">
+          <h1 className="text-base font-semibold line-clamp-2">{name}</h1>
+          <p className="text-gray-600 mt-1">${price}</p>
 
-          <div className="flex gap-4 items-center mt-2">
-            <span
-              onClick={()=>count > 1 && dispatch(decrementQuantity(id))}
-              className="text-xl font-bold cursor-pointer"
+         
+          <div className="flex items-center gap-2 ">
+            <button
+              onClick={() => count > 1 && dispatch(decrementQuantity(id))}
+              className="text-lg font-bold px-1 py-1  rounded hover:bg-gray-100"
             >
               -
-            </span>
-            <h1>{count}</h1>
-            <span
-              onClick={()=>dispatch(incrementQuantity(id))}
-              className="text-xl font-bold cursor-pointer"
+            </button>
+            <span className="min-w-[20px] text-center">{count}</span>
+            <button
+              onClick={() => dispatch(incrementQuantity(id))}
+              className="text-lg font-bold px-1 py-1  rounded hover:bg-gray-100"
             >
               +
-            </span>
+            </button>
           </div>
         </div>
 
-     <div className="flex flex-col items-end ml-auto text-sm sm:text-base font-bold">
-  <span className="">${(price * count).toFixed(2)}</span>
-  <Trash2 className="h-4 w-4 text-red-500 mt-4 cursor-pointer hover:text-red-700" onClick={()=>deleteItems(id)}/>
-</div>
-
-
+        <div className="flex flex-col items-end sm:items-center sm:justify-between  h-full">
+          <p className="font-bold">${(price * count).toFixed(2)}</p>
+          <Trash2
+            onClick={() => deleteItems(id)}
+            className="h-5 w-5 text-red-500 mt-2 hover:text-red-700 cursor-pointer"
+          />
+        </div>
       </div>
     </div>
   );
