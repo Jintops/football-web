@@ -21,7 +21,7 @@ const Products = ({ product }) => {
   return (
     <div className="grid overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-2 group rounded-2xl">
       <div className="card bg-base-100 w-80 shadow-lg">
-        <figure className="px-10 pt-10 flex justify-center ">
+        <figure className="px-10 pt-8 flex justify-center ">
           <img
             src={image}
             alt="Shoes"
@@ -29,7 +29,7 @@ const Products = ({ product }) => {
           />
         </figure>
         <div className="card-body items-center text-center">
-          <h2 className="card-title font-bold text-lg mt-5">{title}</h2>
+          <h2 className="card-title font-bold text-lg ">{title}</h2>
           <p className="line-clamp-2">{description}</p>
           <span>⭐️ ⭐️ ⭐️ ⭐️ {rating}</span>
           <div className="card-actions flex justify-center gap-4 ">
