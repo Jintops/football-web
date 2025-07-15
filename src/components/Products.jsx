@@ -5,7 +5,7 @@ import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
 
 const Products = ({ product }) => {
-  const { name, price, image, description, rating } = product;
+  const { title, price, image, description, rating } = product;
 
   const dispatch = useDispatch();
   const cartItems = (product) => {
@@ -29,7 +29,7 @@ const Products = ({ product }) => {
           />
         </figure>
         <div className="card-body items-center text-center">
-          <h2 className="card-title font-bold text-lg mt-5">{name}</h2>
+          <h2 className="card-title font-bold text-lg mt-5">{title}</h2>
           <p className="line-clamp-2">{description}</p>
           <span>⭐️ ⭐️ ⭐️ ⭐️ {rating}</span>
           <div className="card-actions flex justify-center gap-4 ">
