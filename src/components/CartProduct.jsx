@@ -8,7 +8,7 @@ import {
 } from "../utils/cartCountSlice";
 
 const CartProduct = ({ item }) => {
-  const { id, name, image, price, count } = item;
+  const { id, title, image, price, count } = item;
   const dispatch = useDispatch();
 
   const deleteItems = (id) => {
@@ -27,7 +27,7 @@ const CartProduct = ({ item }) => {
 
         
         <div className="flex-1 w-full sm:w-auto">
-          <h1 className="text-base font-semibold line-clamp-2">{name}</h1>
+          <h1 className="text-base font-semibold line-clamp-2">{title}</h1>
           <p className="text-gray-600 mt-1">${price}</p>
 
          
