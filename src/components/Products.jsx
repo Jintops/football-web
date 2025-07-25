@@ -24,7 +24,7 @@ const Products = ({ product }) => {
         <figure className="px-10 pt-8 flex justify-center ">
           <img
             src={image}
-            alt="Shoes"
+            alt={title}
             className="rounded-xl h-80 w-60 object-cover group-hover:scale-105 transition-transform duration-500"
           />
         </figure>
