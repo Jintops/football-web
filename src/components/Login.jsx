@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Login = () => {
+const Login = ({role}) => {
   return (
    <div className="flex items-center justify-center min-h-screen ">
   <div className="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md border border-gray-100">
@@ -30,9 +30,10 @@ const Login = () => {
         Sign In
       </button>
     </form>
+    {role!=="Admin" &&
     <p className="mt-6 text-sm text-center text-gray-600">
       Don't have an account?<Link to="/signup"  className="text-green-600 hover:underline">Sign up</Link>
-    </p>
+    </p>}
   </div>
 </div>
 

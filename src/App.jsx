@@ -22,8 +22,9 @@ function App() {
           <Route index element={<Home/>}/>
        
           </Route>
-          <Route path="/login" element={<Login/>}></Route>
+          <Route path="/login" element={<Login role="User"/>}></Route>
           <Route path="/signup" element={<Signup/>}></Route>
+          <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
         </Routes>
 
       </div>
