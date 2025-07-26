@@ -1,9 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
-const Login = () => {
+const Signup = () => {
   return (
-   <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex items-center justify-center min-h-screen ">
   <div className="bg-white shadow-lg rounded-2xl p-10 w-full max-w-md border border-gray-100">
     <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Sign In</h2>
     <form className="space-y-5">
@@ -31,12 +30,11 @@ const Login = () => {
       </button>
     </form>
     <p className="mt-6 text-sm text-center text-gray-600">
-      Don't have an account?<Link to="/signup"  className="text-green-600 hover:underline">Sign up</Link>
+      Don't have an account? <a href="/signup" className="text-green-600 hover:underline">Sign up</a>
     </p>
   </div>
 </div>
-
   )
 }
 
-export default Login
+export default Signup

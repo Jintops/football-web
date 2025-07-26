@@ -7,6 +7,7 @@ import appStore from "./utils/appStore"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from "./components/Login"
+import Signup from "./components/Signup"
 
 function App() {
   
@@ -22,6 +23,7 @@ function App() {
        
           </Route>
           <Route path="/login" element={<Login/>}></Route>
+          <Route path="/signup" element={<Signup/>}></Route>
         </Routes>
 
       </div>
