@@ -16,6 +16,7 @@ const getAllProduct=async()=>{
     }
 }
 
+
  useEffect(()=>{
     getAllProduct();
  },[])

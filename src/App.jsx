@@ -6,6 +6,7 @@ import { Provider } from "react-redux"
 import appStore from "./utils/appStore"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Login from "./components/Login"
 
 function App() {
   
@@ -20,7 +21,9 @@ function App() {
           <Route index element={<Home/>}/>
        
           </Route>
+          <Route path="/login" element={<Login/>}></Route>
         </Routes>
+
       </div>
   </BrowserRouter>
   </Provider>
