@@ -8,11 +8,11 @@ import {
 } from "../utils/cartCountSlice";
 
 const CartProduct = ({ item }) => {
-  const { id, title, image, price, count } = item;
+  const { _id, title, image, price, count } = item;
   const dispatch = useDispatch();
 
-  const deleteItems = (id) => {
-    dispatch(deleteItem(id));
+  const deleteItems = (_id) => {
+    dispatch(deleteItem(_id));
   };
 
   return (
@@ -22,7 +22,7 @@ const CartProduct = ({ item }) => {
         <img
           className="w-20 h-20 sm:w-20 sm:h-20 object-cover rounded-lg"
           src={image}
-          alt={name}
+          alt={title}
         />
 
         
@@ -33,14 +33,14 @@ const CartProduct = ({ item }) => {
          
           <div className="flex items-center gap-2 ">
             <button
-              onClick={() => count > 1 && dispatch(decrementQuantity(id))}
+              onClick={() => count > 1 && dispatch(decrementQuantity(_id))}
               className="text-lg font-bold px-1 py-1  rounded hover:bg-gray-100"
             >
               -
             </button>
             <span className="min-w-[20px] text-center">{count}</span>
             <button
-              onClick={() => dispatch(incrementQuantity(id))}
+              onClick={() => dispatch(incrementQuantity(_id))}
               className="text-lg font-bold px-1 py-1  rounded hover:bg-gray-100"
             >
               +
@@ -51,7 +51,7 @@ const CartProduct = ({ item }) => {
         <div className="flex flex-col items-end sm:items-center sm:justify-between  h-full">
           <p className="font-bold">${(price * count).toFixed(2)}</p>
           <Trash2
-            onClick={() => deleteItems(id)}
+            onClick={() => deleteItems(_id)}
             className="h-5 w-5 text-red-500 mt-2 hover:text-red-700 cursor-pointer"
           />
         </div>
