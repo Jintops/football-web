@@ -8,7 +8,7 @@ const cartCountSlice = createSlice({
   reducers: {
     addItem: (state, action) => {
       const itemIndex = state.items.findIndex(
-        (item) => item.id === action.payload.id
+        (item) => item._id === action.payload._id
       );
       if (itemIndex >= 0) {
         state.items[itemIndex].count += 1;

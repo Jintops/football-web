@@ -5,13 +5,12 @@ import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
 
 const Products = ({ product }) => {
-  const { title, price, image, description, rating } = product;
-
+  const { title, price, image, description, rating, } = product;
+ console.log(product)
   const dispatch = useDispatch();
   const cartItems = (product) => {
     dispatch(addItem(product));
-
-
+    
     toast.success("Item added to cart!", {
       position: "bottom-right",
       autoClose: 3000,

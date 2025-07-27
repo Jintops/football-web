@@ -9,8 +9,8 @@ const getAllProduct=async()=>{
     try{
     const res=await axios.get("http://localhost:7777/getAllProducts",{withCredentials:true})
     const products=res.data.products;
-    setProducts(products)
-    // console.log(products)
+    setProducts(products) 
+
     }catch(err){
         console.log(err)
     }
