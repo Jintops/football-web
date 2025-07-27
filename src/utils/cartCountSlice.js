@@ -18,12 +18,12 @@ const cartCountSlice = createSlice({
     },
 
     incrementQuantity: (state, action) => {
-      const item = state.items.find((item) => item.id === action.payload);
+      const item = state.items.find((item) => item._id === action.payload);
       if (item) item.count += 1;
     },
 
     decrementQuantity: (state, action) => {
-      const item = state.items.find((item) => item.id === action.payload);
+      const item = state.items.find((item) => item._id === action.payload);
       if (item && item.count > 1) item.count -= 1;
     },
 
@@ -33,7 +33,7 @@ const cartCountSlice = createSlice({
 
     deleteItem: (state, action) => {
       let deleteid = action.payload;
-      state.items = state.items.filter((item) => item.id !== deleteid);
+      state.items = state.items.filter((item) => item._id !== deleteid);
     },
   },
 });
