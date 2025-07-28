@@ -14,6 +14,7 @@ import AdminProducts from "./components/AdminProducts"
 import AdminOrderList from "./components/AdminOrderList"
 import AdminListOfUsers from "./components/AdminListOfUsers"
 import AdminHome from "./components/AdminHome"
+import AdminOverView from "./components/AdminOverView"
 
 function App() {
   
@@ -36,7 +37,8 @@ function App() {
           <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
 
            <Route path="/admin" element={<AdminHome/>}>   
-           <Route index element={<DashBoard/>}></Route>      
+            <Route index element={<AdminOverView/>}></Route>    
+            <Route path="overview" element={<AdminOverView/>}></Route>  
             <Route path="products" element={<AdminProducts/>}></Route>
             <Route path="orderlist" element={<AdminOrderList/>}></Route>
              <Route path="userlist" element={<AdminListOfUsers/>}></Route>

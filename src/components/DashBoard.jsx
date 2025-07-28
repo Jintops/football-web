@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutDashboard, ShoppingBag, Users, PackageSearch, LogOut } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const DashBoard = () => {
   return (
@@ -12,10 +12,10 @@ const DashBoard = () => {
           <h1 className="text-2xl font-bold text-center text-green-600">Admin Panel</h1>
         </div>
         <ul className="p-4 space-y-4 text-gray-700">
-         <li className="flex items-center gap-3 cursor-pointer hover:text-green-600 hover:bg-gray-100 pt-2">
+         <Link to='/admin/overview'><li className="flex items-center gap-3 cursor-pointer hover:text-green-600 hover:bg-gray-100 pt-2">
             <LayoutDashboard className="w-5 h-5" />
             Dashboard
-          </li>
+          </li></Link>
 
          <Link to='/admin/products'> <li className="flex items-center gap-3 cursor-pointer pt-2 hover:text-green-600 hover:bg-gray-100">
             <ShoppingBag className="w-5 h-5" />
@@ -36,9 +36,9 @@ const DashBoard = () => {
           </li>
         </ul>
       </div>
-
-      {/* Main Content */}
-   
+    <div className="flex-1 p-6">
+        <Outlet/>
+      </div>
     </div>
   );
 };

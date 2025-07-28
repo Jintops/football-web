@@ -5,8 +5,7 @@ import DashBoard from './DashBoard'
 const AdminHome = () => {
   return (
     <div>
-        <DashBoard/>
-        <Outlet/>
+        <DashBoard/>     
     </div>
   )
 }
