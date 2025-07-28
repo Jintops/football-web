@@ -3,6 +3,7 @@ import { Search, ShoppingCart, User, Menu, X } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import CartPage from './CartPage';
 import { LOGO } from '../utils/constants';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ const Navbar = () => {
 
        
         <ul className="hidden md:flex gap-6 lg:gap-8 font-medium text-gray-700">
-          <li className="hover:text-green-500 cursor-pointer">Home</li>
+          <li className="hover:text-green-500 cursor-pointer"><Link to="/">Home</Link></li>
           <li className="hover:text-green-500 cursor-pointer">Jersey</li>
           <li className="hover:text-green-500 cursor-pointer">Boots</li>
           <li className="hover:text-green-500 cursor-pointer">Equipments</li>
@@ -74,7 +75,7 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden px-4 pb-4 space-y-4 animate-slide-down">
           <ul className="flex flex-col gap-3 text-gray-700 font-medium">
-            <li className="hover:text-green-500 cursor-pointer">Home</li>
+            <li className="hover:text-green-500 cursor-pointer"><Link to="/">Home</Link></li>
             <li className="hover:text-green-500 cursor-pointer">Jersey</li>
             <li className="hover:text-green-500 cursor-pointer">Boots</li>
             <li className="hover:text-green-500 cursor-pointer">Equipments</li>

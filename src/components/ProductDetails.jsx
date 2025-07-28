@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { ShoppingCart,CreditCard } from "lucide-react";
 import { useDispatch } from 'react-redux';
 import { addItem } from '../utils/cartCountSlice';
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
