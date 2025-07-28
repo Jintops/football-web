@@ -33,7 +33,7 @@ const getAllProduct=async()=>{
            
          {products.map((item)=>{
             return(
-                <div key={item._id}> <Link to={"/productdetails/"+item._id}><Products  product={item}/> </Link>  </div>
+                <div key={item._id}> <Products  product={item}/>   </div>
             )
          })}
          

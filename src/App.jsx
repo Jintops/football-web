@@ -21,12 +21,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Body/>}>
           <Route index element={<Home/>}/>
-       
-          </Route>
-          <Route path="/login" element={<Login role="User"/>}></Route>
-          <Route path="/signup" element={<Signup/>}></Route>
+         
           <Route path="/productdetails/:id" element={<ProductDetails/>}></Route>
-          <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
+         
+          </Route>
+         <Route path="/login" element={<Login role="User"/>}></Route>
+          <Route path="/signup" element={<Signup/>}></Route>
+           <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
         </Routes>
 
       </div>
