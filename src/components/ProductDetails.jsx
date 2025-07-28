@@ -39,7 +39,7 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="min-h-screen flex  justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className=" flex  justify-center bg-gray-100 py-24 px-4 sm:px-6 lg:px-8">
       <div className="h-[696px] max-w-4xl w-full bg-white rounded-xl shadow-md overflow-hidden grid md:grid-cols-2 gap-8 p-8">
         <div className="flex flex-col items-center">
           <img

@@ -9,7 +9,7 @@ const Home = () => {
         
        <FrontPage/>
        <ProductPage/>
-       <Footer/>
+    
     </div>
 
 

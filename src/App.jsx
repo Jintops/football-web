@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from "./components/Login"
 import Signup from "./components/Signup"
 import ProductDetails from "./components/ProductDetails"
+import DashBoard from "./components/DashBoard"
 
 function App() {
   
@@ -25,9 +26,11 @@ function App() {
           <Route path="/productdetails/:id" element={<ProductDetails/>}></Route>
          
           </Route>
+
          <Route path="/login" element={<Login role="User"/>}></Route>
           <Route path="/signup" element={<Signup/>}></Route>
            <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
+           <Route path="/dashboard" element={<DashBoard/>}></Route>
         </Routes>
 
       </div>
