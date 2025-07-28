@@ -6,7 +6,7 @@ const AdminHome = () => {
   return (
     <div>
         <DashBoard/>
-        <Outlet></Outlet>
+        <Outlet/>
     </div>
   )
 }
