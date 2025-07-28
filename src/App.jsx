@@ -10,6 +10,7 @@ import Login from "./components/Login"
 import Signup from "./components/Signup"
 import ProductDetails from "./components/ProductDetails"
 import DashBoard from "./components/DashBoard"
+import AdminProducts from "./components/AdminProducts"
 
 function App() {
   
@@ -31,6 +32,7 @@ function App() {
           <Route path="/signup" element={<Signup/>}></Route>
            <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
            <Route path="/dashboard" element={<DashBoard/>}></Route>
+            <Route path="/adminproducts" element={<AdminProducts/>}></Route>
         </Routes>
 
       </div>
