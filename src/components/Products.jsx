@@ -3,11 +3,17 @@ import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Products = ({ product }) => {
-  const { title, price, image, description, rating, } = product;
- console.log(product)
+  const { title, price, image, description, rating,_id } = product;
+  const navigate=useNavigate()
   const dispatch = useDispatch();
+
+  const detailedProduct=(_id)=>{
+      navigate('/productdetails/'+_id)
+  }
+
   const cartItems = (product) => {
     dispatch(addItem(product));
     
@@ -20,7 +26,7 @@ const Products = ({ product }) => {
   return (
     <div className="grid overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-2 group rounded-2xl">
       <div className="card bg-base-100 w-80 shadow-lg">
-        <figure className="px-10 pt-8 flex justify-center ">
+        <figure className="px-10 pt-8 flex justify-center" onClick={detailedProduct(_id)}>
           <img
             src={image}
             alt={title}
