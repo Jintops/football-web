@@ -11,6 +11,9 @@ import Signup from "./components/Signup"
 import ProductDetails from "./components/ProductDetails"
 import DashBoard from "./components/DashBoard"
 import AdminProducts from "./components/AdminProducts"
+import AdminOrderList from "./components/AdminOrderList"
+import AdminListOfUsers from "./components/AdminListOfUsers"
+import AdminHome from "./components/AdminHome"
 
 function App() {
   
@@ -30,9 +33,14 @@ function App() {
 
          <Route path="/login" element={<Login role="User"/>}></Route>
           <Route path="/signup" element={<Signup/>}></Route>
-           <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
-           <Route path="/dashboard" element={<DashBoard/>}></Route>
-            <Route path="/adminproducts" element={<AdminProducts/>}></Route>
+          <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
+
+           <Route path="/admin" element={<DashBoard/>}>   
+           <Route index element={<AdminHome/>}></Route>      
+            <Route path="products" element={<AdminProducts/>}></Route>
+            <Route path="orderlist" element={<AdminOrderList/>}></Route>
+             <Route path="userlist" element={<AdminListOfUsers/>}></Route>
+             </Route>
         </Routes>
 
       </div>

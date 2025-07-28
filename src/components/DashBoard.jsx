@@ -22,14 +22,14 @@ const DashBoard = () => {
             Products
           </li></Link> 
 
-         <Link to='/adminproducts'> <li className="flex items-center gap-3 cursor-pointer pt-2 hover:text-green-600 hover:bg-gray-100">
+         <Link to='/adminorderlist'> <li className="flex items-center gap-3 cursor-pointer pt-2 hover:text-green-600 hover:bg-gray-100">
             <PackageSearch className="w-5 h-5" />
             Orders
           </li></Link>
-          <li className="flex items-center gap-3 cursor-pointer pt-2 hover:text-green-600 hover:bg-gray-100">
+         <Link to='/adminuserlist'> <li className="flex items-center gap-3 cursor-pointer pt-2 hover:text-green-600 hover:bg-gray-100">
             <Users className="w-5 h-5" />
             Users
-          </li>
+          </li></Link>
           <li className="flex items-center gap-3 cursor-pointer hover:text-red-500 mt-10">
             <LogOut className="w-5 h-5" />
             Logout
