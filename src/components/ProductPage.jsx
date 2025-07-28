@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Products from './Products'
 import product from '../utils/helper'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 const ProductPage = () => {
 const [products,setProducts]=useState([]);
 
@@ -32,7 +33,7 @@ const getAllProduct=async()=>{
            
          {products.map((item)=>{
             return(
-                <div key={item._id}><Products  product={item}/>  </div>
+                <div key={item._id}> <Link to={"/productdetails/"+item._id}><Products  product={item}/> </Link>  </div>
             )
          })}
          
