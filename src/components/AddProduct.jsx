@@ -26,12 +26,6 @@ const AddProduct = ({ onClose, onProductAdded }) => {
     formData.append("price", price);
     formData.append("image", image); // ✅ This must match 'upload.single("image")' in backend
 
-    // Optional fields (add if you have them)
-    // formData.append("category", category);
-    // formData.append("brand", brand);
-    // formData.append("salePrice", salePrice);
-    // formData.append("totalStock", totalStock);
-
     const res = await axios.post(BASE_URL + "addProduct", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
