@@ -17,16 +17,16 @@ const DashBoard = () => {
             Dashboard
           </li></Link>
 
-         <Link to='/admin/products'> <li className="flex items-center gap-3 cursor-pointer pt-2 hover:text-green-600 hover:bg-gray-100">
+         <Link to='/admin/products'> <li className="flex items-center gap-3 cursor-pointer pt-4 hover:text-green-600 hover:bg-gray-100">
             <ShoppingBag className="w-5 h-5" />
             Products
           </li></Link> 
 
-         <Link to='/admin/orderlist'> <li className="flex items-center gap-3 cursor-pointer pt-2 hover:text-green-600 hover:bg-gray-100">
+         <Link to='/admin/orderlist'> <li className="flex items-center gap-3 cursor-pointer pt-4 hover:text-green-600 hover:bg-gray-100">
             <PackageSearch className="w-5 h-5" />
             Orders
           </li></Link>
-         <Link to='/admin/userlist'> <li className="flex items-center gap-3 cursor-pointer pt-2 hover:text-green-600 hover:bg-gray-100">
+         <Link to='/admin/userlist'> <li className="flex items-center gap-3 cursor-pointer pt-4 hover:text-green-600 hover:bg-gray-100">
             <Users className="w-5 h-5" />
             Users
           </li></Link>
