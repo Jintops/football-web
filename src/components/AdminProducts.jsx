@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
+import AddProduct from "./AddProduct";
 
 const AdminProducts = () => {
   const [product, setProduct] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [productId, setProductId] = useState(null);
+ const [openAddProduct,setOpenAddProduct]=useState(false)
 
   const getAllProducts = async () => {
     try {
@@ -52,7 +54,8 @@ const AdminProducts = () => {
   <h1 className="font-bold text-3xl text-green-700">
     📦 Products List
   </h1>
-  <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-semibold shadow">
+  <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-semibold shadow"
+   onClick={()=>setOpenAddProduct(true)}>
     + Add Product
   </button>
 </div>
@@ -120,6 +123,7 @@ const AdminProducts = () => {
           </div>
         </div>
       )}
+       {openAddProduct && <AddProduct/> }
     </div>
   );
 };
