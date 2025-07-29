@@ -5,28 +5,47 @@ import { BASE_URL } from "../utils/constants";
 
 const AdminProducts = () => {
   const [product, setProduct] = useState([]);
-  const [showModal,setShowModal]=useState(false)
+  const [showModal, setShowModal] = useState(false);
+  const [productId, setProductId] = useState(null);
 
   const getAllProducts = async () => {
     try {
       const res = await axios.get(BASE_URL + "getAllProducts", {
         withCredentials: true,
       });
-      const products = res.data.products;
-      setProduct(products);
-      
+      setProduct(res.data.products);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleDelete=()=>{
-   setShowModal(true);
-  }
+  const handleDelete = (item) => {
+    setProductId(item);
+    setShowModal(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+      const res = await axios.delete(
+        `${BASE_URL}deleteProduct/${productId._id}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      
+      setProduct((prev) => prev.filter((item) => item._id !== productId._id));
+
+      setShowModal(false);
+    } catch (err) {
+      console.log("Delete failed:", err);
+    }
+  };
 
   useEffect(() => {
     getAllProducts();
   }, []);
+
   return (
     <div className="p-6">
       <h1 className="font-bold text-3xl text-green-700 mb-6">
@@ -35,9 +54,10 @@ const AdminProducts = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {product.map((item) => (
-           
-          <div className="bg-white rounded-xl shadow-md border p-4 hover:shadow-lg transition" key={item._id}>
-             
+          <div
+            className="bg-white rounded-xl shadow-md border p-4 hover:shadow-lg transition"
+            key={item._id}
+          >
             <img
               src={item.image}
               alt={item.title}
@@ -57,22 +77,26 @@ const AdminProducts = () => {
                 <Pencil className="w-4 h-4" />
                 Edit
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm"
-              onClick={()=>handleDelete(item._id)}>
+              <button
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm"
+                onClick={() => handleDelete(item)}
+              >
                 <Trash2 className="w-4 h-4" />
                 Delete
               </button>
             </div>
           </div>
         ))}
-
       </div>
 
-
-       {showModal && (
+      {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-xl w-[90%] max-w-md">
-            <h2 className="text-xl font-bold text-red-600 mb-2">Are you sure?</h2>
+            <h2 className="text-xl font-bold text-red-600 mb-2">
+              Are you sure want to delete{" "}
+              <span className="text-black">'{productId.title}'</span>?
+            </h2>
+
             <p className="text-gray-700 mb-6">This action cannot be undone.</p>
             <div className="flex justify-end gap-4">
               <button
@@ -91,8 +115,6 @@ const AdminProducts = () => {
           </div>
         </div>
       )}
-
-
     </div>
   );
 };
