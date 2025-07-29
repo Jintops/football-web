@@ -123,7 +123,7 @@ const AdminProducts = () => {
           </div>
         </div>
       )}
-       {openAddProduct && <AddProduct/> }
+       {openAddProduct && <AddProduct onClose={() => setOpenAddProduct(false)} /> }
     </div>
   );
 };
