@@ -5,6 +5,8 @@ import { BASE_URL } from "../utils/constants";
 
 const AdminProducts = () => {
   const [product, setProduct] = useState([]);
+  const [showModal,setShowModal]=useState(false)
+
   const getAllProducts = async () => {
     try {
       const res = await axios.get(BASE_URL + "getAllProducts", {
@@ -18,6 +20,10 @@ const AdminProducts = () => {
     }
   };
 
+  const handleDelete=()=>{
+   setShowModal(true);
+  }
+
   useEffect(() => {
     getAllProducts();
   }, []);
@@ -29,7 +35,9 @@ const AdminProducts = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {product.map((item) => (
-          <div className="bg-white rounded-xl shadow-md border p-4 hover:shadow-lg transition">
+           
+          <div className="bg-white rounded-xl shadow-md border p-4 hover:shadow-lg transition" key={item._id}>
+             
             <img
               src={item.image}
               alt={item.title}
@@ -49,14 +57,42 @@ const AdminProducts = () => {
                 <Pencil className="w-4 h-4" />
                 Edit
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm">
+              <button className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm"
+              onClick={()=>handleDelete(item._id)}>
                 <Trash2 className="w-4 h-4" />
                 Delete
               </button>
             </div>
           </div>
         ))}
+
       </div>
+
+
+       {showModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-[90%] max-w-md">
+            <h2 className="text-xl font-bold text-red-600 mb-2">Are you sure?</h2>
+            <p className="text-gray-700 mb-6">This action cannot be undone.</p>
+            <div className="flex justify-end gap-4">
+              <button
+                className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100"
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                onClick={confirmDelete}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 };
