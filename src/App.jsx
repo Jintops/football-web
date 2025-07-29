@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from "./components/Login"
 import Signup from "./components/Signup"
 import ProductDetails from "./components/ProductDetails"
-import DashBoard from "./components/DashBoard"
 import AdminProducts from "./components/AdminProducts"
 import AdminOrderList from "./components/AdminOrderList"
 import AdminListOfUsers from "./components/AdminListOfUsers"

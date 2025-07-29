@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = ({role}) => {
 
     const [emailId ,setEmailId]=useState('');
     const [password, setPassword]=useState('');
 
+    const navigate=useNavigate();
 
 
 const handleLogin=async(e)=>{
@@ -17,7 +18,12 @@ const handleLogin=async(e)=>{
       { emailId, password },
       { withCredentials: true }
     );
-    console.log(res.data); 
+    if(res.data.user.role==="user"){
+       navigate('/')
+    }else{
+        navigate('/admin/overview')
+    }
+    console.log(res.data.user.role); 
   } catch (err) {
     console.error("Login failed:", err.response?.data || err.message);
      alert("Login failed");
