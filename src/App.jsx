@@ -14,6 +14,7 @@ import AdminOrderList from "./components/AdminOrderList"
 import AdminListOfUsers from "./components/AdminListOfUsers"
 import AdminHome from "./components/AdminHome"
 import AdminOverView from "./components/AdminOverView"
+import OrderPage from "./components/OrderPage"
 
 function App() {
   
@@ -28,6 +29,7 @@ function App() {
           <Route index element={<Home/>}/>
          
           <Route path="/productdetails/:id" element={<ProductDetails/>}></Route>
+          <Route path="/orders" element={<OrderPage/>}></Route>
          
           </Route>
 

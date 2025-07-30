@@ -3,11 +3,16 @@ import { X, ShoppingCart } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import CartProduct from "./CartProduct";
 import { clearCart } from "../utils/cartCountSlice";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = ({ onClose }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector((store) => store.cartCount.items);
   const totalAmount = cartItem.reduce((acc, item) => acc + item.price * item.count, 0);
+  const navigate=useNavigate();
+  const handleOrder=()=>{
+       navigate('/orders')
+  }
   return (
     <>
       <div
@@ -51,7 +56,8 @@ const CartPage = ({ onClose }) => {
               <h1>${totalAmount.toFixed(2)}</h1>
             </div>
             <div className="flex justify-center m-4">
-              <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 transform hover:scale-105">
+              <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 transform hover:scale-105"
+              onClick={handleOrder}>
                 Buy Now
               </button>
             </div>
