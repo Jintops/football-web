@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../utils/constants';
 
 const OrderPage = () => {
   const { state } = useLocation();
   const { product } = state || {};
-
+ const navigate=useNavigate();
   const [name, setName] = useState('');
   const [pincode, setPincode] = useState('');
   const [address, setAddress] = useState('');
@@ -15,7 +15,8 @@ const OrderPage = () => {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [quantity, setQuantity] = useState(1);
 
-  if (!product) return <p>No product found</p>;
+
+  if (!product) return <p className="text-center mt-10 text-red-500 font-semibold">No product found</p>;
 
   const handleOrder = async () => {
     try {
@@ -25,12 +26,12 @@ const OrderPage = () => {
         BASE_URL + "createOrder",
         {
           address: {
-          name,
-          phone,
-          pincode,
-          place,
-          fullAddress: address,
-        },
+            name,
+            phone,
+            pincode,
+            place,
+            fullAddress: address,
+          },
           paymentMethod,
           productId: product._id,
           quantity,
@@ -40,104 +41,120 @@ const OrderPage = () => {
       );
 
       alert("Order placed successfully!");
+      navigate('/myorders')
     } catch (err) {
       console.error("Order error:", err);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 space-y-6">
-      {/* Address Form */}
-      <div className="bg-white rounded shadow p-4 space-y-2">
-        <h2 className="text-lg font-bold">Shipping Details</h2>
-        <input
-          type="text"
-          placeholder="Name"
-          className="border p-2 w-full"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="Pincode"
-          className="border p-2 w-full"
-          value={pincode}
-          onChange={(e) => setPincode(e.target.value)}
-        />
-        <textarea
-          placeholder="Full Address"
-          className="border p-2 w-full"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Place"
-          className="border p-2 w-full"
-          value={place}
-          onChange={(e) => setPlace(e.target.value)}
-        />
-        <input
-          type="tel"
-          placeholder="Phone Number"
-          className="border p-2 w-full"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-      </div>
+    <div className="min-h-screen bg-gray-100 py-10 px-4">
+      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        {/* Left: Shipping & Payment */}
+        <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
+          <h2 className="text-xl font-semibold border-b pb-2">Shipping Information</h2>
 
-      {/* Payment Options */}
-      <div className="bg-white rounded shadow p-4">
-        <h2 className="text-lg font-bold mb-2">Select Payment Method</h2>
-        <label className="flex items-center gap-2 mb-2">
           <input
-            type="radio"
-            name="payment"
-            value="Cash on Delivery"
-            checked={paymentMethod === 'Cash on Delivery'}
-            onChange={() => setPaymentMethod('Cash on Delivery')}
+            type="text"
+            placeholder="Full Name"
+            className="border rounded px-4 py-2 w-full"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
-          Cash On Delivery
-        </label>
 
-        <label className="flex items-center gap-2">
           <input
-            type="radio"
-            name="payment"
-            value="Online"
-            checked={paymentMethod === 'Online'}
-            onChange={() => setPaymentMethod('Online')}
+            type="tel"
+            placeholder="Phone Number"
+            className="border rounded px-4 py-2 w-full"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           />
-          Online
-        </label>
-      </div>
 
-      {/* Product Summary */}
-      <div className="bg-white rounded shadow p-4 space-y-2">
-        <h2 className="text-lg font-bold">Product Summary</h2>
-        <img src={product.image} alt={product.title} className="h-32 w-auto object-contain" />
-        <h1>{product.title}</h1>
-        <p>Price: ₹ {product.price}</p>
+          <input
+            type="number"
+            placeholder="Pincode"
+            className="border rounded px-4 py-2 w-full"
+            value={pincode}
+            onChange={(e) => setPincode(e.target.value)}
+          />
 
-        <label className="block mt-2">Quantity:</label>
-        <input
-          type="number"
-          value={quantity}
-          min={1}
-          className="border p-2 w-20"
-          onChange={(e) => setQuantity(parseInt(e.target.value))}
-        />
-        <p className="font-semibold mt-2">Total: ₹ {product.price * quantity}</p>
-      </div>
+          <input
+            type="text"
+            placeholder="Place"
+            className="border rounded px-4 py-2 w-full"
+            value={place}
+            onChange={(e) => setPlace(e.target.value)}
+          />
 
-      {/* Place Order Button */}
-      <div className="text-right">
-        <button
-          onClick={handleOrder}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
-        >
-          Place Order
-        </button>
+          <textarea
+            placeholder="Full Address"
+            className="border rounded px-4 py-2 w-full"
+            rows={3}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+
+          <div className="pt-4 border-t">
+            <h3 className="text-md font-semibold mb-2">Payment Method</h3>
+            <label className="flex items-center gap-2 mb-2">
+              <input
+                type="radio"
+                name="payment"
+                value="Cash on Delivery"
+                checked={paymentMethod === 'Cash on Delivery'}
+                onChange={() => setPaymentMethod('Cash on Delivery')}
+              />
+              Cash On Delivery
+            </label>
+
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="payment"
+                value="Online"
+                checked={paymentMethod === 'Online'}
+                onChange={() => setPaymentMethod('Online')}
+              />
+              Online
+            </label>
+          </div>
+        </div>
+
+        {/* Right: Product Details */}
+        <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
+          <h2 className="text-xl font-semibold border-b pb-2">Order Summary</h2>
+
+          <div className="flex gap-4">
+            <img
+              src={product.image}
+              alt={product.title}
+              className="w-32 h-32 object-contain border rounded"
+            />
+            <div>
+              <h3 className="text-lg font-medium">{product.title}</h3>
+              <p className="text-gray-700 mt-1">Price: ₹ {product.price}</p>
+              <div className="mt-3">
+                <label className="block mb-1 font-medium">Quantity</label>
+                <input
+                  type="number"
+                  value={quantity}
+                  min={1}
+                  className="border px-3 py-1 rounded w-24"
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
+                />
+              </div>
+              <p className="mt-2 font-semibold text-green-600">Total: ₹ {product.price * quantity}</p>
+            </div>
+          </div>
+
+          <button
+            onClick={handleOrder}
+            className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded"
+          >
+            Place Order
+          </button>
+        </div>
       </div>
     </div>
   );
