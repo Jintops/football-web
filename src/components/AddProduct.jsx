@@ -44,7 +44,7 @@ const AddProduct = ({ onClose, onProductAdded }) => {
     <>
       <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
 
-      <div className="fixed top-0 right-0 h-full w-full sm:w-[60%] md:w-[45%] lg:w-[35%] xl:w-[30%] bg-white shadow-lg z-50 rounded-l-2xl flex flex-col overflow-y-auto">
+      <div className="fixed top-0 right-0 h-full w-full sm:w-[60%] md:w-[45%] lg:w-[35%] xl:w-[25%] bg-white shadow-lg z-50 rounded-l-2xl flex flex-col overflow-y-auto">
         <div className="flex justify-between items-center px-6 py-4 border-b bg-gray-100">
           <h1 className="text-xl font-bold text-gray-800">Add Product</h1>
           <button onClick={onClose}>
