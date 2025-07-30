@@ -1,13 +1,19 @@
-import React, { useEffect } from 'react'
+import axios from 'axios'
+import { AwardIcon } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { BASE_URL } from '../utils/constants'
 
 
 
 
 const MyOrders = () => {
-
+   
+    const [orders,setOrders]=useState([])
     const orderList=async()=>{
       try{
-
+          const res=await axios.get(BASE_URL+"orderList",{withCredentials:true})
+           setOrders(res.data.data)
+           console.log(res.data.data)
       }catch(err){
         console.log(err)
       }
@@ -18,17 +24,19 @@ const MyOrders = () => {
   return (
     <div className='h-screen'>
         <h1 className='text-2xl font-bold'>My Orders</h1>
+        {orders.map((order)=>(
         <div className='flex  border m-2 p-2'>
             
            
-            <img src='https://i.pinimg.com/736x/1b/61/f8/1b61f8160dcbc9364166230d0f73f3b6.jpg' className='w-20 h-20'></img>
+            <img src={order.cartItems[0].imageUrl} className='w-20 h-20'></img>
            <div className='mx-2 p-2'>
-            <h1>order.name</h1>
-            <h1>quantity</h1>
-            <h1>price</h1>
-            <h1>paymentmethod</h1>
+            <h1>{order.cartItems[0].title}</h1>
+            <h1>{order.cartItems[0].quantity}</h1>
+            <h1>{order.totalAmount}</h1>
+            <h1>{order.paymentMethod}</h1>
             </div>
         </div>
+        ))}
     </div>
   )
 }
