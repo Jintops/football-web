@@ -1,23 +1,23 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { ShoppingCart,CreditCard } from "lucide-react";
-import { useDispatch } from 'react-redux';
-import { addItem } from '../utils/cartCountSlice';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ShoppingCart, CreditCard } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
- const dispatch=useDispatch();
-
-  const cartItem=()=>{
-    dispatch(addItem(product))
-      toast.success("Item added to cart!", {
-          position: "bottom-right",
-          autoClose: 3000,
-        });
-  }
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const cartItem = () => {
+    dispatch(addItem(product));
+    toast.success("Item added to cart!", {
+      position: "bottom-right",
+      autoClose: 3000,
+    });
+  };
 
   const productDetails = async (id) => {
     try {
@@ -29,6 +29,11 @@ const ProductDetails = () => {
       console.log(err);
     }
   };
+
+const handleOrder = () => {
+  navigate('/orders', { state: { product } });
+};
+
 
   useEffect(() => {
     productDetails(id);
@@ -47,28 +52,36 @@ const ProductDetails = () => {
             alt={product.title}
             className="h-[400px] w-auto object-contain"
           />
-        <div className="flex gap-4">
-  <button className="flex items-center justify-center gap-2 w-40 mt-4 px-4 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition"
-  onClick={cartItem}>
-    <ShoppingCart className="w-5 h-5 text-white" />
-    Add to Cart
-  </button>
-  
-  <button className="flex items-center justify-center gap-2 w-40 mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition">
-    <CreditCard className="w-5 h-5 text-white" />
-    Buy Now
-  </button>
-</div>
+          <div className="flex gap-4">
+            <button
+              className="flex items-center justify-center gap-2 w-40 mt-4 px-4 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition"
+              onClick={cartItem}
+            >
+              <ShoppingCart className="w-5 h-5 text-white" />
+              Add to Cart
+            </button>
+
+            <button
+              className="flex items-center justify-center gap-2 w-40 mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
+              onClick={handleOrder}
+            >
+              <CreditCard className="w-5 h-5 text-white" />
+              Buy Now
+            </button>
+          </div>
         </div>
         <div className="space-y-4">
           <h1 className="text-3xl font-bold text-gray-800">{product.title}</h1>
           <p className="text-gray-600">{product.description}</p>
-          <p className="text-xl font-semibold text-green-700">₹ {product.price}</p>
+          <p className="text-xl font-semibold text-green-700">
+            ₹ {product.price}
+          </p>
           <div className="flex items-center gap-2">
-            <span className="text-yellow-500 text-xl">⭐️ ⭐️ ⭐️ ⭐️ ⭐️ {product.rating}</span>
+            <span className="text-yellow-500 text-xl">
+              ⭐️ ⭐️ ⭐️ ⭐️ ⭐️ {product.rating}
+            </span>
             <span className="text-gray-500 text-sm">({product.brand})</span>
           </div>
-          
         </div>
       </div>
     </div>
