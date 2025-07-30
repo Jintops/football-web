@@ -24,6 +24,13 @@ const getAllUsers=async()=>{
     const handleDelete=(user)=>{
      setOpenModal(true)
      setDeleteUser(user)
+     
+    }
+
+    const confirmDelete=async()=>{
+    const res=await axios.delete(BASE_URL+"deleteUser/"+deleteUser._id,{withCredentials:true})
+    setUsers((prev)=>prev.filter((user)=>user._id!==deleteUser._id))
+    setOpenModal(false)
     }
 
   return (
