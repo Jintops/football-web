@@ -20,7 +20,7 @@ const MyOrders = () => {
 
   if (orders.length === 0) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-green-50">
+      <div className="min-h-screen flex justify-center items-center bg-gray-100">
         <p className="text-gray-600 text-lg">⚽ No orders yet. Time to grab some football gear!</p>
       </div>
     );
