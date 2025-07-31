@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
+import { addUser } from '../utils/userSlice';
 
 const Login = ({role}) => {
 
@@ -9,7 +11,7 @@ const Login = ({role}) => {
 
     const navigate=useNavigate();
 
-
+ const dispatch=useDispatch();
 const handleLogin=async(e)=>{
  try {
     e.preventDefault();
@@ -18,6 +20,8 @@ const handleLogin=async(e)=>{
       { emailId, password },
       { withCredentials: true }
     );
+    dispatch(addUser(res.data.user))
+    
     if(res.data.user.role==="user"){
        navigate('/')
     }else{

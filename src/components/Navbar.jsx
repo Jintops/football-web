@@ -10,7 +10,8 @@ const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const profileRef = useRef(null);
-
+ const user=useSelector(store=>store.user)
+ console.log(user)
   const cartCount = useSelector((store) => store.cartCount.items);
 
   // Close profile menu when clicking outside
@@ -71,10 +72,17 @@ const Navbar = () => {
 
           {/* Profile Dropdown */}
           <div className="relative" ref={profileRef}>
-            <User
-              className="w-6 h-6 text-gray-700 hover:text-green-500 cursor-pointer"
-              onClick={() => setOpenProfile(!openProfile)}
-            />
+           <div onClick={() => setOpenProfile(!openProfile)} className="cursor-pointer">
+  {user?.photoUrl ? (
+    <img
+      src={user?.photoUrl}
+      alt="Profile"
+      className="w-8 h-8 rounded-full border-2 border-green-500 object-cover"
+    />
+  ) : (
+    <User className="w-6 h-6 text-gray-700 hover:text-green-500" />
+  )}
+</div>
             {openProfile && (
               <div className="absolute -right-4 mt-5 w-44 bg-white shadow-lg rounded-md overflow-hidden z-50 border border-gray-200">
                 <Link to="/profile">
