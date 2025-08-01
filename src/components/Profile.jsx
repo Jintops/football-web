@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../utils/constants'
 
 const Profile = () => {
-      const [data,setData]=useState([])
+      const [data,setData]=useState()
     const profileData=async()=>{
         try{
          const res=await axios.get(BASE_URL+"profile",{withCredentials:true})
@@ -17,17 +17,20 @@ const Profile = () => {
     useEffect(()=>{
         profileData()
     },[])
-  return (
-    <div>
-      {data.map((profile)=>(
-        <div>
-         <h1>{profile.firstName}</h1>
-         <h1>lstName</h1>
-         <h3>gender</h3>
-        </div>
-        ))}
-    </div>
-  )
+
+    if (!data || data.length === 0) return <p>No profile found</p>
+ return (
+  <div>
+    
+    
+      <div>
+        <h1>{data.firstName}</h1>
+        <h1>{data.lastName}</h1>
+        <h3>{data.gender}</h3>
+      </div>
+  
+  </div>
+);
 }
 
 export default Profile

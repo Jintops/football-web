@@ -16,6 +16,7 @@ import AdminHome from "./components/AdminHome"
 import AdminOverView from "./components/AdminOverView"
 import OrderPage from "./components/OrderPage"
 import MyOrders from "./components/MyOrders"
+import Profile from "./components/Profile"
 
 function App() {
   
@@ -32,6 +33,7 @@ function App() {
           <Route path="/productdetails/:id" element={<ProductDetails/>}></Route>
           <Route path="/orders" element={<OrderPage/>}></Route>
          <Route path="/myorders" element={<MyOrders/>}></Route>
+         <Route path="profile" element={<Profile/>}></Route>
           </Route>
 
          <Route path="/login" element={<Login role="User"/>}></Route>
