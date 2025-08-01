@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Search, ShoppingCart, User, Menu, X } from 'lucide-react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CartPage from './CartPage';
-import { LOGO } from '../utils/constants';
+import { BASE_URL, LOGO } from '../utils/constants';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { removeUser } from '../utils/userSlice';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const profileRef = useRef(null);
+  const dispatch=useDispatch()
  const user=useSelector(store=>store.user)
  console.log(user)
   const cartCount = useSelector((store) => store.cartCount.items);
@@ -24,6 +27,16 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+   
+  const handleLogout=async()=>{
+     try{
+         const res=await axios.post(BASE_URL+"logout",{withcredential:true})       
+         dispatch(removeUser)
+         setOpenProfile(false)
+     }catch(err){
+      console.log(err)
+     }
+  }
 
   return (
     <nav className="w-full sticky top-0 z-50 bg-white shadow-md">
@@ -91,7 +104,7 @@ const Navbar = () => {
                 <Link to="/myorders">
                   <div className="px-4 py-2 text-sm text-gray-700 hover:bg-green-50 cursor-pointer" onClick={()=>setOpenProfile(false)}>📦 Orders</div>
                 </Link>
-                <div className="px-4 py-2 text-sm text-red-600 hover:bg-red-100 cursor-pointer">🚪 Logout</div>
+                <div className="px-4 py-2 text-sm text-red-600 hover:bg-red-100 cursor-pointer " onClick={handleLogout}>🚪 Logout</div>
               </div>
             )}
           </div>
