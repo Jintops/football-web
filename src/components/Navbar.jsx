@@ -30,8 +30,8 @@ const Navbar = () => {
    
   const handleLogout=async()=>{
      try{
-         const res=await axios.post(BASE_URL+"logout",{withcredential:true})       
-         dispatch(removeUser)
+         const res=await axios.post(BASE_URL+"logout",{},{withcredential:true})       
+         dispatch(removeUser())
          setOpenProfile(false)
      }catch(err){
       console.log(err)
