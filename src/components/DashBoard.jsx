@@ -1,8 +1,14 @@
 import React from 'react';
 import { LayoutDashboard, ShoppingBag, Users, PackageSearch, LogOut } from 'lucide-react';
 import { Link, Outlet } from 'react-router-dom';
+import axios from 'axios';
+import { BASE_URL } from '../utils/constants';
 
 const DashBoard = () => {
+
+    const handleLogout=async()=>{
+       const res=await axios.post(BASE_URL+"logout",{},{withCredentials:true})
+    }
   return (
     <div className="flex min-h-screen bg-gray-100">
       
@@ -30,10 +36,10 @@ const DashBoard = () => {
             <Users className="w-5 h-5" />
             Users
           </li></Link>
-          <li className="flex items-center gap-3 cursor-pointer hover:text-red-500 mt-10">
+          <Link to='/admin/login'><li className="flex items-center gap-3 cursor-pointer hover:text-red-500 mt-10" onClick={handleLogout}>
             <LogOut className="w-5 h-5" />
             Logout
-          </li>
+          </li></Link>
         </ul>
       </div>
     <div className="flex-1 p-6">
