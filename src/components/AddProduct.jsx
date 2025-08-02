@@ -1,14 +1,24 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../utils/constants';
 import { X } from 'lucide-react';
 
-const AddProduct = ({ onClose, onProductAdded }) => {
+const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState(null); // File object
+  const [image, setImage] = useState(null); 
   const [previewUrl, setPreviewUrl] = useState(null);
+
+  
+  useEffect(() => {
+    if (selectedProduct) {
+      setTitle(selectedProduct.title || '');
+      setDescription(selectedProduct.description || '');
+      setPrice(selectedProduct.price || '');
+      setPreviewUrl(selectedProduct.image || null); 
+    }
+  }, [selectedProduct]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -24,15 +34,23 @@ const AddProduct = ({ onClose, onProductAdded }) => {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("price", price);
-    formData.append("image", image); // ✅ This must match 'upload.single("image")' in backend
-
-    const res = await axios.post(BASE_URL + "addProduct", formData, {
+    formData.append("image", image); // This must match 'upload.single("image")' in backend
+  let res;
+    if(selectedProduct){
+         res = await axios.put(BASE_URL + "editProduct/"+selectedProduct._id, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
       withCredentials: true,
     });
-
+    }else{
+     res = await axios.post(BASE_URL + "addProduct", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    });
+}
     if (onProductAdded) onProductAdded(res.data.data);
     onClose();
   } catch (err) {
@@ -46,7 +64,7 @@ const AddProduct = ({ onClose, onProductAdded }) => {
 
       <div className="fixed top-0 right-0 h-full w-full sm:w-[60%] md:w-[45%] lg:w-[35%] xl:w-[25%] bg-white shadow-lg z-50 rounded-l-2xl flex flex-col overflow-y-auto">
         <div className="flex justify-between items-center px-6 py-4 border-b bg-gray-100">
-          <h1 className="text-xl font-bold text-gray-800">Add Product</h1>
+          <h1 className="text-xl font-bold text-gray-800">{selectedProduct ? "Edit Product" : "Add Product"}</h1>
           <button onClick={onClose}>
             <X className="w-5 h-5 text-gray-600 hover:text-gray-900" />
           </button>
@@ -106,7 +124,7 @@ const AddProduct = ({ onClose, onProductAdded }) => {
             className="mt-4 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition text-center font-semibold"
             onClick={handleAddProduct}
           >
-            Add Product
+           {selectedProduct ? "Edit Product" : "Add Product"}
           </button>
         </div>
       </div>
