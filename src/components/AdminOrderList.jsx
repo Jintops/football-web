@@ -9,6 +9,7 @@ const AdminOrderList = () => {
     try {
       const res = await axios.get(BASE_URL + "orders", { withCredentials: true });
       setOrders(res.data.data);
+      console.log(res.data.data)
     } catch (err) {
       console.error("Failed to fetch orders:", err);
     }
@@ -45,18 +46,18 @@ const AdminOrderList = () => {
                 <p>Pincode: {item.address.pincode}</p>
               </div>
 
-              {/* Column 3: Quantity & Payment */}
+             
               <div className="w-full md:w-[18%] text-sm text-gray-700">
+                 <p className='font-bold text-base text-gray-900'><span className="font-medium">Product:</span> {item.cartItems[0].title}</p>
                 <p><span className="font-medium">Qty:</span> {item.cartItems[0].quantity}</p>
                 <p><span className="font-medium">Payment:</span> {item.paymentMethod}</p>
               </div>
 
-              {/* Column 4: Price */}
               <div className="w-full md:w-[15%] text-sm text-gray-700">
                 <p><span className="font-medium">Price:</span> ₹{item.cartItems[0].price}</p>
               </div>
 
-              {/* Column 5: Status & Date */}
+            
               <div className="w-full md:w-[20%] text-sm">
                 <p>
                   <span className="font-medium">Status:</span>{" "}
