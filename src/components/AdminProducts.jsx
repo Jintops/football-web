@@ -8,8 +8,8 @@ const AdminProducts = () => {
   const [product, setProduct] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [productId, setProductId] = useState(null);
-const [openAddProduct, setOpenAddProduct] = useState(false);
-const [selectedProduct, setSelectedProduct] = useState(null);
+  const [openAddProduct, setOpenAddProduct] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const getAllProducts = async () => {
     try {
@@ -36,7 +36,6 @@ const [selectedProduct, setSelectedProduct] = useState(null);
         }
       );
 
-      
       setProduct((prev) => prev.filter((item) => item._id !== productId._id));
 
       setShowModal(false);
@@ -51,18 +50,18 @@ const [selectedProduct, setSelectedProduct] = useState(null);
 
   return (
     <div className="p-6">
-<div className="flex justify-between items-center mb-6">
-  <h1 className="font-bold text-3xl text-green-700">
-    📦 Products List
-  </h1>
-  <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-semibold shadow"
- onClick={() => {
-  setSelectedProduct(null); 
-  setOpenAddProduct(true);  
-}}>
-    + Add Product
-  </button>
-</div>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="font-bold text-3xl text-green-700">📦 Products List</h1>
+        <button
+          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-semibold shadow"
+          onClick={() => {
+            setSelectedProduct(null);
+            setOpenAddProduct(true);
+          }}
+        >
+          + Add Product
+        </button>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {product.map((item) => (
@@ -85,11 +84,13 @@ const [selectedProduct, setSelectedProduct] = useState(null);
               ₹{item.price}
             </h4>
             <div className="flex justify-between">
-              <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"
-              onClick={() => {
-  setSelectedProduct(item);
-  setOpenAddProduct(true);  
-}}>
+              <button
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm"
+                onClick={() => {
+                  setSelectedProduct(item);
+                  setOpenAddProduct(true);
+                }}
+              >
                 <Pencil className="w-4 h-4" />
                 Edit
               </button>
@@ -132,35 +133,33 @@ const [selectedProduct, setSelectedProduct] = useState(null);
         </div>
       )}
 
-      
-       {openAddProduct && (
-  <AddProduct
-    onClose={() => {
-      setOpenAddProduct(false);
-      setSelectedProduct(null); // clear after close
-    }}
-    selectedProduct={selectedProduct}
-    onProductAdded={(newProduct) => {
-      if (!newProduct) return;
+      {openAddProduct && (
+        <AddProduct
+          onClose={() => {
+            setOpenAddProduct(false);
+            setSelectedProduct(null); // clear after close
+          }}
+          selectedProduct={selectedProduct}
+          onProductAdded={(newProduct) => {
+            if (!newProduct) return;
 
-      // If it's an edit, replace the product
-      if (selectedProduct) {
-        setProduct((prev) =>
-          prev.map((item) =>
-            item._id === newProduct._id ? newProduct : item
-          )
-        );
-      } else {
-        // If it's a new product, add to the list
-        setProduct((prev) => [...prev, newProduct]);
-      }
+            // If it's an edit, replace the product
+            if (selectedProduct) {
+              setProduct((prev) =>
+                prev.map((item) =>
+                  item._id === newProduct._id ? newProduct : item
+                )
+              );
+            } else {
+              // If it's a new product, add to the list
+              setProduct((prev) => [...prev, newProduct]);
+            }
 
-      setOpenAddProduct(false);
-      setSelectedProduct(null);
-    }}
-  />
-)}
-
+            setOpenAddProduct(false);
+            setSelectedProduct(null);
+          }}
+        />
+      )}
     </div>
   );
 };

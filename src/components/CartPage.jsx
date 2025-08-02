@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 const CartPage = ({ onClose }) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector((store) => store.cartCount.items);
-  const totalAmount = cartItem.reduce((acc, item) => acc + item.price * item.count, 0);
+  const product = useSelector((store) => store.cartCount.items);
+  const totalAmount = product.reduce((acc, item) => acc + item.price * item.count, 0);
   const navigate=useNavigate();
   const handleOrder=()=>{
-       navigate('/orders')
+       navigate('/orders',{state:{cartItem:product}})
   }
   return (
     <>
@@ -28,14 +28,14 @@ const CartPage = ({ onClose }) => {
           />
         </div>
 
-        {cartItem.length === 0 ? (
+        {product.length === 0 ? (
           <div className="flex flex-col items-center justify-center flex-1 text-gray-500 p-4">
             <ShoppingCart className="w-10 h-10 mb-2" />
             <h1 className="text-lg font-medium">Your Cart is Empty</h1>
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto px-3 pb-4">
-            {cartItem.map((item, index) => (
+            {product.map((item, index) => (
               <CartProduct key={index} item={item} />
             ))}
 
@@ -49,7 +49,7 @@ const CartPage = ({ onClose }) => {
             </div>
           </div>
         )}
-        {cartItem.length > 0 && (
+        {product.length > 0 && (
           <div>
             <div className="border-t h-12 flex justify-between items-center font-bold mb-2 text-base p-5">
               <h1 className="font-bold ">Total:</h1>
