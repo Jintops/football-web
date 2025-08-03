@@ -1,6 +1,20 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { BASE_URL } from '../utils/constants'
 
 const AdminOverView = () => {
+
+    const [total,setTotal]=useState([])
+    const overView=async()=>{
+         const res=await axios.get(BASE_URL+"getAllProducts",{withCredentials:true})
+         setTotal(res.data.products)
+    }
+
+     const totall=total.length
+
+    useEffect(()=>{
+       overView()
+    },[])
   return (
     <div>
            <div className="flex-1 p-6">
@@ -9,11 +23,12 @@ const AdminOverView = () => {
           <p className="text-gray-500">Welcome back, Admin!</p>
         </div>
 
+       
         {/* Stats Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="p-6 bg-white rounded-lg shadow">
             <h3 className="text-sm text-gray-500">Total Products</h3>
-            <p className="text-2xl font-bold">120</p>
+            <p className="text-2xl font-bold">{totall}</p>
           </div>
           <div className="p-6 bg-white rounded-lg shadow">
             <h3 className="text-sm text-gray-500">Total Orders</h3>
