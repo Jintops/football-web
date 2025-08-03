@@ -5,13 +5,20 @@ import { BASE_URL } from '../utils/constants'
 const AdminOverView = () => {
 
     const [total,setTotal]=useState([])
+    const [orders,setOrders]=useState([])
+     const [users,setUsers]=useState([])
     const overView=async()=>{
          const res=await axios.get(BASE_URL+"getAllProducts",{withCredentials:true})
          setTotal(res.data.products)
+         const order=await axios.get(BASE_URL+"orders",{withCredentials:true})
+        setOrders(order.data.data)
+        const user=await axios.get(BASE_URL+"getAllUsers",{withCredentials:true})
+        setUsers(user.data.data)
     }
 
      const totall=total.length
-
+     const order=orders.length
+     const user=users.length
     useEffect(()=>{
        overView()
     },[])
@@ -32,11 +39,11 @@ const AdminOverView = () => {
           </div>
           <div className="p-6 bg-white rounded-lg shadow">
             <h3 className="text-sm text-gray-500">Total Orders</h3>
-            <p className="text-2xl font-bold">450</p>
+            <p className="text-2xl font-bold">{order}</p>
           </div>
           <div className="p-6 bg-white rounded-lg shadow">
             <h3 className="text-sm text-gray-500">Total Users</h3>
-            <p className="text-2xl font-bold">320</p>
+            <p className="text-2xl font-bold">{user}</p>
           </div>
           <div className="p-6 bg-white rounded-lg shadow">
             <h3 className="text-sm text-gray-500">Revenue</h3>
