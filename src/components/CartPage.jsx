@@ -12,6 +12,7 @@ const CartPage = ({ onClose }) => {
   const navigate=useNavigate();
   const handleOrder=()=>{
        navigate('/orders',{state:{cartItem:product}})
+       onClose()
   }
   return (
     <>
