@@ -16,7 +16,7 @@ const cartCountSlice = createSlice({
         state.items.push({ ...action.payload, count: 1 });
       }
     },
-
+    
     incrementQuantity: (state, action) => {
       const item = state.items.find((item) => item._id === action.payload);
       if (item) item.count += 1;

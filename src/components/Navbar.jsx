@@ -15,6 +15,7 @@ const Navbar = () => {
   const dispatch=useDispatch()
  const {user}=useSelector(store=>store.user)
  console.log(user)
+ 
   const cartCount = useSelector((store) => store.cartCount.items);
 
   // Close profile menu when clicking outside
