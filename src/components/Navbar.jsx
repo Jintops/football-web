@@ -6,6 +6,7 @@ import { BASE_URL, LOGO } from '../utils/constants';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { removeUser } from '../utils/userSlice';
+import { clearCart } from '../utils/cartCountSlice';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -15,7 +16,7 @@ const Navbar = () => {
   const dispatch=useDispatch()
  const {user}=useSelector(store=>store.user)
  console.log(user)
- 
+
   const cartCount = useSelector((store) => store.cartCount.items);
 
   // Close profile menu when clicking outside
@@ -33,6 +34,7 @@ const Navbar = () => {
      try{
          const res=await axios.post(BASE_URL+"logout",{},{withCredentials:true})       
          dispatch(removeUser())
+         dispatch(clearCart())
          setOpenProfile(false)
      }catch(err){
       console.log(err)
