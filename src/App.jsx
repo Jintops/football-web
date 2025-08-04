@@ -21,23 +21,20 @@ import CheckAuth from "./components/CheckAuth"
 
 function App() {
    
-  const {user,isAuthenticatd}=useSelector((store)=>store.user)
+  const {user,isAuthenticated}=useSelector((store)=>store.user)
   
   return (
-    
-    <Provider store={appStore}>
-         <ToastContainer />
-    <BrowserRouter>
+       
       <div>
         <Routes>
           <Route path="/" element={<Body/>}>
           <Route index element={<Home/>}/>
          
           <Route path="/productdetails/:id" element={<ProductDetails/>}></Route>
-          <Route path="/orders" element={<CheckAuth user={user} isAuthenticated={isAuthenticatd}>
+          <Route path="/orders" element={<CheckAuth user={user} isAuthenticated={isAuthenticated}>
              <OrderPage/>
           </CheckAuth>}></Route>
-          
+
          <Route path="/myorders"  element={<MyOrders/>}></Route>
          <Route path="profile" element={<Profile/>}></Route>
           </Route>
@@ -56,8 +53,8 @@ function App() {
         </Routes>
 
       </div>
-  </BrowserRouter>
-  </Provider>
+
+  
   )
 }
 
