@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { BASE_URL } from '../utils/constants';
-import { clearCart } from '../utils/cartCountSlice';
+import axios from "axios";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { BASE_URL } from "../utils/constants";
+import { clearCart } from "../utils/cartCountSlice";
 
 const OrderPage = () => {
   const { state } = useLocation();
@@ -12,12 +12,12 @@ const OrderPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [name, setName] = useState('');
-  const [pincode, setPincode] = useState('');
-  const [address, setAddress] = useState('');
-  const [place, setPlace] = useState('');
-  const [phone, setPhone] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [name, setName] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [address, setAddress] = useState("");
+  const [place, setPlace] = useState("");
+  const [phone, setPhone] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [quantities, setQuantities] = useState(
     products.map((p) => p.count || 1)
   );
@@ -44,7 +44,7 @@ const OrderPage = () => {
         const totalAmount = prod.price * quantity;
 
         await axios.post(
-          BASE_URL + 'createOrder',
+          BASE_URL + "createOrder",
           {
             address: {
               name,
@@ -62,12 +62,12 @@ const OrderPage = () => {
         );
       }
 
-      alert('Order placed successfully!');
+      alert("Order placed successfully!");
       if (cartItem) dispatch(clearCart());
-      navigate('/myorders');
+      navigate("/myorders");
     } catch (err) {
-      console.error('Order error:', err);
-      alert('Something went wrong. Please try again.');
+      console.error("Order error:", err);
+      alert("Something went wrong. Please try again.");
     }
   };
 
@@ -127,8 +127,8 @@ const OrderPage = () => {
                 type="radio"
                 name="payment"
                 value="Cash on Delivery"
-                checked={paymentMethod === 'Cash on Delivery'}
-                onChange={() => setPaymentMethod('Cash on Delivery')}
+                checked={paymentMethod === "Cash on Delivery"}
+                onChange={() => setPaymentMethod("Cash on Delivery")}
               />
               Cash On Delivery
             </label>
@@ -138,8 +138,8 @@ const OrderPage = () => {
                 type="radio"
                 name="payment"
                 value="Online"
-                checked={paymentMethod === 'Online'}
-                onChange={() => setPaymentMethod('Online')}
+                checked={paymentMethod === "Online"}
+                onChange={() => setPaymentMethod("Online")}
               />
               Online
             </label>
