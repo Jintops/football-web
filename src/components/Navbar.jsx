@@ -13,7 +13,7 @@ const Navbar = () => {
   const [openProfile, setOpenProfile] = useState(false);
   const profileRef = useRef(null);
   const dispatch=useDispatch()
- const user=useSelector(store=>store.user)
+ const {user}=useSelector(store=>store.user)
  console.log(user)
   const cartCount = useSelector((store) => store.cartCount.items);
 

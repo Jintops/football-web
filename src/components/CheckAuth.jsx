@@ -1,23 +1,16 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
 
-const CheckAuth = ({user,isAuthenticated,children}) => {
-    const location=useLocation();
-    if(location.pathname === "/orders"){
-        if(!isAuthenticated){
-            return <Navigate to="/login"/>
-        }else{
-            if(user.role!=="admin"){
-                return <Navigate to="/orders"/>
-            }else{
-                return <Navigate to='/admin/overview'/>
-            }
-        }
-    }
+const CheckAuth = ({ user, isAuthenticated, children }) => {
+  const location = useLocation();
 
-  return (
-    <div>{children}</div>
-  )
-}
+  if (!isAuthenticated) {
+    // Redirect to login with memory of where user wanted to go
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
-export default CheckAuth
+  // You can add further role-based conditions here if needed
+  return <>{children}</>;
+};
+
+export default CheckAuth;
