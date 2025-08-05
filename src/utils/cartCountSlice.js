@@ -40,7 +40,7 @@ const cartCountSlice = createSlice({
     deleteItem: (state, action) => {
       let deleteid = action.payload;
       state.items = state.items.filter((item) => item._id !== deleteid);
-        localStorage.setItem("cartItems", JSON.stringify(state.items));
+      localStorage.setItem("cartItems", JSON.stringify(state.items));
     },
   },
 });
