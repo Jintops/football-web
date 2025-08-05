@@ -19,13 +19,7 @@ const CartProduct = ({ item }) => {
     dispatch(deleteItem(_id));
   };
 
-   const itemsInCart=async()=>{
-        const res=await axios.get(BASE_URL+"cartItems",{})
-         setCartItems(res.data.data)
-   }
-  useEffect(()=>{
-     itemsInCart();
-  },[])
+  
 
   return (
     <div className="w-full px-2 ">

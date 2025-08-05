@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { X, ShoppingCart } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import CartProduct from "./CartProduct";
 import { clearCart } from "../utils/cartCountSlice";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 const CartPage = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -14,6 +16,15 @@ const CartPage = ({ onClose }) => {
        navigate('/orders',{state:{cartItem:product}})
        onClose()
   }
+
+   const itemsInCart=async()=>{
+        const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})
+    
+         console.log(res.data.data)
+   }
+  useEffect(()=>{
+     itemsInCart();
+  },[])
   return (
     <>
       <div

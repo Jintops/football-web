@@ -15,7 +15,7 @@ const Navbar = () => {
   const profileRef = useRef(null);
   const dispatch=useDispatch()
  const {user}=useSelector(store=>store.user)
- console.log(user)
+
 
   const cartCount = useSelector((store) => store.cartCount.items);
 
@@ -30,6 +30,15 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
    
+
+  const handleCart=async()=>{
+    setIsCartOpen(true)
+   
+        const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})
+         
+        //  console.log(res.data.data)
+  
+  }
   const handleLogout=async()=>{
      try{
          const res=await axios.post(BASE_URL+"logout",{},{withCredentials:true})       
@@ -77,7 +86,7 @@ const Navbar = () => {
           <div className="relative">
             <ShoppingCart
               className="w-6 h-6 text-gray-700 hover:text-green-500 cursor-pointer"
-              onClick={() => setIsCartOpen(true)}
+              onClick={handleCart}
             />
             {cartCount.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
