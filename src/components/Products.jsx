@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ShoppingCart } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
@@ -22,6 +22,7 @@ const Products = ({ product }) => {
       autoClose: 3000,
     });
   };
+
 
   return (
     <div

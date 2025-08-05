@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import {
@@ -6,14 +6,26 @@ import {
   deleteItem,
   incrementQuantity,
 } from "../utils/cartCountSlice";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
+
 
 const CartProduct = ({ item }) => {
   const { _id, title, image, price, count } = item;
   const dispatch = useDispatch();
+  const [cartItems,setCartItems]=useState([])
 
   const deleteItems = (_id) => {
     dispatch(deleteItem(_id));
   };
+
+   const itemsInCart=async()=>{
+        const res=await axios.get(BASE_URL+"cartItems",{})
+         setCartItems(res.data.data)
+   }
+  useEffect(()=>{
+     itemsInCart();
+  },[])
 
   return (
     <div className="w-full px-2 ">
