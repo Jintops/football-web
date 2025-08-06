@@ -20,7 +20,8 @@ const CartPage = ({ onClose }) => {
 }, 0);
 
 const clearCart=async()=>{
-  const res=await axios.delete(BASE_URL+"removeCart",{withCredentials:true})
+  await axios.delete(BASE_URL+"removeCart",{withCredentials:true})
+
 }
 
   const navigate=useNavigate();
