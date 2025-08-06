@@ -12,10 +12,17 @@ const CartPage = ({ onClose }) => {
 
   const [cartItem,setCartItem]=useState([])
   const product = useSelector((store) => store.cartCount.items);
-  const totalAmount = product.reduce((acc, item) => acc + item.price * item.count, 0);
+
+ const totalAmount = cartItem.reduce((acc, item) => {
+  const price = item?.productId?.salePrice || item?.productId?.price || 0;
+  const count = item?.quantity || 1;
+  return acc + price * count;
+}, 0);
+
+
   const navigate=useNavigate();
   const handleOrder=()=>{
-       navigate('/orders',{state:{cartItem:product}})
+       navigate('/orders',{state:{cartItem:cartItem}})
        onClose()
   }
 
@@ -24,6 +31,7 @@ const CartPage = ({ onClose }) => {
         setCartItem(res.data.data.items)
          console.log(res.data.data)
    }
+   
   useEffect(()=>{
      itemsInCart();
   },[])
@@ -42,7 +50,7 @@ const CartPage = ({ onClose }) => {
           />
         </div>
 
-        {product.length === 0 ? (
+        {cartItem.length === 0 ? (
           <div className="flex flex-col items-center justify-center flex-1 text-gray-500 p-4">
             <ShoppingCart className="w-10 h-10 mb-2" />
             <h1 className="text-lg font-medium">Your Cart is Empty</h1>
@@ -63,7 +71,7 @@ const CartPage = ({ onClose }) => {
             </div>
           </div>
         )}
-        {product.length > 0 && (
+        {cartItem.length > 0 && (
           <div>
             <div className="border-t h-12 flex justify-between items-center font-bold mb-2 text-base p-5">
               <h1 className="font-bold ">Total:</h1>
