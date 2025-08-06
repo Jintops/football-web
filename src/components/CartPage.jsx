@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { X, ShoppingCart } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import CartProduct from "./CartProduct";
@@ -9,6 +9,8 @@ import { BASE_URL } from "../utils/constants";
 
 const CartPage = ({ onClose }) => {
   const dispatch = useDispatch();
+
+  const [cartItem,setCartItem]=useState([])
   const product = useSelector((store) => store.cartCount.items);
   const totalAmount = product.reduce((acc, item) => acc + item.price * item.count, 0);
   const navigate=useNavigate();
@@ -19,7 +21,7 @@ const CartPage = ({ onClose }) => {
 
    const itemsInCart=async()=>{
         const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})
-    
+        setCartItem(res.data.data.items)
          console.log(res.data.data)
    }
   useEffect(()=>{
@@ -47,7 +49,7 @@ const CartPage = ({ onClose }) => {
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto px-3 pb-4">
-            {product.map((item, index) => (
+            {cartItem.map((item, index) => (
               <CartProduct key={index} item={item} />
             ))}
 

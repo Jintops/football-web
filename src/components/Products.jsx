@@ -17,7 +17,7 @@ const Products = ({ product }) => {
   };
 
   const cartItems =async (e) => {
-
+    
     e.stopPropagation(); 
     dispatch(addItem(product));
 

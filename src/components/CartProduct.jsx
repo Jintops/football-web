@@ -11,7 +11,8 @@ import { BASE_URL } from "../utils/constants";
 
 
 const CartProduct = ({ item }) => {
-  const { _id, title, image, price, count } = item;
+  const { _id, title, image, price, count, } = item.productId;
+  const {quantity}=item
   const dispatch = useDispatch();
   const [cartItems,setCartItems]=useState([])
 
@@ -44,7 +45,7 @@ const CartProduct = ({ item }) => {
             >
               -
             </button>
-            <span className="min-w-[20px] text-center">{count}</span>
+            <span className="min-w-[20px] text-center">{quantity}</span>
             <button
               onClick={() => dispatch(incrementQuantity(_id))}
               className="text-lg font-bold px-1 py-1  rounded hover:bg-gray-100"
