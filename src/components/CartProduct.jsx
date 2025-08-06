@@ -16,8 +16,8 @@ const CartProduct = ({ item }) => {
   const dispatch = useDispatch();
   
 
-  const deleteItems = (_id) => {
-    dispatch(deleteItem(_id));
+  const deleteItems = async(_id) => {
+    const res=await axios.patch(BASE_URL+"deleteCartItem/"+_id,{},{withCredentials:true})
   };
 
   
@@ -36,7 +36,7 @@ const CartProduct = ({ item }) => {
         <div className="flex-1 w-full sm:w-auto">
           <h1 className="text-base font-semibold line-clamp-2">{title}</h1>
           <p className="text-gray-600 mt-1">${price}</p>
-           
+
           <div className="flex items-center gap-2 ">
             <button
               onClick={() => quantity > 1 && dispatch(decrementQuantity(_id))}

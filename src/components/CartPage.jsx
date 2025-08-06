@@ -19,6 +19,9 @@ const CartPage = ({ onClose }) => {
   return acc + price * count;
 }, 0);
 
+const clearCart=async()=>{
+  const res=await axios.delete(BASE_URL+"removeCart",{withCredentials:true})
+}
 
   const navigate=useNavigate();
   const handleOrder=()=>{
@@ -63,7 +66,7 @@ const CartPage = ({ onClose }) => {
 
             <div className="mt-4">
               <button
-                onClick={() => dispatch(clearCart())}
+                onClick={clearCart}
                 className="w-full border border-red-500 text-red-500 px-4 py-2 rounded-md hover:bg-red-50 hover:text-red-700"
               >
                 Clear cart
