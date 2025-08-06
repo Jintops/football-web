@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 const Products = ({ product }) => {
   const { title, price, image, description, rating, _id } = product;
@@ -14,9 +16,13 @@ const Products = ({ product }) => {
     navigate(`/productdetails/${_id}`);
   };
 
-  const cartItems = (e) => {
+  const cartItems =async (e) => {
+
     e.stopPropagation(); 
     dispatch(addItem(product));
+
+    const res=await axios.post(BASE_URL+"addToCart/"+_id,{},{withCredentials:true})
+    
     toast.success("Item added to cart!", {
       position: "bottom-right",
       autoClose: 3000,
