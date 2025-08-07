@@ -43,7 +43,7 @@ function App() {
           <Route path="/signup" element={<Signup/>}></Route>
           <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
 
-           <Route path="/admin" element={<AdminHome/>}>   
+           <Route path="/admin" element={<CheckAuth user={user} isAuthenticated={isAuthenticated}><AdminHome/></CheckAuth>}>   
             <Route index element={<AdminOverView/>}></Route>    
             <Route path="overview" element={<AdminOverView/>}></Route>  
             <Route path="products" element={<AdminProducts/>}></Route>
