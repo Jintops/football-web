@@ -12,7 +12,18 @@ const CheckAuth = ({ user, isAuthenticated, children }) => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Additional Role-Based Protection
+   if (
+    isAuthenticated &&
+    (location.pathname.includes("/login") ||
+      location.pathname.includes("/register")||location.pathname.includes("/admin/login"))
+  ) {
+    if (user?.role === "admin") {
+      return <Navigate to="/admin/overview" />;
+    } else {
+      return <Navigate to="/" />;
+    }
+  }
+
   if (location.pathname.startsWith("/admin") && user?.role !== "admin") {
     return <Navigate to="/" replace />; // Or show 'Unauthorized' page
   }
