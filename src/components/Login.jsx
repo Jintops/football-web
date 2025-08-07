@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { addUser } from "../utils/userSlice";
 
 const Login = ({ role }) => {
@@ -9,6 +9,15 @@ const Login = ({ role }) => {
   const [password, setPassword] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+ const { isAuthenticated, user } = useSelector((store) => store.user);
+
+   if (isAuthenticated) {
+    if (role === "Admin" && user?.role === "admin") {
+      return <Navigate to="/admin/overview" replace />;
+    } else if (role === "User" && user?.role === "user") {
+      return <Navigate to="/" replace />;
+    }
+  }
 
   const from = location.state?.from?.pathname || "/";
 const product = location.state?.from?.state?.product;

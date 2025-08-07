@@ -41,7 +41,7 @@ function App() {
 
          <Route path="/login" element={<Login role="User"/>}></Route>
           <Route path="/signup" element={<Signup/>}></Route>
-          <Route path="/admin/login" element={<CheckAuth user={user} isAuthenticated={isAuthenticated}><Login role="Admin"/></CheckAuth>}></Route>
+          <Route path="/admin/login" element={<Login role="Admin"/>}></Route>
 
            <Route path="/admin" element={<CheckAuth user={user} isAuthenticated={isAuthenticated}><AdminHome/></CheckAuth>}>   
             <Route index element={<AdminOverView/>}></Route>    
