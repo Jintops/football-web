@@ -3,11 +3,14 @@ import { LayoutDashboard, ShoppingBag, Users, PackageSearch, LogOut } from 'luci
 import { Link, Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../utils/constants';
+import { useDispatch } from 'react-redux';
+import { removeUser } from '../utils/userSlice';
 
 const DashBoard = () => {
-
+    const dispatch=useDispatch()
     const handleLogout=async()=>{
        const res=await axios.post(BASE_URL+"logout",{},{withCredentials:true})
+      dispatch(removeUser())
     }
   return (
     <div className="flex min-h-screen bg-gray-100">

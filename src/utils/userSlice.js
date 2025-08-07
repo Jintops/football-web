@@ -5,9 +5,9 @@ const userSlice=createSlice({
     name:'user',
     initialState:{
         user:savedUser || null,
-        isAuthenticated:!!savedUser,
-       
+        isAuthenticated:!!savedUser,      
     },
+
     reducers:{
         addUser:(state,action)=>{
             state.isAuthenticated=true,
@@ -19,7 +19,7 @@ const userSlice=createSlice({
             state.user=null
             state.isAuthenticated=false
 
-                 localStorage.removeItem("userDetail");
+          localStorage.removeItem("userDetail");
         }
     }
 })
