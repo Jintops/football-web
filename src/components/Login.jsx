@@ -13,7 +13,7 @@ const Login = ({ role }) => {
 
    if (isAuthenticated) {
     if (role === "Admin" && user?.role === "admin") {
-      return <Navigate to="/admin/overview" replace />;
+      return <Navigate to="/admin" replace />;
     } else if (role === "User" && user?.role === "user") {
       return <Navigate to="/" replace />;
     }

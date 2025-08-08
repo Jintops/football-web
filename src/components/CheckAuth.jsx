@@ -11,11 +11,15 @@ const CheckAuth = ({ user, isAuthenticated, children }) => {
     }
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
+  
+  if (user?.role === "admin" && !location.pathname.startsWith("/admin")) {
+    return <Navigate to="/admin/overview" replace />;
+  }
 
    if (
     isAuthenticated &&
     (location.pathname.includes("/login") ||
-      location.pathname.includes("/register")||location.pathname.includes("/admin/login"))
+      location.pathname.includes("/register")|| location.pathname.includes("/admin/login"))
   ) {
     if (user?.role === "admin") {
       return <Navigate to="/admin/overview" />;
@@ -27,6 +31,10 @@ const CheckAuth = ({ user, isAuthenticated, children }) => {
   if (location.pathname.startsWith("/admin") && user?.role !== "admin") {
     return <Navigate to="/" replace />; // Or show 'Unauthorized' page
   }
+
+//   if(user?.role==="admin" && !location.pathname.startsWith("/admin") ){
+//      return <Navigate to="/admin/overview"/>
+//   }
 
   return <>{children}</>;
 };
