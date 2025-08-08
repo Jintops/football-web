@@ -21,6 +21,7 @@ const CartPage = ({ onClose }) => {
 
 const clearCart=async()=>{
   await axios.delete(BASE_URL+"removeCart",{withCredentials:true})
+  setCartItem([])
 
 }
 
@@ -62,6 +63,7 @@ const clearCart=async()=>{
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto px-3 pb-4">
+            
             {cartItem?.map((item, index) => (
               <CartProduct key={index} item={item} refreshCart={itemsInCart}/>
             ))}
