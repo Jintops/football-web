@@ -10,7 +10,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 
 
-const CartProduct = ({ item }) => {
+const CartProduct = ({ item,refreshCart }) => {
   const { _id, title, image, price, count, } = item.productId;
   const {quantity}=item
   const dispatch = useDispatch();
@@ -18,6 +18,8 @@ const CartProduct = ({ item }) => {
 
   const deleteItems = async(_id) => {
     const res=await axios.patch(BASE_URL+"deleteCartItem/"+_id,{},{withCredentials:true})
+    dispatch(deleteItem(_id))
+    refreshCart()
   };
 
   

@@ -63,7 +63,7 @@ const clearCart=async()=>{
         ) : (
           <div className="flex-1 overflow-y-auto px-3 pb-4">
             {cartItem?.map((item, index) => (
-              <CartProduct key={index} item={item} />
+              <CartProduct key={index} item={item} refreshCart={itemsInCart}/>
             ))}
 
             <div className="mt-4">
