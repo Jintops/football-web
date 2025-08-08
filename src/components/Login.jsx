@@ -5,8 +5,8 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { addUser } from "../utils/userSlice";
 
 const Login = ({ role }) => {
-  const [emailId, setEmailId] = useState("");
-  const [password, setPassword] = useState("");
+  const [emailId, setEmailId] = useState("jps2003@gmail.com");
+  const [password, setPassword] = useState("Jinto@2003");
   const location = useLocation();
   const navigate = useNavigate();
  const { isAuthenticated, user } = useSelector((store) => store.user);

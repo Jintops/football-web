@@ -21,7 +21,6 @@ const CartProduct = ({ item }) => {
   };
 
   
-
   return (
     <div className="w-full px-2 ">
       <div className="flex flex-row gap-4 items-center bg-gray-50 p-4 rounded-xl shadow-sm mt-6 h-28">

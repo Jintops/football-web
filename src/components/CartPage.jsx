@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { X, ShoppingCart } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import CartProduct from "./CartProduct";
-import { clearCart } from "../utils/cartCountSlice";
+import { addItem, clearCart } from "../utils/cartCountSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
@@ -32,10 +32,11 @@ const clearCart=async()=>{
 
    const itemsInCart=async()=>{
         const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})
+        // dispatch(addItem(res.data.data.items))
         setCartItem(res.data.data.items)
-         console.log(res.data.data)
+      //  console.log(res.data.data)
    }
-   
+
   useEffect(()=>{
      itemsInCart();
   },[])
@@ -61,7 +62,7 @@ const clearCart=async()=>{
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto px-3 pb-4">
-            {cartItem.map((item, index) => (
+            {cartItem?.map((item, index) => (
               <CartProduct key={index} item={item} />
             ))}
 

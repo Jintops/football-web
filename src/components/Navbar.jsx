@@ -15,7 +15,7 @@ const Navbar = () => {
   const [count,setCount]=useState()
   const profileRef = useRef(null);
   const dispatch=useDispatch()
- const {user}=useSelector(store=>store.user)
+  const {user}=useSelector(store=>store.user)
 
 
   // const cartCount = useSelector((store) => store.cartCount.items);
@@ -34,8 +34,7 @@ const Navbar = () => {
 
   const handleCart=async()=>{
     setIsCartOpen(true)
-   
-        const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})     
+     const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})     
   }
   const handleLogout=async()=>{
      try{
