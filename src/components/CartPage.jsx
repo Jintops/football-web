@@ -13,7 +13,7 @@ const CartPage = ({ onClose }) => {
   
   // Get cart items from Redux store
   const cartItems = useSelector((store) => store.cartCount.items);
-  
+  console.log(cartItems)
   const navigate = useNavigate();
 
   // Calculate total amount

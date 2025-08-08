@@ -16,7 +16,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(store => store.user);
 
-  // Get cart count from Redux store - this is the single source of truth
+ 
   const cartItems = useSelector((store) => store.cartCount.items);
   const cartCount = cartItems.length;
   
