@@ -6,19 +6,22 @@ import { BASE_URL, LOGO } from '../utils/constants';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { removeUser } from '../utils/userSlice';
-import { clearCart } from '../utils/cartCountSlice';
+import { clearCart, addItem } from '../utils/cartCountSlice';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
-  const [count,setCount]=useState()
   const profileRef = useRef(null);
-  const dispatch=useDispatch()
-  const {user}=useSelector(store=>store.user)
+  const dispatch = useDispatch();
+  const { user } = useSelector(store => store.user);
 
-
-  // const cartCount = useSelector((store) => store.cartCount.items);
+  // Get cart count from Redux store - this is the single source of truth
+  const cartItems = useSelector((store) => store.cartCount.items);
+  const cartCount = cartItems.length;
+  
+  // Calculate total quantity if you want to show total items instead of unique items
+  const totalQuantity = cartItems.reduce((total, item) => total + (item.count || 1), 0);
 
   // Close profile menu when clicking outside
   useEffect(() => {
@@ -30,30 +33,66 @@ const Navbar = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-   
 
-  const handleCart=async()=>{
-    setIsCartOpen(true)
-     const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})     
-  }
-  const handleLogout=async()=>{
-     try{
-         const res=await axios.post(BASE_URL+"logout",{},{withCredentials:true})       
-         dispatch(removeUser())
-         dispatch(clearCart())
-         setOpenProfile(false)
-     }catch(err){
-      console.log(err)
-     }
-  }
- 
-  const cartCount=async()=>{
-    const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})
-   setCount(res.data.data.items.length)
-  }
-  useEffect(()=>{
-       cartCount();
-  },[])
+  // Sync cart with backend on component mount
+  useEffect(() => {
+    const syncCartWithBackend = async () => {
+      try {
+        const res = await axios.get(BASE_URL + "cartItems", { withCredentials: true });
+        
+        if (res.data.data.items && Array.isArray(res.data.data.items)) {
+          // Clear current cart and sync with backend
+          dispatch(clearCart());
+          
+          // Add each item from backend to Redux store
+          res.data.data.items.forEach(item => {
+            let normalizedItem;
+            
+            if (item.productId) {
+              // If item has productId (populated product), flatten it
+              normalizedItem = {
+                ...item.productId,
+                count: item.quantity || 1,
+                _id: item.productId._id
+              };
+            } else {
+              // If item is already flattened
+              normalizedItem = {
+                ...item,
+                count: item.quantity || item.count || 1
+              };
+            }
+            
+            dispatch(addItem(normalizedItem));
+          });
+        }
+      } catch (error) {
+        console.error("Error syncing cart:", error);
+        // Don't clear cart on error - keep existing Redux state
+      }
+    };
+
+    // Only sync if user is logged in
+    if (user) {
+      syncCartWithBackend();
+    }
+  }, [dispatch, user]);
+
+  const handleCart = async () => {
+    setIsCartOpen(true);
+    // No need to fetch cart items here - CartPage component handles this
+  };
+
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post(BASE_URL + "logout", {}, { withCredentials: true });
+      dispatch(removeUser());
+      dispatch(clearCart());
+      setOpenProfile(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <nav className="w-full sticky top-0 z-50 bg-white shadow-md">
@@ -90,38 +129,47 @@ const Navbar = () => {
           {/* Cart */}
           <div className="relative">
             <ShoppingCart
-              className="w-6 h-6 text-gray-700 hover:text-green-500 cursor-pointer"
+              className="w-6 h-6 text-gray-700 hover:text-green-500 cursor-pointer transition-colors duration-200"
               onClick={handleCart}
             />
-            {count > 0 && (
-              <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
-                {count}
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold animate-pulse">
+                {/* Show unique items count */}
+                {cartCount}
+                {/* Alternatively, show total quantity: */}
+                {/* {totalQuantity} */}
               </span>
             )}
           </div>
 
           {/* Profile Dropdown */}
           <div className="relative" ref={profileRef}>
-           <div onClick={() => setOpenProfile(!openProfile)} className="cursor-pointer">
-  {user?.photoUrl ? (
-    <img
-      src={user?.photoUrl}
-      alt="Profile"
-      className="w-8 h-8 rounded-full border-2 border-green-500 object-cover"
-    />
-  ) : (
-    <User className="w-6 h-6 text-gray-700 hover:text-green-500" />
-  )}
-</div>
+            <div onClick={() => setOpenProfile(!openProfile)} className="cursor-pointer">
+              {user?.photoUrl ? (
+                <img
+                  src={user?.photoUrl}
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full border-2 border-green-500 object-cover hover:border-green-600 transition-colors duration-200"
+                />
+              ) : (
+                <User className="w-6 h-6 text-gray-700 hover:text-green-500 transition-colors duration-200" />
+              )}
+            </div>
             {openProfile && (
               <div className="absolute -right-4 mt-5 w-44 bg-white shadow-lg rounded-md overflow-hidden z-50 border border-gray-200">
                 <Link to="/profile">
-                  <div className="px-4 py-2 text-sm text-gray-700 hover:bg-green-50 cursor-pointer" onClick={()=>setOpenProfile(false)}>👤 Profile</div>
+                  <div className="px-4 py-2 text-sm text-gray-700 hover:bg-green-50 cursor-pointer" onClick={() => setOpenProfile(false)}>
+                    👤 Profile
+                  </div>
                 </Link>
                 <Link to="/myorders">
-                  <div className="px-4 py-2 text-sm text-gray-700 hover:bg-green-50 cursor-pointer" onClick={()=>setOpenProfile(false)}>📦 Orders</div>
+                  <div className="px-4 py-2 text-sm text-gray-700 hover:bg-green-50 cursor-pointer" onClick={() => setOpenProfile(false)}>
+                    📦 Orders
+                  </div>
                 </Link>
-                <div className="px-4 py-2 text-sm text-red-600 hover:bg-red-100 cursor-pointer " onClick={handleLogout}>🚪 Logout</div>
+                <div className="px-4 py-2 text-sm text-red-600 hover:bg-red-100 cursor-pointer" onClick={handleLogout}>
+                  🚪 Logout
+                </div>
               </div>
             )}
           </div>

@@ -11,15 +11,17 @@ import { BASE_URL } from "../utils/constants";
 
 
 const CartProduct = ({ item,refreshCart }) => {
-  const { _id, title, image, price, count, } = item.productId;
-  const {quantity}=item
+  const product = item.productId || item;
+
+  const { title, image, price } = product;
+  const { quantity, _id } = item;
   const dispatch = useDispatch();
   
 
   const deleteItems = async(_id) => {
     const res=await axios.patch(BASE_URL+"deleteCartItem/"+_id,{},{withCredentials:true})
     dispatch(deleteItem(_id))
-    refreshCart()
+    
   };
 
   

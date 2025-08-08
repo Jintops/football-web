@@ -3,10 +3,15 @@ import Products from './Products'
 import product from '../utils/helper'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { BASE_URL } from '../utils/constants'
+import { useDispatch } from 'react-redux'
+import { addItem } from '../utils/cartCountSlice'
 const ProductPage = () => {
 const [products,setProducts]=useState([]);
-
+const dispatch=useDispatch()
 const getAllProduct=async()=>{
+
+    
     try{
     const res=await axios.get("http://localhost:7777/getAllProducts",{withCredentials:true})
     const products=res.data.products;
@@ -17,9 +22,16 @@ const getAllProduct=async()=>{
     }
 }
 
+// const itemsInCart=async()=>{
+//         const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})
+//         dispatch(addItem(res.data.data.items))   
+//     //    console.log(res.data.data.items)
+//    }
 
+ 
  useEffect(()=>{
     getAllProduct();
+    //  itemsInCart();
  },[])
   return (
 

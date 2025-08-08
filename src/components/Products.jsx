@@ -16,19 +16,36 @@ const Products = ({ product }) => {
     navigate(`/productdetails/${_id}`);
   };
 
-  const cartItems =async (e) => {
+  const cartItems = async (e) => {
+    e.stopPropagation();
     
-    e.stopPropagation(); 
-    dispatch(addItem(product));
-
-    const res=await axios.post(BASE_URL+"addToCart/"+_id,{},{withCredentials:true})
-    
-    toast.success("Item added to cart!", {
-      position: "bottom-right",
-      autoClose: 3000,
-    });
+    try {
+      const res = await axios.post(
+        BASE_URL + "addToCart/" + _id,
+        {},
+        { withCredentials: true }
+      );
+      
+      console.log("API Response:", res.data);
+      
+      // Simply add the current product to Redux store
+      // The API handles the backend, Redux handles the frontend state
+      dispatch(addItem({ ...product, count: 1 }));
+      
+      toast.success("Item added to cart!", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+      
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      
+      toast.error("Failed to add item to cart. Please try again.", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    }
   };
-
 
   return (
     <div
