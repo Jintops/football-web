@@ -20,7 +20,10 @@ const ProductDetails = () => {
     // Then add to Redux store
     dispatch(addItem({ ...product, count: 1 }));
     
-    toast.success("Item added to cart!");
+   toast.success("Item added to cart!", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
   } catch (error) {
     // Fallback: Still add to Redux even if API fails
     dispatch(addItem({ ...product, count: 1 }));
@@ -40,9 +43,12 @@ const ProductDetails = () => {
   };
 
 const handleOrder = () => {
-  navigate('/orders', { state: { product } });
+  navigate('/orders', { 
+    state: { 
+      cartItem: [{ ...product, count: 1 }] // Wrap in array for consistency
+    } 
+  });
 };
-
 
   useEffect(() => {
     productDetails(id);
