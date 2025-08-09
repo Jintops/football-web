@@ -18,6 +18,7 @@ import OrderPage from "./components/OrderPage"
 import MyOrders from "./components/MyOrders"
 import Profile from "./components/Profile"
 import CheckAuth from "./components/CheckAuth"
+import AdminRestricted from "./components/AdminRestricted"
 
 function App() {
    
@@ -27,7 +28,7 @@ function App() {
        
       <div>
         <Routes>
-          <Route path="/" element={<Body/>}>
+          <Route path="/" element={<AdminRestricted user={user}><Body/></AdminRestricted>}>
           <Route index element={<Home/>}/>
          
           <Route path="/productdetails/:id" element={<ProductDetails/>}></Route>
