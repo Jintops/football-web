@@ -9,7 +9,7 @@ const Profile = () => {
   const profileData = async () => {
     try {
       const res = await axios.get(BASE_URL + 'profile', { withCredentials: true });
-      console.log(res.data.data);
+     
       setData(res.data.data);
     } catch (err) {
       console.log(err);

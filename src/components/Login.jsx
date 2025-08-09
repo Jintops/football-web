@@ -42,7 +42,7 @@ const cartItem = location.state?.from?.state?.cartItem;
   state: { product, cartItem },  // ⬅️ send the original state back
 });
       }
-      console.log(res.data.user.role);
+     
     } catch (err) {
       console.error("Login failed:", err.response?.data || err.message);
       alert("Login failed");

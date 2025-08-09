@@ -5,19 +5,28 @@ import { ShoppingCart, CreditCard } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../utils/constants";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cartItem = () => {
-    dispatch(addItem(product));
-    toast.success("Item added to cart!", {
-      position: "bottom-right",
-      autoClose: 3000,
-    });
-  };
+  const cartItem = async () => {
+  try {
+    // Add to backend first
+    await axios.post(BASE_URL + "addToCart/" + id, {}, { withCredentials: true });
+    
+    // Then add to Redux store
+    dispatch(addItem({ ...product, count: 1 }));
+    
+    toast.success("Item added to cart!");
+  } catch (error) {
+    // Fallback: Still add to Redux even if API fails
+    dispatch(addItem({ ...product, count: 1 }));
+    toast.error("Failed to sync with server, but item added to cart locally");
+  }
+};
 
   const productDetails = async (id) => {
     try {
