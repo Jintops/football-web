@@ -38,7 +38,7 @@ function App() {
           </CheckAuth>}></Route>
 
          <Route path="/myorders"  element={<MyOrders/>}></Route>
-         <Route path="/myorderdetails" element={<MyOrderDetail/>}></Route>
+         <Route path="/myorderdetails/:id" element={<MyOrderDetail/>}></Route>
          <Route path="profile" element={<Profile/>}></Route>
           </Route>
 

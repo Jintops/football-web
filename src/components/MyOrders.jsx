@@ -1,15 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../utils/constants';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
-
+  const navigate=useNavigate()
   const fetchOrders = async () => {
     try {
       const res = await axios.get(BASE_URL + "orderList", { withCredentials: true });
       setOrders(res.data.data);
+      
     } catch (err) {
       console.error("Failed to fetch orders:", err);
     }
@@ -27,16 +28,16 @@ const MyOrders = () => {
     );
   }
   const orderDetail=(orders)=>{
-  Navigate('/myorderdetails')
+  navigate(`/myorderdetails/${orders._id}`);
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4" onClick={orderDetail(orders)}>
+    <div className="min-h-screen bg-gray-100 py-10 px-4" >
       <h1 className="text-3xl font-bold mb-8 text-center text-green-800">⚽ My Orders</h1>
 
       <div className="space-y-6 max-w-4xl mx-auto">
         {orders.map((order, index) => (
-          <div
+          <div onClick={() => orderDetail(order)}
             key={order._id || index}
             className="bg-white rounded-xl shadow-md border-l-4 border-green-600 p-4 space-y-3 hover:shadow-lg transition-shadow"
           >
