@@ -36,7 +36,7 @@ const Profile = () => {
   };
 
   const handleEditProfile = async () => {
-    if (!firstName.trim() || !lastName.trim()) {
+    if (!firstName.trim()) {
       setError('First name and last name are required');
       return;
     }
