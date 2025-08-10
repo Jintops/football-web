@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../utils/constants';
+import { Navigate } from 'react-router-dom';
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -25,9 +26,12 @@ const MyOrders = () => {
       </div>
     );
   }
+  const orderDetail=(orders)=>{
+  Navigate('/myorderdetails')
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
+    <div className="min-h-screen bg-gray-100 py-10 px-4" onClick={orderDetail(orders)}>
       <h1 className="text-3xl font-bold mb-8 text-center text-green-800">⚽ My Orders</h1>
 
       <div className="space-y-6 max-w-4xl mx-auto">

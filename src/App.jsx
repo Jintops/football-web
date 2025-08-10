@@ -19,6 +19,7 @@ import MyOrders from "./components/MyOrders"
 import Profile from "./components/Profile"
 import CheckAuth from "./components/CheckAuth"
 import AdminRestricted from "./components/AdminRestricted"
+import MyOrderDetail from "./components/MyOrderDetail"
 
 function App() {
    
@@ -37,6 +38,7 @@ function App() {
           </CheckAuth>}></Route>
 
          <Route path="/myorders"  element={<MyOrders/>}></Route>
+         <Route path="/myorderdetails" element={<MyOrderDetail/>}></Route>
          <Route path="profile" element={<Profile/>}></Route>
           </Route>
 
