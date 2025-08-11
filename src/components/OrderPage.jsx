@@ -4,19 +4,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BASE_URL } from "../utils/constants";
 import { clearCart } from "../utils/cartCountSlice";
-import { 
-  ShoppingBag, 
-  CreditCard, 
-  Truck, 
-  MapPin, 
-  Phone, 
-  User, 
-  Plus, 
-  Minus, 
+import {
+  ShoppingBag,
+  CreditCard,
+  Truck,
+  MapPin,
+  Phone,
+  User,
+  Plus,
+  Minus,
   CheckCircle,
   ArrowLeft,
   AlertCircle,
-  Target
+  Target,
 } from "lucide-react";
 
 const OrderPage = () => {
@@ -45,12 +45,15 @@ const OrderPage = () => {
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <Target className="w-8 h-8 text-green-600" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">No Products Found</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            No Products Found
+          </h2>
           <p className="text-gray-600 mb-6">
-            Your cart seems empty! Browse our football gear and add some products to score your perfect order.
+            Your cart seems empty! Browse our football gear and add some
+            products to score your perfect order.
           </p>
           <button
-            onClick={() => navigate('/products')}
+            onClick={() => navigate("/products")}
             className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-200 shadow-lg"
           >
             Browse Football Gear
@@ -62,15 +65,18 @@ const OrderPage = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     if (!name.trim()) newErrors.name = "Player name is required";
     if (!phone.trim()) newErrors.phone = "Contact number is required";
-    else if (!/^\d{10}$/.test(phone.trim())) newErrors.phone = "Contact number must be 10 digits";
+    else if (!/^\d{10}$/.test(phone.trim()))
+      newErrors.phone = "Contact number must be 10 digits";
     if (!pincode.trim()) newErrors.pincode = "Pincode is required";
-    else if (!/^\d{6}$/.test(pincode.trim())) newErrors.pincode = "Pincode must be 6 digits";
+    else if (!/^\d{6}$/.test(pincode.trim()))
+      newErrors.pincode = "Pincode must be 6 digits";
     if (!place.trim()) newErrors.place = "City is required";
     if (!address.trim()) newErrors.address = "Delivery address is required";
-    if (!paymentMethod) newErrors.paymentMethod = "Please select a payment method";
+    if (!paymentMethod)
+      newErrors.paymentMethod = "Please select a payment method";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -99,7 +105,7 @@ const OrderPage = () => {
 
   const calculateTotal = () => {
     return products.reduce((total, prod, index) => {
-      return total + (prod.price * quantities[index]);
+      return total + prod.price * quantities[index];
     }, 0);
   };
 
@@ -142,7 +148,10 @@ const OrderPage = () => {
       navigate("/myorders");
     } catch (err) {
       console.error("Order error:", err);
-      setErrors({ general: err.response?.data?.message || "Goal missed! Please try again." });
+      setErrors({
+        general:
+          err.response?.data?.message || "Goal missed! Please try again.",
+      });
     } finally {
       setLoading(false);
     }
@@ -184,8 +193,12 @@ const OrderPage = () => {
                   <Truck className="w-6 h-6 text-white" />
                 </div> */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">🚚 Delivery Information</h2>
-                  <p className="text-green-600 text-sm">Where should we deliver your football gear?</p>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    🚚 Delivery Information
+                  </h2>
+                  <p className="text-green-600 text-sm">
+                    Where should we deliver your football gear?
+                  </p>
                 </div>
               </div>
 
@@ -199,15 +212,21 @@ const OrderPage = () => {
                     type="text"
                     placeholder="Enter your full name"
                     className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ${
-                      errors.name ? 'border-red-400 bg-red-50' : 'border-green-200 hover:border-green-300'
+                      errors.name
+                        ? "border-red-400 bg-red-50"
+                        : "border-green-200 hover:border-green-300"
                     }`}
                     value={name}
                     onChange={(e) => {
                       setName(e.target.value);
-                      if (errors.name) setErrors({ ...errors, name: '' });
+                      if (errors.name) setErrors({ ...errors, name: "" });
                     }}
                   />
-                  {errors.name && <p className="text-red-500 text-sm mt-1 font-medium">⚠️ {errors.name}</p>}
+                  {errors.name && (
+                    <p className="text-red-500 text-sm mt-1 font-medium">
+                      ⚠️ {errors.name}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -219,15 +238,21 @@ const OrderPage = () => {
                     type="tel"
                     placeholder="10-digit mobile number"
                     className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ${
-                      errors.phone ? 'border-red-400 bg-red-50' : 'border-green-200 hover:border-green-300'
+                      errors.phone
+                        ? "border-red-400 bg-red-50"
+                        : "border-green-200 hover:border-green-300"
                     }`}
                     value={phone}
                     onChange={(e) => {
                       setPhone(e.target.value);
-                      if (errors.phone) setErrors({ ...errors, phone: '' });
+                      if (errors.phone) setErrors({ ...errors, phone: "" });
                     }}
                   />
-                  {errors.phone && <p className="text-red-500 text-sm mt-1 font-medium">⚠️ {errors.phone}</p>}
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm mt-1 font-medium">
+                      ⚠️ {errors.phone}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -239,15 +264,21 @@ const OrderPage = () => {
                     type="text"
                     placeholder="6-digit pincode"
                     className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ${
-                      errors.pincode ? 'border-red-400 bg-red-50' : 'border-green-200 hover:border-green-300'
+                      errors.pincode
+                        ? "border-red-400 bg-red-50"
+                        : "border-green-200 hover:border-green-300"
                     }`}
                     value={pincode}
                     onChange={(e) => {
                       setPincode(e.target.value);
-                      if (errors.pincode) setErrors({ ...errors, pincode: '' });
+                      if (errors.pincode) setErrors({ ...errors, pincode: "" });
                     }}
                   />
-                  {errors.pincode && <p className="text-red-500 text-sm mt-1 font-medium">⚠️ {errors.pincode}</p>}
+                  {errors.pincode && (
+                    <p className="text-red-500 text-sm mt-1 font-medium">
+                      ⚠️ {errors.pincode}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -258,15 +289,21 @@ const OrderPage = () => {
                     type="text"
                     placeholder="Enter your city"
                     className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ${
-                      errors.place ? 'border-red-400 bg-red-50' : 'border-green-200 hover:border-green-300'
+                      errors.place
+                        ? "border-red-400 bg-red-50"
+                        : "border-green-200 hover:border-green-300"
                     }`}
                     value={place}
                     onChange={(e) => {
                       setPlace(e.target.value);
-                      if (errors.place) setErrors({ ...errors, place: '' });
+                      if (errors.place) setErrors({ ...errors, place: "" });
                     }}
                   />
-                  {errors.place && <p className="text-red-500 text-sm mt-1 font-medium">⚠️ {errors.place}</p>}
+                  {errors.place && (
+                    <p className="text-red-500 text-sm mt-1 font-medium">
+                      ⚠️ {errors.place}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -277,16 +314,22 @@ const OrderPage = () => {
                 <textarea
                   placeholder="House/Flat No., Street, Landmark, Area"
                   className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-200 ${
-                    errors.address ? 'border-red-400 bg-red-50' : 'border-green-200 hover:border-green-300'
+                    errors.address
+                      ? "border-red-400 bg-red-50"
+                      : "border-green-200 hover:border-green-300"
                   }`}
                   rows={3}
                   value={address}
                   onChange={(e) => {
                     setAddress(e.target.value);
-                    if (errors.address) setErrors({ ...errors, address: '' });
+                    if (errors.address) setErrors({ ...errors, address: "" });
                   }}
                 />
-                {errors.address && <p className="text-red-500 text-sm mt-1 font-medium">⚠️ {errors.address}</p>}
+                {errors.address && (
+                  <p className="text-red-500 text-sm mt-1 font-medium">
+                    ⚠️ {errors.address}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -297,8 +340,12 @@ const OrderPage = () => {
                   <CreditCard className="w-6 h-6 text-white" />
                 </div> */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">💳 Payment Method</h2>
-                  <p className="text-green-600 text-sm">Choose your preferred payment option</p>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    💳 Payment Method
+                  </h2>
+                  <p className="text-green-600 text-sm">
+                    Choose your preferred payment option
+                  </p>
                 </div>
               </div>
 
@@ -311,16 +358,23 @@ const OrderPage = () => {
                     checked={paymentMethod === "Cash on Delivery"}
                     onChange={() => {
                       setPaymentMethod("Cash on Delivery");
-                      if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
+                      if (errors.paymentMethod)
+                        setErrors({ ...errors, paymentMethod: "" });
                     }}
                     className="w-5 h-5 text-green-600 focus:ring-green-500"
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <p className="font-bold text-gray-900">💵 Cash on Delivery</p>
-                      <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-medium">POPULAR</span>
+                      <p className="font-bold text-gray-900">
+                        💵 Cash on Delivery
+                      </p>
+                      <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-medium">
+                        POPULAR
+                      </span>
                     </div>
-                    <p className="text-sm text-gray-600">Pay when your football gear arrives at your doorstep</p>
+                    <p className="text-sm text-gray-600">
+                      Pay when your football gear arrives at your doorstep
+                    </p>
                   </div>
                 </label>
 
@@ -332,20 +386,31 @@ const OrderPage = () => {
                     checked={paymentMethod === "Online"}
                     onChange={() => {
                       setPaymentMethod("Online");
-                      if (errors.paymentMethod) setErrors({ ...errors, paymentMethod: '' });
+                      if (errors.paymentMethod)
+                        setErrors({ ...errors, paymentMethod: "" });
                     }}
                     className="w-5 h-5 text-green-600 focus:ring-green-500"
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <p className="font-bold text-gray-900">🔐 Online Payment</p>
-                      <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full font-medium">SECURE</span>
+                      <p className="font-bold text-gray-900">
+                        🔐 Online Payment
+                      </p>
+                      <span className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full font-medium">
+                        SECURE
+                      </span>
                     </div>
-                    <p className="text-sm text-gray-600">Pay securely with UPI, Cards, or Net Banking</p>
+                    <p className="text-sm text-gray-600">
+                      Pay securely with UPI, Cards, or Net Banking
+                    </p>
                   </div>
                 </label>
               </div>
-              {errors.paymentMethod && <p className="text-red-500 text-sm mt-3 font-medium">⚠️ {errors.paymentMethod}</p>}
+              {errors.paymentMethod && (
+                <p className="text-red-500 text-sm mt-3 font-medium">
+                  ⚠️ {errors.paymentMethod}
+                </p>
+              )}
             </div>
           </div>
 
@@ -357,26 +422,37 @@ const OrderPage = () => {
                   <ShoppingBag className="w-6 h-6 text-white" />
                 </div> */}
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">⚽ Your Cart</h2>
-                  <p className="text-green-600 text-sm">Review your football gear</p>
+                  <h2 className="text-xl font-bold text-gray-900">
+                    ⚽ Your Cart
+                  </h2>
+                  <p className="text-green-600 text-sm">
+                    Review your football gear
+                  </p>
                 </div>
               </div>
 
               <div className="space-y-4 max-h-96 overflow-y-auto">
                 {products.map((prod, idx) => (
-                  <div key={idx} className="flex gap-4 p-4  rounded-xl border-2 border-green-600">
+                  <div
+                    key={idx}
+                    className="flex gap-4 p-4  rounded-xl border-2 border-green-600"
+                  >
                     <img
                       src={prod.image}
                       alt={prod.title}
                       className="w-16 h-16 object-cover rounded-lg border-2 border-green-200 shadow-sm"
                       onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/64?text=⚽';
+                        e.target.src = "https://via.placeholder.com/64?text=⚽";
                       }}
                     />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-gray-900 truncate text-sm">{prod.title}</h3>
-                      <p className="text-green-600 font-bold mb-2">₹{prod.price.toLocaleString()}</p>
-                      
+                      <h3 className="font-bold text-gray-900 truncate text-sm">
+                        {prod.title}
+                      </h3>
+                      <p className="text-green-600 font-bold mb-2">
+                        ₹{prod.price.toLocaleString()}
+                      </p>
+
                       <div className="flex items-center gap-2 bg-white rounded-lg p-1 border border-green-200">
                         <button
                           onClick={() => decrementQuantity(idx)}
@@ -390,7 +466,9 @@ const OrderPage = () => {
                           value={quantities[idx]}
                           min={1}
                           className="w-12 text-center border-0 bg-transparent font-bold text-gray-900 text-sm focus:outline-none"
-                          onChange={(e) => handleQuantityChange(idx, e.target.value)}
+                          onChange={(e) =>
+                            handleQuantityChange(idx, e.target.value)
+                          }
                         />
                         <button
                           onClick={() => incrementQuantity(idx)}
@@ -399,9 +477,10 @@ const OrderPage = () => {
                           <Plus className="w-4 h-4" />
                         </button>
                       </div>
-                      
+
                       <p className="text-sm font-bold text-emerald-600 mt-2">
-                        Total: ₹{(prod.price * quantities[idx]).toLocaleString()}
+                        Total: ₹
+                        {(prod.price * quantities[idx]).toLocaleString()}
                       </p>
                     </div>
                   </div>
@@ -411,18 +490,28 @@ const OrderPage = () => {
               <div className="border-t-2 border-green-100 pt-4 mt-6">
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 font-medium">Subtotal ({calculateItemCount()} items)</span>
-                    <span className="font-bold text-gray-900">₹{calculateTotal().toLocaleString()}</span>
+                    <span className="text-gray-600 font-medium">
+                      Subtotal ({calculateItemCount()} items)
+                    </span>
+                    <span className="font-bold text-gray-900">
+                      ₹{calculateTotal().toLocaleString()}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600 font-medium">Delivery Charges</span>
+                    <span className="text-gray-600 font-medium">
+                      Delivery Charges
+                    </span>
                     <span className="font-bold text-green-600">FREE ⚡</span>
                   </div>
                 </div>
                 <div className="bg-gradient-to-r from-green-100 to-emerald-100 p-4 rounded-xl border-t-2 border-green-200">
                   <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-gray-900">🏆 Grand Total</span>
-                    <span className="text-2xl font-bold text-green-600">₹{calculateTotal().toLocaleString()}</span>
+                    <span className="text-lg font-bold text-gray-900">
+                      🏆 Grand Total
+                    </span>
+                    <span className="text-2xl font-bold text-green-600">
+                      ₹{calculateTotal().toLocaleString()}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -439,8 +528,8 @@ const OrderPage = () => {
                 disabled={loading}
                 className={`w-full mt-6 py-4 px-6 rounded-2xl font-bold text-white transition duration-200 flex items-center justify-center gap-3 text-lg shadow-lg ${
                   loading
-                    ? 'bg-gray-400 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 active:scale-95 shadow-green-300'
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 active:scale-95 shadow-green-300"
                 }`}
               >
                 {loading ? (
@@ -451,7 +540,7 @@ const OrderPage = () => {
                 ) : (
                   <>
                     <CheckCircle className="w-6 h-6" />
-                     Score This Order!
+                    Score This Order!
                   </>
                 )}
               </button>

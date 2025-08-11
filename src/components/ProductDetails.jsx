@@ -24,7 +24,7 @@ const ProductDetails = () => {
         { withCredentials: true }
       );
       
-      // Then add to Redux store
+    
       dispatch(addItem({ ...product, count: 1 }));
       
       toast.success("Item added to cart!", {
@@ -49,7 +49,7 @@ const ProductDetails = () => {
       setLoading(true);
       setError(null);
       
-      // Use BASE_URL for consistency
+     
       const res = await axios.get(`${BASE_URL}product/${productId}`, {
         withCredentials: true,
       });
