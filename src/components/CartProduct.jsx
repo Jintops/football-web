@@ -21,8 +21,24 @@ const CartProduct = ({ item,refreshCart }) => {
   const deleteItems = async(_id) => {
     const res=await axios.patch(BASE_URL+"deleteCartItem/"+_id,{},{withCredentials:true})
     dispatch(deleteItem(_id))
-    
+
   };
+
+  const editQuantity=async(newCount)=>{
+    const res=await axios.put(BASE_URL+"cartEdit/"+_id,{quantity:newCount},{withCredentials:true})
+  }
+
+  const increment = () => {
+    const newCount = count + 1;
+    dispatch(incrementQuantity(_id));
+    editQuantity(newCount);
+  };
+
+  const decrement=()=>{
+    const newCount=count-1
+    count > 1 && dispatch(decrementQuantity(_id))
+    editQuantity(newCount)
+  }
 
   
   return (
@@ -42,14 +58,14 @@ const CartProduct = ({ item,refreshCart }) => {
 
           <div className="flex items-center gap-2 ">
             <button
-              onClick={() => count > 1 && dispatch(decrementQuantity(_id))}
+              onClick={decrement}
               className="text-lg font-bold px-1 py-1  rounded hover:bg-gray-100"
             >
               -
             </button>
             <span className="min-w-[20px] text-center">{count}</span>
             <button
-              onClick={() => dispatch(incrementQuantity(_id))}
+              onClick={increment}
               className="text-lg font-bold px-1 py-1  rounded hover:bg-gray-100"
             >
               +
