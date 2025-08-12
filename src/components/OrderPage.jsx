@@ -435,7 +435,7 @@ const OrderPage = () => {
                 {products.map((prod, idx) => (
                   <div
                     key={idx}
-                    className="flex gap-4 p-4  rounded-xl border-2 border-green-600"
+                    className="flex gap-4 p-4  rounded-xl border-2 border-green-200"
                   >
                     <img
                       src={prod.image}
