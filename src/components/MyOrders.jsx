@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../utils/constants';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { UserX, Edit2, Save, X, User } from 'lucide-react';
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -20,13 +21,25 @@ const MyOrders = () => {
     fetchOrders();
   }, []);
 
-  if (orders.length === 0) {
+  if (orders.length===0) {
     return (
-      <div className="min-h-screen flex justify-center items-center bg-gray-100">
-        <p className="text-gray-600 text-lg">⚽ No orders yet. Time to grab some football gear!</p>
+      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4">
+        <div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center max-w-md w-full">
+          <UserX className="w-14 h-14 text-red-500 mb-4" />
+          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-2 text-center">Order Not Found</h2>
+          <p className="text-gray-600 text-center mb-6">
+            We couldn't find your Order. Please log in to access your account and view your order information.
+          </p>
+          <Link to="/login" className="w-full">
+            <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition duration-200">
+              Go to Login
+            </button>
+          </Link>
+        </div>
       </div>
     );
   }
+
   const orderDetail=(orders)=>{
   navigate(`/myorderdetails/${orders._id}`);
   }
@@ -41,7 +54,7 @@ const MyOrders = () => {
             key={order._id || index}
             className="bg-white rounded-xl shadow-md border-l-4 border-green-600 p-4 space-y-3 hover:shadow-lg transition-shadow"
           >
-            {/* Order Info */}
+            
             <div className="flex items-center gap-4">
               <img
                 src={order.cartItems[0]?.imageUrl}
@@ -57,19 +70,6 @@ const MyOrders = () => {
               </div>
             </div>
 
-            {/* Address */}
-            {/* <div className="text-sm text-gray-800 bg-green-100 rounded-md p-3">
-              <p className="font-semibold mb-1 text-green-900">Shipping Address</p>
-              <p>{order.address?.name}</p>
-              <p>{order.address?.phone}</p>
-              <p>{order.address?.fullAddress}, {order.address?.place} - {order.address?.pincode}</p>
-            </div> */}
-
-            {/* Order Meta Info */}
-            {/* <div className="text-xs text-gray-500 flex justify-between mt-2">
-              <p>Order ID: {order._id}</p>
-              
-            </div> */}
           </div>
         ))}
       </div>
