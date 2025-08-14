@@ -13,7 +13,7 @@ const getAllProduct=async()=>{
 
     
     try{
-    const res=await axios.get("http://localhost:7777/getAllProducts",{withCredentials:true})
+    const res=await axios.get(BASE_URL+"getAllProducts",{withCredentials:true})
     const products=res.data.products;
     setProducts(products) 
 
