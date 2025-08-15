@@ -523,7 +523,7 @@ const OrderPage = () => {
                 </div>
               )}
 
-              <button
+           {paymentMethod!=="Online" &&   <button
                 onClick={handleOrder}
                 disabled={loading}
                 className={`w-full mt-6 py-4 px-6 rounded-2xl font-bold text-white transition duration-200 flex items-center justify-center gap-3 text-lg shadow-lg ${
@@ -543,7 +543,30 @@ const OrderPage = () => {
                     Score This Order!
                   </>
                 )}
-              </button>
+              </button>}
+
+
+               {paymentMethod==="Online" &&     <button
+                onClick={handleOrder}
+                disabled={loading}
+                className={`w-full mt-6 py-4 px-6 rounded-2xl font-bold text-white transition duration-200 flex items-center justify-center gap-3 text-lg shadow-lg ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 active:scale-95 shadow-green-300"
+                }`}
+              >
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                    Scoring Your Order...
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle className="w-6 h-6" />
+                    Pay Now
+                  </>
+                )}
+              </button>}
 
               <p className="text-center text-xs text-gray-500 mt-3">
                 ⚽ Gear up for victory! Your order will be processed securely.
