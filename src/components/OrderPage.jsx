@@ -568,6 +568,7 @@ const OrderPage = () => {
                 )}
               </button>}
 
+
               <p className="text-center text-xs text-gray-500 mt-3">
                 ⚽ Gear up for victory! Your order will be processed securely.
               </p>
