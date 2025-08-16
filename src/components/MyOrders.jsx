@@ -64,7 +64,7 @@ const MyOrders = () => {
               <div className="flex-1">
                 <h2 className="text-lg font-semibold text-green-800">{order.cartItems[0]?.title}</h2>
                 <p className="text-sm text-gray-700">Quantity: {order.cartItems[0]?.quantity}</p>
-                <p className="text-sm text-gray-700">Total: ₹ {order.totalAmount/100}</p>
+                <p className="text-sm text-gray-700">Total: ₹ {order.totalAmount}</p>
                 <p className="text-sm font-medium text-green-700">Payment: {order.paymentMethod}</p>
               <p>Date: {new Date(order.createdAt).toLocaleDateString()}</p>
               </div>
