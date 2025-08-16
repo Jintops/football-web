@@ -26,11 +26,11 @@ const OrderPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState("ied");
   const [pincode, setPincode] = useState("");
   const [address, setAddress] = useState("");
   const [place, setPlace] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(9605255705);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [quantities, setQuantities] = useState(
     products.map((p) => p.count || 1)
@@ -67,9 +67,9 @@ const OrderPage = () => {
     const newErrors = {};
 
     if (!name.trim()) newErrors.name = "Player name is required";
-    if (!phone.trim()) newErrors.phone = "Contact number is required";
-    else if (!/^\d{10}$/.test(phone.trim()))
-      newErrors.phone = "Contact number must be 10 digits";
+    // if (!phone.trim()) newErrors.phone = "Contact number is required";
+    // else if (!/^\d{10}$/.test(phone.trim()))
+    //   newErrors.phone = "Contact number must be 10 digits";
     if (!pincode.trim()) newErrors.pincode = "Pincode is required";
     else if (!/^\d{6}$/.test(pincode.trim()))
       newErrors.pincode = "Pincode must be 6 digits";
@@ -123,14 +123,14 @@ const OrderPage = () => {
       for (let i = 0; i < products.length; i++) {
         const prod = products[i];
         const quantity = quantities[i];
-        const totalAmount = prod.price * quantity;
-
+        // const totalAmount = prod.price * quantity;
+            const totalAmount=   calculateTotal()*100
         await axios.post(
           BASE_URL + "createOrder",
           {
             address: {
               name: name.trim(),
-              phone: phone.trim(),
+              phone,
               pincode: pincode.trim(),
               place: place.trim(),
               fullAddress: address.trim(),
@@ -168,13 +168,13 @@ const OrderPage = () => {
       for (let i = 0; i < products.length; i++) {
         const prod = products[i];
         const quantity = quantities[i];
-        const totalAmount = prod.price * quantity;
+        const totalAmount = calculateTotal()*100;
 
 
       const order=await axios.post(BASE_URL+"payment/create",{
             address: {
               name: name.trim(),
-              phone: phone.trim(),
+              phone,
               pincode: pincode.trim(),
               place: place.trim(),
               fullAddress: address.trim(),
@@ -191,7 +191,7 @@ const OrderPage = () => {
        console.log(order.data)
       const options = {
         key: keyId, // Replace with your Razorpay key_id
-        amount:"700", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        amount:savedPayment.totalAmount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
         currency: 'INR',
         name: 'Soccer Gear',
         description: 'shop your items',
