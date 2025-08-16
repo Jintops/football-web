@@ -169,7 +169,7 @@ const OrderPage = () => {
         const prod = products[i];
         const quantity = quantities[i];
         const totalAmount = prod.price * quantity;
-        
+
 
       const order=await axios.post(BASE_URL+"payment/create",{
             address: {
@@ -187,15 +187,15 @@ const OrderPage = () => {
         {withCredentials:true})
         
 
-        const {keyId,currency,orderID}=order.data
-
+        const {keyId,savedPayment}=order.data
+       console.log(order.data)
       const options = {
         key: keyId, // Replace with your Razorpay key_id
         amount:"700", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        currency,
+        currency: 'INR',
         name: 'Soccer Gear',
         description: 'shop your items',
-        order_id: orderID,
+        order_id: savedPayment.orderId,
         prefill: {
           name: 'Gaurav Kumar',
           email: 'gaurav.kumar@example.com',
@@ -211,7 +211,7 @@ const OrderPage = () => {
     }
 
 if (cartItem) dispatch(clearCart());
-      navigate("/myorders");
+      // navigate("/myorders");
 
     }catch(err){
       console.log(err)
