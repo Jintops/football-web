@@ -157,6 +157,46 @@ const OrderPage = () => {
     }
   };
 
+
+  const handlePaymentOrder=async()=>{
+   if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      for (let i = 0; i < products.length; i++) {
+        const prod = products[i];
+        const quantity = quantities[i];
+        const totalAmount = prod.price * quantity;
+
+ 
+
+
+      const order=await axios.post(BASE_URL+"payment/create",{
+            address: {
+              name: name.trim(),
+              phone: phone.trim(),
+              pincode: pincode.trim(),
+              place: place.trim(),
+              fullAddress: address.trim(),
+            },
+            paymentMethod,
+            productId: prod._id,
+            quantity,
+            totalAmount,
+          },
+        {withCredentials:true})
+        }
+        
+if (cartItem) dispatch(clearCart());
+      navigate("/myorders");
+
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header with Football Theme */}
@@ -547,7 +587,7 @@ const OrderPage = () => {
 
 
                {paymentMethod==="Online" &&     <button
-                onClick={handleOrder}
+                onClick={handlePaymentOrder}
                 disabled={loading}
                 className={`w-full mt-6 py-4 px-6 rounded-2xl font-bold text-white transition duration-200 flex items-center justify-center gap-3 text-lg shadow-lg ${
                   loading
