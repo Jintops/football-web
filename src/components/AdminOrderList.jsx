@@ -88,8 +88,9 @@ const AdminOrderList = () => {
       onChange={(e) => handleStatus(item._id, e.target.value)}
       value={item.orderStatus}
       className={`font-semibold border rounded-lg px-4 p-1 outline-none
-        ${item.orderStatus === "Delivered" ? "text-green-600 border-green-600" :
-          item.orderStatus === "Cancelled" ? "text-red-600 border-red-600" :
+        ${item.orderStatus === "delivered" ? "text-green-600 border-green-600" :
+          item.orderStatus === "cancelled" ? "text-red-600 border-red-600" :
+          item.orderStatus === "shipping" ? "text-blue-900 border-blue-900" :
           "text-yellow-600 border-yellow-600"}
       `}
     >
