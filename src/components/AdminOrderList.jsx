@@ -51,6 +51,7 @@ const AdminOrderList = () => {
                  <p className='font-bold text-base text-gray-900'><span className="font-medium">Product:</span> {item.cartItems[0].title}</p>
                 <p><span className="font-medium">Qty:</span> {item.cartItems[0].quantity}</p>
                 <p><span className="font-medium">Payment:</span> {item.paymentMethod}</p>
+                  <p><span className="font-medium">Date:</span> {new Date(item.createdAt).toLocaleDateString()}</p>
               </div>
 
               <div className="w-full md:w-[15%] text-sm text-gray-700">
@@ -58,21 +59,26 @@ const AdminOrderList = () => {
               </div>
 
             
-              <div className="w-full md:w-[20%] text-sm">
-                <p>
-                  <span className="font-medium">Status:</span>{" "}
-                  <span className={`font-semibold ${
-                    item.orderStatus === "Delivered"
-                      ? "text-green-600"
-                      : item.orderStatus === "Cancelled"
-                      ? "text-red-600"
-                      : "text-yellow-600"
-                  }`}>
-                    {item.orderStatus}
-                  </span>
-                </p>
-                <p><span className="font-medium">Date:</span> {new Date(item.createdAt).toLocaleDateString()}</p>
-              </div>
+          <div className="w-full md:w-[20%] text-sm">
+  <p>
+    <span className="font-medium">Status:</span>{" "}
+    <select
+      value={item.orderStatus}
+      onChange={(e) => handleStatusChange(e.target.value, item.id)} // update logic
+      className={`font-semibold border rounded-lg px-4 p-1 outline-none
+        ${item.orderStatus === "Delivered" ? "text-green-600 border-green-600" :
+          item.orderStatus === "Cancelled" ? "text-red-600 border-red-600" :
+          "text-yellow-600 border-yellow-600"}
+      `}
+    >
+      <option value="Pending" >Pending</option>
+      <option value="Shipping" >Shipping</option>
+      <option value="Delivered">Delivered</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
+  </p>
+</div>
+
 
             </div>
           ))}
