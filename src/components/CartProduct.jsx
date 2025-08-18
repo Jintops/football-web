@@ -19,9 +19,13 @@ const CartProduct = ({ item,refreshCart }) => {
   
 
   const deleteItems = async(_id) => {
+    try{
     const res=await axios.patch(BASE_URL+"deleteCartItem/"+_id,{},{withCredentials:true})
     dispatch(deleteItem(_id))
-
+    }catch(err){
+      console.log(err.message)
+      dispatch(deleteItem(_id));
+    }
   };
 
   const editQuantity=async(newCount)=>{
