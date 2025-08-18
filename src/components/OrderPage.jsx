@@ -211,7 +211,7 @@ const OrderPage = () => {
     }
 
 if (cartItem) dispatch(clearCart());
-      // navigate("/myorders");
+      navigate("/myorders");
 
     }catch(err){
       console.log(err)

@@ -39,8 +39,10 @@ const Products = ({ product }) => {
       
     } catch (error) {
       console.error("Error adding item to cart:", error);
+
+      dispatch(addItem({ ...product, count: 1 }));
       
-      toast.error("Failed to add item to cart. Please try again.", {
+      toast.success("Item added to cart!", {
         position: "bottom-right",
         autoClose: 3000,
       });
