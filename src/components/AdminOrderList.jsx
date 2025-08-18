@@ -4,7 +4,7 @@ import { BASE_URL } from '../utils/constants';
 
 const AdminOrderList = () => {
   const [orders, setOrders] = useState([]);
-
+ 
   const getAllOrders = async () => {
     try {
       const res = await axios.get(BASE_URL + "orders", { withCredentials: true });
@@ -18,6 +18,28 @@ const AdminOrderList = () => {
   useEffect(() => {
     getAllOrders();
   }, []);
+
+  const handleStatus = async (id, value) => {
+  try {
+    const res = await axios.patch(
+      BASE_URL + "orderStatus/" + id,
+      { status: value },
+      { withCredentials: true }
+    );
+
+    // Update local state immediately so UI reflects change
+    setOrders((prev) =>
+      prev.map((order) =>
+        order._id === id ? { ...order, orderStatus: value } : order
+      )
+    );
+
+    console.log("Status updated:", res.data);
+  } catch (err) {
+    console.error("Failed to change status", err);
+  }
+};
+
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -59,25 +81,26 @@ const AdminOrderList = () => {
               </div>
 
             
-          <div className="w-full md:w-[20%] text-sm">
+<div className="w-full md:w-[20%] text-sm">
   <p>
     <span className="font-medium">Status:</span>{" "}
     <select
+      onChange={(e) => handleStatus(item._id, e.target.value)}
       value={item.orderStatus}
-      onChange={(e) => handleStatusChange(e.target.value, item.id)} // update logic
       className={`font-semibold border rounded-lg px-4 p-1 outline-none
         ${item.orderStatus === "Delivered" ? "text-green-600 border-green-600" :
           item.orderStatus === "Cancelled" ? "text-red-600 border-red-600" :
           "text-yellow-600 border-yellow-600"}
       `}
     >
-      <option value="Pending" >Pending</option>
-      <option value="Shipping" >Shipping</option>
-      <option value="Delivered">Delivered</option>
-      <option value="Cancelled">Cancelled</option>
+      <option value="pending">Pending</option>
+      <option value="shipping">Shipping</option>
+      <option value="delivered">Delivered</option>
+      <option value="cancelled">Cancelled</option>
     </select>
   </p>
 </div>
+
 
 
             </div>
