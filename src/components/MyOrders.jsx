@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../utils/constants';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { UserX, Edit2, Save, X, User } from 'lucide-react';
+import { PackageX } from "lucide-react";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -20,25 +20,30 @@ const MyOrders = () => {
   useEffect(() => {
     fetchOrders();
   }, []);
-
-  if (orders.length===0) {
-    return (
-      <div className="min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4">
-        <div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center max-w-md w-full">
-          <UserX className="w-14 h-14 text-red-500 mb-4" />
-          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-2 text-center">Order Not Found</h2>
-          <p className="text-gray-600 text-center mb-6">
-            We couldn't find your Order. Please log in to access your account and view your order information.
-          </p>
-          <Link to="/login" className="w-full">
-            <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition duration-200">
-              Go to Login
-            </button>
-          </Link>
+if (orders.length === 0) {
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
+      <div className="bg-white shadow-lg rounded-2xl p-10 flex flex-col items-center max-w-md w-full border border-gray-200">
+        <div className="flex items-center justify-center w-20 h-20 rounded-full bg-red-100 mb-6">
+          <PackageX className="w-10 h-10 text-red-500" />
         </div>
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-3 text-center">
+          No Orders Found
+        </h2>
+        <p className="text-gray-600 text-center mb-8 leading-relaxed">
+          Looks like you haven’t placed any orders yet.  
+          Start exploring and add something to your cart!
+        </p>
+
+        <Link to="/" className="w-full">
+          <button className="w-full px-5 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 active:scale-95 transition-all duration-200 shadow-md">
+            Browse Products
+          </button>
+        </Link>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   const orderDetail=(orders)=>{
   navigate(`/myorderdetails/${orders._id}`);
