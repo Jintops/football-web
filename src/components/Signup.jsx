@@ -10,6 +10,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState(""); 
    const [showPassword,setShowPassword]=useState(false)
+   const [errorr,setErrorr]=useState('')
   const navigate = useNavigate();
 
   const handleSignUP = async (e) => {
@@ -34,10 +35,12 @@ const Signup = () => {
         });
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Something went wrong", {
-        position: "bottom-right",
-        autoClose: 2000,
-      });
+      console.log(err)
+      setErrorr(err?.response?.data?.message)
+      // toast.error(err.response?.data?.message || "Something went wrong", {
+      //   position: "bottom-right",
+      //   autoClose: 2000,
+      // });
     }
   };
 
@@ -113,6 +116,7 @@ const Signup = () => {
                          </button>
                        </div>
                      </div>
+                   {errorr &&  <p className="text-red-600">{errorr}!!</p>}
           <button
             type="submit"
             className="w-full bg-green-600 text-white font-bold py-2 rounded-lg hover:bg-green-700 transition duration-300"
