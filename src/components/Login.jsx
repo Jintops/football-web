@@ -8,6 +8,7 @@ const Login = ({ role }) => {
   const [emailId, setEmailId] = useState("jps2003@gmail.com");
   const [password, setPassword] = useState("Jinto@2003");
   const [showPassword,setShowPassword]=useState(false)
+  const [errorr,setErrorr]=useState('')
   const location = useLocation();
   const navigate = useNavigate();
  const { isAuthenticated, user } = useSelector((store) => store.user);
@@ -33,7 +34,7 @@ const cartItem = location.state?.from?.state?.cartItem;
         { withCredentials: true }
       );
       dispatch(addUser(res.data.user));
-
+      
       if (res.data.user.role === "admin") {
         navigate("/admin/overview", { replace: true });
       } else {
@@ -46,7 +47,7 @@ const cartItem = location.state?.from?.state?.cartItem;
      
     } catch (err) {
       console.error("Login failed:", err.response?.data || err.message);
-      alert("Login failed");
+      setErrorr(err.response.data.message)
     }
   };
   return (
@@ -105,6 +106,7 @@ const cartItem = location.state?.from?.state?.cartItem;
                 </button>
               </div>
             </div>
+          {errorr&&<p className="text-red-600 font-medium">{errorr} !!</p>}
           <button
             type="submit"
             className="w-full bg-green-600 text-white font-bold py-2 rounded-lg hover:bg-green-700 transition duration-300"
