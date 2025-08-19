@@ -59,7 +59,7 @@ const Profile = () => {
       setEditLoading(false);
     }
   };
-
+  console.log(data)
   const handleCancelEdit = () => {
     // Reset form to original values
     setFirstName(data?.firstName || '');
@@ -124,9 +124,6 @@ const Profile = () => {
                 src={data?.photoUrl || 'https://via.placeholder.com/100'}
                 alt="Profile"
                 className="w-24 h-24 rounded-full border-4 border-green-500 object-cover"
-                onError={(e) => {
-                  e.target.src = 'https://via.placeholder.com/100';
-                }}
               />
               {!data?.photoUrl && (
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-100 rounded-full border-4 border-green-500">
@@ -144,7 +141,7 @@ const Profile = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <p className="text-sm text-gray-600 font-medium mb-1">Email</p>
-              <p className="text-gray-800">{data.email || 'N/A'}</p>
+              <p className="text-gray-800">{data.emailId || 'N/A'}</p>
             </div>
             <div>
               <p className="text-sm text-gray-600 font-medium mb-1">Phone</p>
