@@ -601,9 +601,12 @@ const ProductDetails = () => {
               
 
                 {/* Footer - likes */}
-                <div className="flex items-center justify-end mt-4 gap-2">
+                <div className="flex items-center justify-end mt-4 gap-4">
                   <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
                     👍🏻 {rev.likesCount || 0}
+                  </button>
+                   <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
+                    👎🏻 {rev.dislikesCount || 0}
                   </button>
                 </div>
               </div>
