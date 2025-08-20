@@ -25,6 +25,8 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [review, setReview] = useState([]);
+  const [orders,setOrders]=useState([])
+  const [reviewBtn,setReviewBtn]=useState(false)
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -104,13 +106,39 @@ const ProductDetails = () => {
     }
   };
 
+    const orderss = async () => {
+    try {
+      const res = await axios.get(BASE_URL + "orderList", { withCredentials: true });
+      setOrders(res.data.data)
+      
+    } catch (err) {
+      console.error("Failed to fetch orders:", err);
+    }
+  };
+useEffect(()=>{
+  orderss()
+},[])
+
   useEffect(() => {
     if (id) {
       productDetails(id);
       reviews(id);
     }
   }, [id]);
-  console.log(review);
+  // console.log(productId);
+
+
+ useEffect(() => {
+    if (orders.length > 0 && id) {
+      const isReviewable = orders.some((order) =>
+        order.orderStatus === "delivered" &&
+        order.cartItems?.some((item) => item.productId.toString() === id.toString())
+      );
+      setReviewBtn(isReviewable);
+    }
+  }, [orders, id]);
+
+
   // Loading state with modern skeleton
   if (loading) {
     return (
@@ -524,8 +552,7 @@ const ProductDetails = () => {
                 </div>
               </div>
             ) : (
-              <p className="text-gray-600">
-                No reviews yet. Be the first to review!
+              <p className="text-gray-600">           
               </p>
             )}
           </div>
@@ -535,9 +562,15 @@ const ProductDetails = () => {
 
       {/* Reviews Section */}
       <div className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
           Customer Reviews
         </h2>
+
+      
+     {reviewBtn &&   <button className="bg-green-600 text-white px-6 m-2 p-2 font-semibold rounded-md hover:bg-green-800 hover:scale-105 transition-all">Add review</button>}
+      
+        </div>
 
         {review.length === 0 ? (
           <p className="text-gray-600">
