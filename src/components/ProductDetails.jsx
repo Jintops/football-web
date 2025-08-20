@@ -1,7 +1,16 @@
 import axios from "axios";
 import React, { use, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ShoppingCart, CreditCard, Heart, Share2, Truck, Shield, RotateCcw, Star } from "lucide-react";
+import {
+  ShoppingCart,
+  CreditCard,
+  Heart,
+  Share2,
+  Truck,
+  Shield,
+  RotateCcw,
+  Star,
+} from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
@@ -15,7 +24,7 @@ const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const [review,setReview]=useState([])
+  const [review, setReview] = useState([]);
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,9 +36,9 @@ const ProductDetails = () => {
         { quantity },
         { withCredentials: true }
       );
-      
+
       dispatch(addItem({ ...product, count: quantity }));
-      
+
       toast.success(`${quantity} item(s) added to cart!`, {
         position: "bottom-right",
         autoClose: 3000,
@@ -37,10 +46,13 @@ const ProductDetails = () => {
     } catch (error) {
       console.error("Error adding item to cart:", error);
       dispatch(addItem({ ...product, count: quantity }));
-      toast.error("Failed to sync with server, but item added to cart locally", {
-        position: "bottom-right",
-        autoClose: 3000,
-      });
+      toast.error(
+        "Failed to sync with server, but item added to cart locally",
+        {
+          position: "bottom-right",
+          autoClose: 3000,
+        }
+      );
     }
   };
 
@@ -48,11 +60,11 @@ const ProductDetails = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const res = await axios.get(`${BASE_URL}product/${productId}`, {
         withCredentials: true,
       });
-      
+
       setProduct(res.data.data);
     } catch (err) {
       console.error("Error fetching product details:", err);
@@ -63,39 +75,42 @@ const ProductDetails = () => {
   };
 
   const handleOrder = () => {
-    navigate('/orders', { 
-      state: { 
-        cartItem: [{ ...product, count: quantity }]
-      } 
+    navigate("/orders", {
+      state: {
+        cartItem: [{ ...product, count: quantity }],
+      },
     });
   };
 
   const toggleWishlist = () => {
     setIsWishlisted(!isWishlisted);
-    toast.success(isWishlisted ? "Removed from wishlist" : "Added to wishlist", {
-      position: "bottom-right",
-      autoClose: 2000,
-    });
+    toast.success(
+      isWishlisted ? "Removed from wishlist" : "Added to wishlist",
+      {
+        position: "bottom-right",
+        autoClose: 2000,
+      }
+    );
   };
 
-  const reviews=async(productId)=>{
-    try{
-      const res=await axios.get(BASE_URL+"getReviews/"+productId,{withCredentials:true})
-      setReview(res.data.data)
-
-    }catch(err){
-      console.log(err.message)
+  const reviews = async (productId) => {
+    try {
+      const res = await axios.get(BASE_URL + "getReviews/" + productId, {
+        withCredentials: true,
+      });
+      setReview(res.data.data);
+    } catch (err) {
+      console.log(err.message);
     }
-
-  }
+  };
 
   useEffect(() => {
     if (id) {
       productDetails(id);
-      reviews(id)
+      reviews(id);
     }
   }, [id]);
- console.log(review)
+  console.log(review);
   // Loading state with modern skeleton
   if (loading) {
     return (
@@ -109,11 +124,14 @@ const ProductDetails = () => {
                   <div className="aspect-square bg-gray-200 rounded-xl"></div>
                   <div className="flex gap-2">
                     {[...Array(4)].map((_, i) => (
-                      <div key={i} className="w-16 h-16 bg-gray-200 rounded-lg"></div>
+                      <div
+                        key={i}
+                        className="w-16 h-16 bg-gray-200 rounded-lg"
+                      ></div>
                     ))}
                   </div>
                 </div>
-                
+
                 {/* Details skeleton */}
                 <div className="space-y-6">
                   <div className="h-8 bg-gray-200 rounded w-3/4"></div>
@@ -144,7 +162,9 @@ const ProductDetails = () => {
           <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-red-500 text-3xl">⚠️</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Something went wrong</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            Something went wrong
+          </h2>
           <p className="text-gray-600 mb-6">{error}</p>
           <button
             onClick={() => productDetails(id)}
@@ -164,10 +184,14 @@ const ProductDetails = () => {
           <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-gray-400 text-3xl">📦</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Product Not Found</h2>
-          <p className="text-gray-600 mb-6">The product you're looking for doesn't exist.</p>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+            Product Not Found
+          </h2>
+          <p className="text-gray-600 mb-6">
+            The product you're looking for doesn't exist.
+          </p>
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate("/")}
             className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 transform hover:scale-105"
           >
             Go Home
@@ -186,7 +210,10 @@ const ProductDetails = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-          <button onClick={() => navigate('/')} className="hover:text-blue-600 transition-colors">
+          <button
+            onClick={() => navigate("/")}
+            className="hover:text-blue-600 transition-colors"
+          >
             Home
           </button>
           <span>/</span>
@@ -204,11 +231,11 @@ const ProductDetails = () => {
                     alt={product.title}
                     className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                     onError={(e) => {
-                      e.target.src = '/api/placeholder/400/400';
+                      e.target.src = "/api/placeholder/400/400";
                     }}
                   />
                 </div>
-                
+
                 {/* Image indicators */}
                 {images.length > 1 && (
                   <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
@@ -218,8 +245,8 @@ const ProductDetails = () => {
                         onClick={() => setSelectedImage(index)}
                         className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
                           selectedImage === index
-                            ? 'border-blue-500 ring-2 ring-blue-200'
-                            : 'border-gray-200 hover:border-gray-300'
+                            ? "border-blue-500 ring-2 ring-blue-200"
+                            : "border-gray-200 hover:border-gray-300"
                         }`}
                       >
                         <img
@@ -244,15 +271,19 @@ const ProductDetails = () => {
                   <button
                     onClick={toggleWishlist}
                     className={`p-2 rounded-full transition-all duration-200 ${
-                      isWishlisted 
-                        ? 'bg-red-100 text-red-600 hover:bg-red-200' 
-                        : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-red-500'
+                      isWishlisted
+                        ? "bg-red-100 text-red-600 hover:bg-red-200"
+                        : "bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-red-500"
                     }`}
                   >
-                    <Heart className={`w-6 h-6 ${isWishlisted ? 'fill-current' : ''}`} />
+                    <Heart
+                      className={`w-6 h-6 ${
+                        isWishlisted ? "fill-current" : ""
+                      }`}
+                    />
                   </button>
                 </div>
-                
+
                 {product.brand && (
                   <p className="text-blue-600 font-medium text-lg mb-2">
                     {product.brand}
@@ -268,14 +299,18 @@ const ProductDetails = () => {
                           key={i}
                           className={`w-5 h-5 ${
                             i < Math.floor(rating)
-                              ? 'text-yellow-400 fill-current'
-                              : 'text-gray-300'
+                              ? "text-yellow-400 fill-current"
+                              : "text-gray-300"
                           }`}
                         />
                       ))}
                     </div>
-                    <span className="text-gray-700 font-medium">{rating.toFixed(1)}</span>
-                    <span className="text-gray-500">({reviewCount} reviews)</span>
+                    <span className="text-gray-700 font-medium">
+                      {rating.toFixed(1)}
+                    </span>
+                    <span className="text-gray-500">
+                      ({reviewCount} reviews)
+                    </span>
                   </div>
                 )}
               </div>
@@ -314,16 +349,18 @@ const ProductDetails = () => {
                     </span>
                   </div>
                 )}
-                
+
                 {product.inStock !== undefined && (
                   <div className="flex items-center gap-2">
                     <span className="text-gray-500 font-medium">Stock:</span>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      product.inStock 
-                        ? 'bg-green-50 text-green-700' 
-                        : 'bg-red-50 text-red-700'
-                    }`}>
-                      {product.inStock ? 'In Stock' : 'Out of Stock'}
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        product.inStock
+                          ? "bg-green-50 text-green-700"
+                          : "bg-red-50 text-red-700"
+                      }`}
+                    >
+                      {product.inStock ? "In Stock" : "Out of Stock"}
                     </span>
                   </div>
                 )}
@@ -385,7 +422,9 @@ const ProductDetails = () => {
                     <Truck className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <div className="font-medium text-gray-900">Free Shipping</div>
+                    <div className="font-medium text-gray-900">
+                      Free Shipping
+                    </div>
                     <div>On orders over $50</div>
                   </div>
                 </div>
@@ -395,7 +434,9 @@ const ProductDetails = () => {
                     <Shield className="w-5 h-5 text-green-600" />
                   </div>
                   <div>
-                    <div className="font-medium text-gray-900">Secure Payment</div>
+                    <div className="font-medium text-gray-900">
+                      Secure Payment
+                    </div>
                     <div>100% protected</div>
                   </div>
                 </div>
@@ -405,144 +446,171 @@ const ProductDetails = () => {
                     <RotateCcw className="w-5 h-5 text-orange-600" />
                   </div>
                   <div>
-                    <div className="font-medium text-gray-900">Easy Returns</div>
+                    <div className="font-medium text-gray-900">
+                      Easy Returns
+                    </div>
                     <div>30-day policy</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
+            {/* <h2 className="text-2xl font-bold text-gray-900 mb-6">Rating & Reviews</h2> */}
+
+            {/* If there are reviews */}
+            {review.length > 0 ? (
+              <div className="bg-white rounded-xl  p-6 mb-10 border border-gray-200">
+                <div className="grid md:grid-cols-3 gap-6">
+                  {/* Average Rating */}
+                  <div className="flex flex-col items-center justify-center text-center">
+                    <h3 className="text-5xl font-bold text-yellow-500">
+                      {(
+                        review.reduce((sum, r) => sum + r.rating, 0) /
+                        review.length
+                      ).toFixed(1)}
+                    </h3>
+                    <div className="flex items-center mt-2">
+                      {[...Array(5)].map((_, i) => {
+                        const avg =
+                          review.reduce((sum, r) => sum + r.rating, 0) /
+                          review.length;
+                        return (
+                          <Star
+                            key={i}
+                            className={`w-6 h-6 ${
+                              i < Math.round(avg)
+                                ? "text-yellow-400 fill-current"
+                                : "text-gray-300"
+                            }`}
+                          />
+                        );
+                      })}
+                    </div>
+                    <p className="text-gray-600 mt-2">
+                      {review.length} reviews
+                    </p>
+                  </div>
+
+                  {/* Progress Bars */}
+                  <div className="md:col-span-2 space-y-2">
+                    {[5, 4, 3, 2, 1].map((star) => {
+                      const count = review.filter(
+                        (r) => Math.floor(r.rating) === star
+                      ).length;
+                      const percentage = (
+                        (count / review.length) *
+                        100
+                      ).toFixed(0);
+
+                      return (
+                        <div key={star} className="flex items-center gap-3">
+                          <span className="w-10 text-gray-700 font-medium">
+                            {star} ★
+                          </span>
+                          <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-yellow-400 rounded-full"
+                              style={{ width: `${percentage}%` }}
+                            ></div>
+                          </div>
+                          <span className="w-12 text-right text-gray-600 text-sm">
+                            {count}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <p className="text-gray-600">
+                No reviews yet. Be the first to review!
+              </p>
+            )}
+          </div>
         </div>
       </div>
       {/* Review Summary */}
-<div className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
-  <h2 className="text-2xl font-bold text-gray-900 mb-6">Customer Reviews</h2>
 
-  {/* If there are reviews */}
-  {review.length > 0 ? (
-    <div className="bg-white rounded-xl shadow-md p-6 mb-10 border border-gray-100">
-      <div className="grid md:grid-cols-3 gap-6">
-        {/* Average Rating */}
-        <div className="flex flex-col items-center justify-center text-center">
-          <h3 className="text-5xl font-bold text-yellow-500">
-            {(
-              review.reduce((sum, r) => sum + r.rating, 0) / review.length
-            ).toFixed(1)}
-          </h3>
-          <div className="flex items-center mt-2">
-            {[...Array(5)].map((_, i) => {
-              const avg =
-                review.reduce((sum, r) => sum + r.rating, 0) / review.length;
-              return (
-                <Star
-                  key={i}
-                  className={`w-6 h-6 ${
-                    i < Math.round(avg)
-                      ? "text-yellow-400 fill-current"
-                      : "text-gray-300"
-                  }`}
-                />
-              );
-            })}
-          </div>
-          <p className="text-gray-600 mt-2">{review.length} reviews</p>
-        </div>
+      {/* Reviews Section */}
+      <div className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          Customer Reviews
+        </h2>
 
-        {/* Progress Bars */}
-        <div className="md:col-span-2 space-y-2">
-          {[5, 4, 3, 2, 1].map((star) => {
-            const count = review.filter((r) => Math.floor(r.rating) === star).length;
-            const percentage = ((count / review.length) * 100).toFixed(0);
-
-            return (
-              <div key={star} className="flex items-center gap-3">
-                <span className="w-10 text-gray-700 font-medium">{star} ★</span>
-                <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-yellow-400 rounded-full"
-                    style={{ width: `${percentage}%` }}
-                  ></div>
-                </div>
-                <span className="w-12 text-right text-gray-600 text-sm">
-                  {count}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  ) : (
-    <p className="text-gray-600">No reviews yet. Be the first to review!</p>
-  )}
-</div>
-
-{/* Reviews Section */}
-<div className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
-  <h2 className="text-2xl font-bold text-gray-900 mb-6">Customer Reviews</h2>
-
-  {review.length === 0 ? (
-    <p className="text-gray-600">No reviews yet. Be the first to review!</p>
-  ) : (
-    <div className="space-y-6">
-      {review.map((rev, index) => (
-        <div
-          key={index}
-          className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-all"
-        >
-          {/* Header with Avatar + Name + Rating */}
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              {/* Avatar Initial */}
-              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center font-semibold text-blue-600">
-                {rev.firstName ? rev.firstName[0].toUpperCase() : "U"}
-              </div>
-              <div>
-                <p className="font-semibold text-gray-800">
-                  {rev.firstName || "Anonymous"}
-                </p>
-                <p className="text-sm text-gray-500">Verified Buyer</p>
-              </div>
-            </div>
-
-            {/* Rating */}
-            <div className="flex items-center gap-1">
-  {[...Array(5)].map((_, i) => {
-    const filled = i < Math.floor(rev.rating);
-    const half = rev.rating - i >= 0.5 && rev.rating - i < 1;
-
-    return (
-      <span key={i} className="relative w-5 h-5">
-        {filled ? (
-          <Star className="w-5 h-5 text-yellow-400 fill-current" />
-        ) : half ? (
-          <Star className="w-5 h-5 text-yellow-400 absolute left-0 top-0 overflow-hidden" style={{ clipPath: "inset(0 50% 0 0)" }} />
+        {review.length === 0 ? (
+          <p className="text-gray-600">
+            No reviews yet. Be the first to review!
+          </p>
         ) : (
-          <Star className="w-5 h-5 text-gray-300" />
+          <div className="space-y-4">
+            {review.map((rev, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-all flex justify-between"
+              >
+                {/* Header with Avatar + Name + Rating */}
+                <div className="flex flex-col  mb-4">
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => {
+                      const filled = i < Math.floor(rev.rating);
+                      const half = rev.rating - i >= 0.5 && rev.rating - i < 1;
+
+                      return (
+                        <span key={i} className="relative w-5 h-5">
+                          {filled ? (
+                            <Star className="w-5 h-5 text-yellow-400 fill-current" />
+                          ) : half ? (
+                            <Star
+                              className="w-5 h-5 text-yellow-400 absolute left-0 top-0 overflow-hidden"
+                              style={{ clipPath: "inset(0 50% 0 0)" }}
+                            />
+                          ) : (
+                            <Star className="w-5 h-5 text-gray-300" />
+                          )}
+                        </span>
+                      );
+                    })}
+                    {/* <span className="ml-2 text-gray-700 font-medium">
+                      {rev.rating.toFixed(1)}/5
+                    </span> */}
+                  </div>
+
+                  
+                  <div className="flex items-center gap-3 mt-5">
+                    {/* Avatar Initial */}
+                    <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center font-semibold text-blue-600">
+                      {rev.firstName ? rev.firstName[0].toUpperCase() : "U"}
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-gray-800">
+                        {rev.firstName || "Anonymous"}
+                      </p>
+                      <p className="text-sm text-gray-500">Verified Buyer</p>
+                    </div>
+                  </div>
+               <p className="text-gray-700 leading-relaxed mt-4">
+                  {rev.reviewMessage}
+                </p>
+                  {/* Rating */}
+                </div>
+
+                {/* Review Message */}
+              
+
+                {/* Footer - likes */}
+                <div className="flex items-center justify-end mt-4 gap-2">
+                  <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
+                    👍🏻 {rev.likesCount || 0}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
-      </span>
-    );
-  })}
-  <span className="ml-2 text-gray-700 font-medium">{rev.rating.toFixed(1)}/5</span>
-</div>
-
-          </div>
-
-          {/* Review Message */}
-          <p className="text-gray-700 leading-relaxed">{rev.reviewMessage}</p>
-
-          {/* Footer - likes */}
-          <div className="flex items-center justify-end mt-4 gap-2">
-            <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
-              👍🏻 {rev.likesCount || 0}
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  )}
-</div>
-
+      </div>
     </div>
   );
 };
