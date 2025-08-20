@@ -59,7 +59,7 @@ const Profile = () => {
       setEditLoading(false);
     }
   };
-  console.log(data)
+  
   const handleCancelEdit = () => {
     // Reset form to original values
     setFirstName(data?.firstName || '');
@@ -121,7 +121,7 @@ const Profile = () => {
           <div className="flex items-center space-x-6 mb-6">
             <div className="relative">
               <img
-                src={data?.photoUrl || 'https://via.placeholder.com/100'}
+                src={data.photoUrl || 'https://via.placeholder.com/100'}
                 alt="Profile"
                 className="w-24 h-24 rounded-full border-4 border-green-500 object-cover"
               />

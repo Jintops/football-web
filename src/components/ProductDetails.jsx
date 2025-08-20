@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShoppingCart, CreditCard, Heart, Share2, Truck, Shield, RotateCcw, Star } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../utils/constants";
+import { div } from "framer-motion/client";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
@@ -14,6 +15,7 @@ const ProductDetails = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [review,setReview]=useState([])
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -76,12 +78,24 @@ const ProductDetails = () => {
     });
   };
 
+  const reviews=async(productId)=>{
+    try{
+      const res=await axios.get(BASE_URL+"getReviews/"+productId,{withCredentials:true})
+      setReview(res.data.data)
+
+    }catch(err){
+      console.log(err.message)
+    }
+
+  }
+
   useEffect(() => {
     if (id) {
       productDetails(id);
+      reviews(id)
     }
   }, [id]);
-
+ console.log(review)
   // Loading state with modern skeleton
   if (loading) {
     return (
@@ -400,6 +414,66 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      
+{/* Reviews Section */}
+<div className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
+  <h2 className="text-2xl font-bold text-gray-900 mb-6">Customer Reviews</h2>
+
+  {review.length === 0 ? (
+    <p className="text-gray-600">No reviews yet. Be the first to review!</p>
+  ) : (
+    <div className="space-y-6">
+      {review.map((rev, index) => (
+        <div
+          key={index}
+          className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-all"
+        >
+          {/* Header with Avatar + Name + Rating */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              {/* Avatar Initial */}
+              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center font-semibold text-blue-600">
+                {rev.firstName ? rev.firstName[0].toUpperCase() : "U"}
+              </div>
+              <div>
+                <p className="font-semibold text-gray-800">
+                  {rev.firstName || "Anonymous"}
+                </p>
+                <p className="text-sm text-gray-500">Verified Buyer</p>
+              </div>
+            </div>
+
+            {/* Rating */}
+            <div className="flex items-center gap-1">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`w-5 h-5 ${
+                    i < Math.floor(rev.rating)
+                      ? "text-yellow-400 fill-current"
+                      : "text-gray-300"
+                  }`}
+                />
+              ))}
+              <span className="ml-2 text-gray-700 font-medium">{rev.rating}/5</span>
+            </div>
+          </div>
+
+          {/* Review Message */}
+          <p className="text-gray-700 leading-relaxed">{rev.reviewMessage}</p>
+
+          {/* Footer - likes */}
+          <div className="flex items-center justify-end mt-4 gap-2">
+            <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
+              👍🏻 {rev.likesCount || 0}
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
     </div>
   );
 };
