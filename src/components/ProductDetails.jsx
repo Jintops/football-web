@@ -414,7 +414,69 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      
+      {/* Review Summary */}
+<div className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
+  <h2 className="text-2xl font-bold text-gray-900 mb-6">Customer Reviews</h2>
+
+  {/* If there are reviews */}
+  {review.length > 0 ? (
+    <div className="bg-white rounded-xl shadow-md p-6 mb-10 border border-gray-100">
+      <div className="grid md:grid-cols-3 gap-6">
+        {/* Average Rating */}
+        <div className="flex flex-col items-center justify-center text-center">
+          <h3 className="text-5xl font-bold text-yellow-500">
+            {(
+              review.reduce((sum, r) => sum + r.rating, 0) / review.length
+            ).toFixed(1)}
+          </h3>
+          <div className="flex items-center mt-2">
+            {[...Array(5)].map((_, i) => {
+              const avg =
+                review.reduce((sum, r) => sum + r.rating, 0) / review.length;
+              return (
+                <Star
+                  key={i}
+                  className={`w-6 h-6 ${
+                    i < Math.round(avg)
+                      ? "text-yellow-400 fill-current"
+                      : "text-gray-300"
+                  }`}
+                />
+              );
+            })}
+          </div>
+          <p className="text-gray-600 mt-2">{review.length} reviews</p>
+        </div>
+
+        {/* Progress Bars */}
+        <div className="md:col-span-2 space-y-2">
+          {[5, 4, 3, 2, 1].map((star) => {
+            const count = review.filter((r) => Math.floor(r.rating) === star).length;
+            const percentage = ((count / review.length) * 100).toFixed(0);
+
+            return (
+              <div key={star} className="flex items-center gap-3">
+                <span className="w-10 text-gray-700 font-medium">{star} ★</span>
+                <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-yellow-400 rounded-full"
+                    style={{ width: `${percentage}%` }}
+                  ></div>
+                </div>
+                <span className="w-12 text-right text-gray-600 text-sm">
+                  {count}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <p className="text-gray-600">No reviews yet. Be the first to review!</p>
+  )}
+</div>
+
 {/* Reviews Section */}
 <div className="max-w-7xl mx-auto mt-12 px-4 sm:px-6 lg:px-8">
   <h2 className="text-2xl font-bold text-gray-900 mb-6">Customer Reviews</h2>
@@ -445,18 +507,25 @@ const ProductDetails = () => {
 
             {/* Rating */}
             <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-5 h-5 ${
-                    i < Math.floor(rev.rating)
-                      ? "text-yellow-400 fill-current"
-                      : "text-gray-300"
-                  }`}
-                />
-              ))}
-              <span className="ml-2 text-gray-700 font-medium">{rev.rating}/5</span>
-            </div>
+  {[...Array(5)].map((_, i) => {
+    const filled = i < Math.floor(rev.rating);
+    const half = rev.rating - i >= 0.5 && rev.rating - i < 1;
+
+    return (
+      <span key={i} className="relative w-5 h-5">
+        {filled ? (
+          <Star className="w-5 h-5 text-yellow-400 fill-current" />
+        ) : half ? (
+          <Star className="w-5 h-5 text-yellow-400 absolute left-0 top-0 overflow-hidden" style={{ clipPath: "inset(0 50% 0 0)" }} />
+        ) : (
+          <Star className="w-5 h-5 text-gray-300" />
+        )}
+      </span>
+    );
+  })}
+  <span className="ml-2 text-gray-700 font-medium">{rev.rating.toFixed(1)}/5</span>
+</div>
+
           </div>
 
           {/* Review Message */}
