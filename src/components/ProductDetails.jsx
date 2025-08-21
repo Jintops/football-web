@@ -27,6 +27,9 @@ const ProductDetails = () => {
   const [review, setReview] = useState([]);
   const [orders,setOrders]=useState([])
   const [reviewBtn,setReviewBtn]=useState(false)
+  const [openReview,setOpenReview]=useState(false)
+
+
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -234,7 +237,7 @@ useEffect(()=>{
   const reviewCount = product.reviewCount || 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+    <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
@@ -568,7 +571,7 @@ useEffect(()=>{
         </h2>
 
       
-     {reviewBtn &&   <button className="bg-green-600 text-white px-6 m-2 p-2 font-semibold rounded-md hover:bg-green-800 hover:scale-105 transition-all">Add review</button>}
+     {reviewBtn &&   <button className="bg-green-600 text-white px-6 m-2 p-2 font-semibold rounded-md hover:bg-green-800 hover:scale-105 transition-all" onClick={()=>setOpenReview(true)}>Add review</button>}
       
         </div>
 
@@ -648,6 +651,16 @@ useEffect(()=>{
           </div>
         )}
       </div>
+
+
+ {openReview &&  <div className="absolute inset-0 flex justify-center items-center border">
+    <textarea className="border" placeholder="Enter the review"></textarea>
+    <input className="border" type="number" placeholder="rating"></input>
+    <button className="btn btn-block">cancel</button>
+    <button className="btn btn-accent">Submit</button>
+
+   </div>}
+
     </div>
   );
 };
