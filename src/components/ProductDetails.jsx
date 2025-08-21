@@ -573,9 +573,10 @@ useEffect(()=>{
         </div>
 
         {review.length === 0 ? (
-          <p className="text-gray-600">
-            No reviews yet. Be the first to review!
-          </p>
+         <p className="text-gray-600">
+    No reviews yet.{" "}
+    {reviewBtn && <span className="text-blue-600 font-semibold">Be the first to review!</span>}
+  </p>
         ) : (
           <div className="space-y-4">
             {review.map((rev, index) => (
