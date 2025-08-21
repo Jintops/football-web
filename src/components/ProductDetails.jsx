@@ -143,12 +143,43 @@ useEffect(()=>{
       setReviewBtn(isReviewable);
     }
   }, [orders, id]);
- console.log(id)
 
-  const handleReview=async()=>{
-     const res=await axios.post(BASE_URL+"addReview",{productId:id,reviewMessage:reviewMsg,rating:ratingg},{withCredentials:true})
-     setOpenReview(false)
+
+const handleReview = async () => {
+  const finalRating = ratingg || 1;
+
+  try {
+    const res = await axios.post(
+      BASE_URL + "addReview",
+      { productId: id, reviewMessage: reviewMsg, rating: finalRating },
+      { withCredentials: true }
+    );
+
+    // update local review state instantly
+    if (res.data?.review) {
+      setReview((prev) => [res.data.review, ...prev]);  // new on top
+    } else {
+      setReview((prev) => [
+        {
+          productId: id,
+          reviewMessage: reviewMsg,
+          rating: finalRating,
+          firstName: "You",
+          createdAt: new Date(),
+        },
+        ...prev,
+      ]);
+    }
+
+    setReviewMsg("");
+    setRatingg(1);
+    setOpenReview(false);
+  } catch (err) {
+    console.error("Error adding review:", err);
   }
+};
+
+
 
 
   // Loading state with modern skeleton
