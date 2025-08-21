@@ -28,7 +28,9 @@ const ProductDetails = () => {
   const [orders,setOrders]=useState([])
   const [reviewBtn,setReviewBtn]=useState(false)
   const [openReview,setOpenReview]=useState(false)
- const [ratingg, setRatingg] = useState(0);
+ const [ratingg, setRatingg] = useState(1);
+ const [reviewMsg,setReviewMsg]=useState('')
+
 
 
   const { id } = useParams();
@@ -141,10 +143,11 @@ useEffect(()=>{
       setReviewBtn(isReviewable);
     }
   }, [orders, id]);
-
+ console.log(id)
 
   const handleReview=async()=>{
-     const res=await axios.post(BASE_URL+"/addReview")
+     const res=await axios.post(BASE_URL+"addReview",{productId:id,reviewMessage:reviewMsg,rating:ratingg},{withCredentials:true})
+     setOpenReview(false)
   }
 
 
@@ -659,52 +662,56 @@ useEffect(()=>{
       </div>
 
 {openReview && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
-              Add Your Review
-            </h2>
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 ">
+    <div className="bg-white/90 rounded-3xl shadow-2xl p-8 w-full max-w-md transform transition-all scale-95 hover:scale-100">
+      {/* Title */}
+      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+        Share Your Review
+      </h2>
 
-            {/* Textarea */}
-            <textarea
-              className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Write your review..."
-              rows="4"
-            ></textarea>
+      {/* Textarea */}
+      <textarea
+        value={reviewMsg}
+        onChange={(e) => setReviewMsg(e.target.value)}
+        className="w-full border border-gray-300 rounded-xl p-4 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none shadow-sm"
+        placeholder="Write your thoughts about this product..."
+        rows="4"
+      />
 
-            {/* Star Rating */}
-            <div className="flex justify-center mb-4 space-x-1">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star
-                  key={star}
-                  className={`w-8 h-8 cursor-pointer transition ${
-                    ( ratingg) >= star
-                      ? "text-yellow-400 fill-yellow-400"
-                      : "text-gray-300"
-                  }`}
-                  onClick={() => setRatingg(star)}
-                  
-                />
-              ))}
-            </div>
+      {/* Star Rating */}
+      <div className="flex justify-center mb-6 space-x-2">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <Star
+            key={star}
+            className={`w-10 h-10 cursor-pointer transition-transform ${
+              ratingg >= star
+                ? "text-yellow-400 fill-yellow-400 scale-110"
+                : "text-gray-300 hover:text-yellow-300"
+            }`}
+            onClick={() => setRatingg(star)}
+          />
+        ))}
+      </div>
 
-            <div className="flex justify-between gap-3">
-              <button
-                className="w-1/2 py-2 rounded-lg bg-gray-300 text-gray-800 font-medium hover:bg-gray-400 transition"
-                onClick={() => setOpenReview(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="w-1/2 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
-                onClick={handleReview}
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Buttons */}
+      <div className="flex gap-4">
+        <button
+          className="w-1/2 py-3 rounded-xl bg-gray-300 text-gray-800 font-medium shadow hover:bg-gray-400 transition"
+          onClick={() => setOpenReview(false)}
+        >
+          Cancel
+        </button>
+        <button
+          className="w-1/2 py-3 rounded-xl bg-gradient-to-r from-green-500 to-green-700 text-white font-semibold shadow-lg hover:from-green-600 hover:to-green-800 transition"
+          onClick={handleReview}
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
 
     </div>
