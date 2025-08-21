@@ -28,6 +28,7 @@ const ProductDetails = () => {
   const [orders,setOrders]=useState([])
   const [reviewBtn,setReviewBtn]=useState(false)
   const [openReview,setOpenReview]=useState(false)
+ const [ratingg, setRatingg] = useState(0);
 
 
   const { id } = useParams();
@@ -142,6 +143,11 @@ useEffect(()=>{
   }, [orders, id]);
 
 
+  const handleReview=async()=>{
+     const res=await axios.post(BASE_URL+"/addReview")
+  }
+
+
   // Loading state with modern skeleton
   if (loading) {
     return (
@@ -237,7 +243,7 @@ useEffect(()=>{
   const reviewCount = product.reviewCount || 0;
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+    <div className=" min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
@@ -652,14 +658,54 @@ useEffect(()=>{
         )}
       </div>
 
+{openReview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 text-center">
+              Add Your Review
+            </h2>
 
- {openReview &&  <div className="absolute inset-0 flex justify-center items-center border">
-    <textarea className="border" placeholder="Enter the review"></textarea>
-    <input className="border" type="number" placeholder="rating"></input>
-    <button className="btn btn-block">cancel</button>
-    <button className="btn btn-accent">Submit</button>
+            {/* Textarea */}
+            <textarea
+              className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Write your review..."
+              rows="4"
+            ></textarea>
 
-   </div>}
+            {/* Star Rating */}
+            <div className="flex justify-center mb-4 space-x-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star
+                  key={star}
+                  className={`w-8 h-8 cursor-pointer transition ${
+                    ( ratingg) >= star
+                      ? "text-yellow-400 fill-yellow-400"
+                      : "text-gray-300"
+                  }`}
+                  onClick={() => setRatingg(star)}
+                  
+                />
+              ))}
+            </div>
+
+            <div className="flex justify-between gap-3">
+              <button
+                className="w-1/2 py-2 rounded-lg bg-gray-300 text-gray-800 font-medium hover:bg-gray-400 transition"
+                onClick={() => setOpenReview(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="w-1/2 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
+                onClick={handleReview}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
 
     </div>
   );
