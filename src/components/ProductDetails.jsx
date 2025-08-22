@@ -184,7 +184,18 @@ const handleLikes=async (reviewId,actions)=>{
   
   try{
     const res=await axios.patch(BASE_URL+"likes/"+reviewId,{action:actions},{withCredentials:true})
-    console.log(res.data)
+    setReview((prevReviews) =>
+      prevReviews.map((rev) =>
+        rev._id === reviewId
+          ? {
+              ...rev,
+              // Update likes and dislikes arrays with correct length
+              likes: Array(res.data.likesCount).fill(null),
+              dislikes: Array(res.data.dislikesCount).fill(null),
+            }
+          : rev
+      )
+    );
   }catch(err){
     console.log(err.message)
   }
