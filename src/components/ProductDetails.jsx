@@ -11,6 +11,7 @@ import {
   RotateCcw,
   Star,
 } from "lucide-react";
+import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
@@ -131,7 +132,7 @@ useEffect(()=>{
       reviews(id);
     }
   }, [id]);
-  // console.log(productId);
+  
 
 
  useEffect(() => {
@@ -157,7 +158,7 @@ const handleReview = async () => {
 
     // update local review state instantly
     if (res.data?.review) {
-      setReview((prev) => [res.data.review, ...prev]);  // new on top
+      setReview((prev) => [res.data.review, ...prev]); 
     } else {
       setReview((prev) => [
         {
@@ -179,9 +180,17 @@ const handleReview = async () => {
   }
 };
 
+const handleLikes=async (reviewId,actions)=>{
+  
+  try{
+    const res=await axios.patch(BASE_URL+"likes/"+reviewId,{action:actions},{withCredentials:true})
+    console.log(res.data)
+  }catch(err){
+    console.log(err.message)
+  }
+}
 
-
-
+console.log(review)
   // Loading state with modern skeleton
   if (loading) {
     return (
@@ -190,7 +199,6 @@ const handleReview = async () => {
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="animate-pulse p-8">
               <div className="grid lg:grid-cols-2 gap-12">
-                {/* Image skeleton */}
                 <div className="space-y-4">
                   <div className="aspect-square bg-gray-200 rounded-xl"></div>
                   <div className="flex gap-2">
@@ -279,7 +287,6 @@ const handleReview = async () => {
   return (
     <div className=" min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
           <button
             onClick={() => navigate("/")}
@@ -678,14 +685,14 @@ const handleReview = async () => {
               
 
                 {/* Footer - likes */}
-                <div className="flex items-center justify-end mt-4 gap-4">
-                  <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
-                    👍🏻 {rev.likesCount || 0}
-                  </button>
-                   <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
-                    👎🏻 {rev.dislikesCount || 0}
-                  </button>
-                </div>
+              <div className="flex items-center justify-end mt-4 gap-4">
+  <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
+    <ThumbsUp className="w-4 h-4" onClick={()=>handleLikes(rev._id,"likes")} /> {rev.likes.length || 0}
+  </button>
+  <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
+    <ThumbsDown className="w-4 h-4"onClick={()=>handleLikes(rev._id,"dislikes")} /> {rev.dislikes.length || 0}
+  </button>
+</div>
               </div>
             ))}
           </div>
