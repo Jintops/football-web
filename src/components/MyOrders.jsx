@@ -6,12 +6,16 @@ import { PackageX } from "lucide-react";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [page,setPage]=useState(1)
+const [totalPages,setTotalPages]=useState(1)
+ const limit=6
+
   const navigate=useNavigate()
   const fetchOrders = async () => {
     try {
-      const res = await axios.get(BASE_URL + "orderList", { withCredentials: true });
+      const res = await axios.get(`${BASE_URL}orderList?page=${page}&limit=${limit}`, { withCredentials: true });
       setOrders(res.data.data);
-      
+      setTotalPages(res.data.totalPages); 
     } catch (err) {
       console.error("Failed to fetch orders:", err);
     }
@@ -19,7 +23,7 @@ const MyOrders = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [page]);
 if (orders.length === 0) {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
@@ -78,6 +82,42 @@ if (orders.length === 0) {
           </div>
         ))}
       </div>
+
+
+ <div className="flex justify-center items-center gap-2 mt-8">
+      <button
+        onClick={() => setPage((prev) => prev - 1)}
+        disabled={page === 1}
+        className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300"
+      >
+        Prev
+      </button>
+
+      {/* Page Numbers */}
+      {Array.from({ length: totalPages }, (_, i) => (
+        <button
+          key={i + 1}
+          onClick={() => setPage(i + 1)}
+          className={`px-3 py-1 rounded ${
+            page === i + 1
+              ? "bg-green-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300"
+          }`}
+        >
+          {i + 1}
+        </button>
+      ))}
+
+      <button
+        onClick={() => setPage((prev) => prev + 1)}
+        disabled={page === totalPages}
+        className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300"
+      >
+        Next
+      </button>
+    </div>
+
+
     </div>
   );
 };
