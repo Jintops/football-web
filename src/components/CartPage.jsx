@@ -11,79 +11,67 @@ const CartPage = ({ onClose }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   
-  // Get cart items from Redux store
+  // ✅ Get cart from Redux
   const cartItems = useSelector((store) => store.cartCount.items);
-  
   const navigate = useNavigate();
 
-  // Calculate total amount
-  const totalAmount = cartItems.reduce((acc, item) => {
-    const price = item.salePrice || item.price || 0;
-    const quantity = item.count || item.quantity || 1;
-    return acc + price * quantity;
-  }, 0);
-
-  const clearCartt = async () => {
+  // ✅ Fetch cart from backend
+  const fetchCart = async () => {
     try {
-      await axios.delete(BASE_URL + "removeCart", { withCredentials: true });
-      dispatch(clearCart());
+      setLoading(true);
+      const res = await axios.get(BASE_URL + "cartItems", { withCredentials: true });
+
+      dispatch(resetCart());
+
+      if (res.data.data.items && Array.isArray(res.data.data.items)) {
+        const normalizedCart = res.data.data.items.map((item) => {
+          if (item.productId) {
+            return {
+              ...item.productId,
+              count: item.quantity || 1,
+              _id: item.productId._id,
+            };
+          }
+          return {
+            ...item,
+            count: item.quantity || item.count || 1,
+          };
+        });
+        dispatch(setCart(normalizedCart));
+      }
     } catch (error) {
-      console.error("Error clearing cart:", error);
-      // Still clear Redux store even if API fails
-      dispatch(clearCart());
+      console.error("Error fetching cart:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  // ✅ Calculate total
+  const totalAmount = cartItems.reduce((acc, item) => {
+    const price = item.salePrice || item.price || 0;
+    return acc + price * (item.count || 1);
+  }, 0);
+
+  // ✅ Clear cart
+ const clearCartt = async () => {
+   try { 
+    await axios.delete(BASE_URL + "removeCart", { withCredentials: true }); dispatch(clearCart());
+   } catch (error) {
+     console.error("Error clearing cart:", error);
+  dispatch(clearCart());
+  } };
+
+  // ✅ Buy Now
   const handleOrder = () => {
-    navigate('/orders', { state: { cartItem: cartItems } });
+    navigate("/orders", { state: { cartItem: cartItems } });
     onClose();
   };
 
-  useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(BASE_URL + "cartItems", { withCredentials: true });
-        
-        console.log("Cart API Response:", res.data);
-        
-        // Clear existing cart first
-        dispatch(clearCart());
-        
-        // Add each item individually to match Redux slice expectations
-        if (res.data.data.items && Array.isArray(res.data.data.items)) {
-          res.data.data.items.forEach(item => {
-            // Normalize the item structure
-            let normalizedItem;
-            
-            if (item.productId) {
-              // If item has productId (populated product), flatten it
-              normalizedItem = {
-                ...item.productId,
-                count: item.quantity || 1,
-                _id: item.productId._id
-              };
-            } else {
-              // If item is already flattened
-              normalizedItem = {
-                ...item,
-                count: item.quantity || item.count || 1
-              };
-            }
-            
-            dispatch(addItem(normalizedItem));
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching cart:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchCart();
-  }, [dispatch]);
-
+  // ✅ Loading
   if (loading) {
     return (
       <>
@@ -108,6 +96,7 @@ const CartPage = ({ onClose }) => {
     );
   }
 
+  // ✅ Final UI
   return (
     <>
       <div
@@ -134,6 +123,7 @@ const CartPage = ({ onClose }) => {
               <CartProduct 
                 key={item._id || index} 
                 item={item} 
+                refreshCart={fetchCart} // ✅ ensures + / - syncs with backend
               />
             ))}
 
