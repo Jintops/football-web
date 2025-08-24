@@ -9,21 +9,18 @@ const cartCountSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
-      const itemIndex = state.items.findIndex(
-        (item) => item._id === action.payload._id
-      );
-      if (itemIndex >= 0) {
-        // Item already exists, increment count
-        state.items[itemIndex].count += 1;
-      } else {
-        // New item, add with count 1
-        state.items.push({ 
-          ...action.payload, 
-          count: action.payload.count || 1 
-        });
-      }
-      localStorage.setItem("cartItems", JSON.stringify(state.items));
-    },
+  const { _id, count = 1 } = action.payload;
+  const itemIndex = state.items.findIndex((item) => item._id === _id);
+
+  if (itemIndex >= 0) {
+    state.items[itemIndex].count += count;  
+  } else {
+    state.items.push({ ...action.payload, count });
+  }
+
+  localStorage.setItem("cartItems", JSON.stringify(state.items));
+},
+
     
     // New action to set entire cart (useful for API sync)
     setCart: (state, action) => {
