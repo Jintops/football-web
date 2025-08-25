@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { PHOTO_1, PHOTO_2 } from '../utils/constants';
+import { Link } from 'react-router-dom';
 
 const FrontPage = () => {
   return (
@@ -22,9 +23,9 @@ const FrontPage = () => {
             Shop Now 
             <ArrowRight className="ml-2 h-5 w-5" />
           </button>
-          <button className="w-full sm:w-48 h-12 md:h-18 border-2 border-white rounded-lg bg-transparent hover:bg-white text-white hover:text-green-500 font-bold transition-all duration-200 transform hover:scale-105 p-2">
+        <Link to="/viewallproducts"> <button className="w-full sm:w-48 h-12 md:h-18 border-2 border-white rounded-lg bg-transparent hover:bg-white text-white hover:text-green-500 font-bold transition-all duration-200 transform hover:scale-105 p-2">
             View Collections
-          </button>
+          </button></Link> 
         </div>
       </div>
     

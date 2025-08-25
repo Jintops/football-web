@@ -9,7 +9,6 @@ import { addItem } from '../utils/cartCountSlice'
 import { ArrowRight } from "lucide-react";
 const ProductPage = () => {
 const [products,setProducts]=useState([]);
-const dispatch=useDispatch()
 const getAllProduct=async()=>{
 
     
@@ -22,17 +21,15 @@ const getAllProduct=async()=>{
         console.log(err)
     }
 }
+const shuffleArray = (arr) => {
+  return [...arr].sort(() => Math.random() - 0.5);
+};
 
-// const itemsInCart=async()=>{
-//         const res=await axios.get(BASE_URL+"cartItems",{withCredentials:true})
-//         dispatch(addItem(res.data.data.items))   
-//     //    console.log(res.data.data.items)
-//    }
+const randomProducts = shuffleArray(products).slice(0, 8);
 
- 
+
  useEffect(()=>{
     getAllProduct();
-    //  itemsInCart();
  },[])
   return (
 
@@ -44,7 +41,7 @@ const getAllProduct=async()=>{
         </div>
         <div className='flex gap-10 items-center justify-center mt-10 flex-wrap'>
            
-         {products.map((item)=>{
+         {randomProducts.map((item)=>{
             return(
                 <div key={item._id}> <Products  product={item}/>   </div>
             )

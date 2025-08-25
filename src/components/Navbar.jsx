@@ -105,11 +105,11 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-6 lg:gap-8 font-medium text-gray-700">
+        <ul className="hidden md:flex gap-6 lg:gap-8 font-bold text-gray-600">
           <li className="hover:text-green-500"><Link to="/">Home</Link></li>
-          <li className="hover:text-green-500">Jersey</li>
-          <li className="hover:text-green-500">Boots</li>
-          <li className="hover:text-green-500">Equipments</li>
+          <li className="hover:text-green-500"><Link to="/viewallproducts">Collections</Link></li>
+          {/* <li className="hover:text-green-500">Boots</li>
+          <li className="hover:text-green-500">Equipments</li> */}
           <li className="hover:text-green-500">Contact</li>
         </ul>
 

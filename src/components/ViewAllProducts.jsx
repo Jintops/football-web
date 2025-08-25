@@ -30,7 +30,6 @@ useEffect(()=>{
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
-      {/* Heading */}
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
         Our Products
       </h1>
