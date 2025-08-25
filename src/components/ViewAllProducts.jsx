@@ -2,17 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 
-const categories = ["All", "Jerseys", "Boots", "Accessories"];
-
-const productss = [
-  { id: 1, name: "Home Jersey", category: "Jerseys", price: 1299, image: "https://i.pinimg.com/736x/27/4d/bb/274dbb8670cf70a8d38906261b887309.jpg" },
-  { id: 2, name: "Away Jersey", category: "Jerseys", price: 1399, image: "https://i.pinimg.com/736x/1b/61/f8/1b61f8160dcbc9364166230d0f73f3b6.jpg" },
-  { id: 3, name: "Football Boots", category: "Boots", price: 2999, image: "https://i.pinimg.com/736x/b3/af/8d/b3af8d828e99a19e0bd3740ae1fbe525.jpg" },
-  { id: 4, name: "Shin Guards", category: "Accessories", price: 499, image: "https://i.pinimg.com/736x/d7/fd/79/d7fd79788139d0a77d63aaf2e7c6d827.jpg" },
-  { id: 5, name: "Goalkeeper Gloves", category: "Accessories", price: 999, image: "https://i.pinimg.com/736x/cb/66/3e/cb663e76a1bc4d7844c9f1e88b8c0901.jpg" },
-];
-
-
+const categories = ["All", "jersey", "boots", "glove","shinguard","shorts"];
 
 const ViewAllProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
