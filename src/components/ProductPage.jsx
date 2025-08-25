@@ -52,9 +52,10 @@ const getAllProduct=async()=>{
          
         </div>
 <div className="flex justify-center mt-10">
+    <Link to="/viewallproducts">
   <button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-green-700 to-green-400 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
     View All Products →
-  </button>
+  </button></Link>
 </div>
 
     </div>
