@@ -29,7 +29,7 @@ useEffect(()=>{
 },[])
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
+    <div className="max-w-11/12 mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
         Our Products
       </h1>
@@ -52,17 +52,19 @@ useEffect(()=>{
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden"
+            className="bg-white rounded-xl shadow-md hover:shadow-xl  overflow-hidden hover:scale-105 transition-transform duration-500"
           >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-56 object-cover bg-gray-50  rounded-t-xl"
-            />
+          <figure className="px-10 pt-8 flex justify-center">
+          <img
+            src={product.image}
+            alt={product.title}
+            className="rounded-xl h-60 w-60 object-cover hover:scale-105 transition-transform duration-500"
+          />
+        </figure>
             <div className="p-4">
               <h2 className="text-lg font-semibold text-gray-800">
                 {product.name}
