@@ -3,7 +3,7 @@ import { Search, ShoppingCart, User, Menu, X } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import CartPage from './CartPage';
 import { BASE_URL, LOGO } from '../utils/constants';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { removeUser } from '../utils/userSlice';
 import { clearCart, addItem } from '../utils/cartCountSlice';
@@ -16,7 +16,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(store => store.user);
 
- 
+ const navigate=useNavigate()
   const cartItems = useSelector((store) => store.cartCount.items);
   const cartCount = cartItems.length;
   
@@ -89,6 +89,7 @@ const Navbar = () => {
       dispatch(removeUser());
       dispatch(clearCart());
       setOpenProfile(false);
+      navigate("/")
     } catch (err) {
       console.log(err);
     }
