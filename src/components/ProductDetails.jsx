@@ -55,9 +55,9 @@ const ProductDetails = () => {
     } catch (error) {
       console.error("Error adding item to cart:", error);
       dispatch(addItem({ ...product, count: quantity }));
-      
-      toast.error(
-        "Failed to sync with server, but item added to cart locally",
+
+      toast.success(
+        "Item added to Cart",
         {
           position: "bottom-right",
           autoClose: 3000,
