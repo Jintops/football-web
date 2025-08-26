@@ -107,16 +107,23 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
           </div>
 
 
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-1">Category</label>
-            <input
-              type="text"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              placeholder="Enter Category"
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
+        <div>
+  <label className="text-sm font-medium text-gray-700 mb-1 block">
+    Category
+  </label>
+  <select
+    value={category}
+    onChange={(e) => setCategory(e.target.value)}
+    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+  >
+    <option value="">Select Category</option>
+    <option value="jersey">Jersey</option>
+    <option value="boots">Boots</option>
+    <option value="glove">Glove</option>
+    <option value="shinguard">Shin Guard</option>
+    <option value="shorts">Shorts</option>
+  </select>
+</div>
 
 
 
