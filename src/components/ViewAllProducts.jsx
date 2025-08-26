@@ -1,17 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const categories = ["jersey", "boots", "glove", "shinguard", "shorts"];
 
 const ViewAllProducts = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); // array
   const [products, setProducts] = useState([]);
-
+ const navigate=useNavigate();
   const filteredProducts =
     selectedCategories.length === 0 
       ? products
       : products.filter((p) => selectedCategories.includes(p.category));
+
+
 
   const allProducts = async () => {
     try {
@@ -33,6 +36,10 @@ const ViewAllProducts = () => {
       prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
     );
   };
+
+  const detailedProduct=(id)=>{
+    navigate(`/productdetails/${id}`)
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -102,12 +109,13 @@ const ViewAllProducts = () => {
 
 
           {/* Product Grid */}
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"
+          >
             {filteredProducts.map((product) => (
               <div
                 key={product._id}
                 className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden hover:scale-105 transition-transform duration-500"
-              >
+               onClick={()=>detailedProduct(product._id)} >
                 <figure className="px-6 pt-6 flex justify-center">
                   <img
                     src={product.image}
@@ -117,7 +125,7 @@ const ViewAllProducts = () => {
                 </figure>
                 <div className="p-4">
                   <h2 className="text-lg font-semibold text-gray-800">
-                    {product.name}
+                    {product.title}
                   </h2>
                   <p className="text-green-600 font-bold mt-2">
                     ₹{product.price}
