@@ -45,7 +45,7 @@ const ViewAllProducts = () => {
     <div className="flex flex-col min-h-screen">
             <div className="">
         <h1 className="text-3xl font-bold text-center m-8 text-gray-800 ">
-          Our Products
+          All Products
         </h1>
         </div>
       {/* Page Content */}
@@ -109,7 +109,7 @@ const ViewAllProducts = () => {
 
 
           {/* Product Grid */}
-          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"
+          <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-10"
           >
             {filteredProducts.map((product) => (
               <div

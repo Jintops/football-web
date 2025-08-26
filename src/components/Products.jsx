@@ -67,7 +67,7 @@ const Products = ({ product }) => {
           <p className="line-clamp-2">{description}</p>
           <span>⭐️ ⭐️ ⭐️ ⭐️ {rating}</span>
           <div className="card-actions flex justify-center gap-4">
-            <h1 className="text-2xl font-bold mt-1">${price}</h1>
+            <h1 className="text-2xl font-bold mt-1">₹{price}</h1>
             <button
               className="mb-3 flex justify-center gap-2 border bg-green-600 w-40 px-4 py-2 text-white font-bold rounded-lg hover:bg-green-700 transition"
               onClick={cartItems}

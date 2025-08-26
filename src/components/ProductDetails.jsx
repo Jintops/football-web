@@ -408,15 +408,15 @@ console.log(review)
               {/* Price */}
               <div className="flex items-center gap-4">
                 <span className="text-4xl font-bold text-green-600">
-                  ${product.price}
+                  ₹{product.price}
                 </span>
                 {product.salePrice && product.salePrice !== product.price && (
                   <div className="flex items-center gap-2">
                     <span className="text-xl text-gray-500 line-through">
-                      ${product.salePrice}
+                      ₹{product.salePrice}
                     </span>
                     <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm font-medium">
-                      Save ${(product.salePrice - product.price).toFixed(2)}
+                      Save ₹{(product.salePrice - product.price).toFixed(2)}
                     </span>
                   </div>
                 )}
