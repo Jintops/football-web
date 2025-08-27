@@ -20,19 +20,15 @@ const dispatch=useDispatch()
   const filteredProducts =
     selectedCategories.length === 0 
       ? products
-      : products.filter((p) => selectedCategories.includes(p.category));
-
-
-
-      const sortProduct=[...filteredProducts].sort((a,b)=>{
+      : products.filter((p) => selectedCategories.includes(p.category)
+    ).sort((a,b)=>{
         if(sortOption==="LowtoHigh") return a.price-b.price;
         if(sortOption==="HightoLow") return b.price-a.price;
         if(sortOption==="TitleAZ") return a.title.localeCompare(b.title);
         if(sortOption==="TitleZA") return b.title.localeCompare(a.title);
         return 0
-      })
+      });
 
-const combinedProduct=filteredProducts&&sortProduct
 
   const allProducts = async () => {
     try {
@@ -160,7 +156,7 @@ const combinedProduct=filteredProducts&&sortProduct
           {/* Product Grid */}
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-10"
           >
-            {combinedProduct.map((product) => (
+            {filteredProducts.map((product) => (
               <div
                 key={product._id}
                 className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden hover:scale-105 transition-transform duration-500"
