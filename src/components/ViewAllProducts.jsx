@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
+import { ArrowUpDown } from "lucide-react";
 
 const categories = ["jersey", "boots", "glove", "shinguard", "shorts"];
 
@@ -20,15 +21,19 @@ const dispatch=useDispatch()
   const filteredProducts =
     selectedCategories.length === 0 
       ? products
-      : products.filter((p) => selectedCategories.includes(p.category)
-    ).sort((a,b)=>{
+      : products.filter((p) => selectedCategories.includes(p.category));
+
+
+
+      const sortProduct=[...filteredProducts].sort((a,b)=>{
         if(sortOption==="LowtoHigh") return a.price-b.price;
         if(sortOption==="HightoLow") return b.price-a.price;
         if(sortOption==="TitleAZ") return a.title.localeCompare(b.title);
         if(sortOption==="TitleZA") return b.title.localeCompare(a.title);
         return 0
-      });
+      })
 
+const combinedProduct=filteredProducts&&sortProduct
 
   const allProducts = async () => {
     try {
@@ -79,20 +84,33 @@ const dispatch=useDispatch()
 
   return (
     <div className="flex flex-col min-h-screen">
-            <div className="">
+            <div className="flex items-center justify-around px-6 py-2 bg-white border-b-1 border-gray-200 sticky top-[64px] z-40">
         <h1 className="text-3xl font-bold text-center m-8 text-gray-800 ">
           All Products
         </h1>
-        </div>
-        <div className="flex justify-end max-w-11/12 my-4">  
-        <select className="border border-gray-300 outline-none rounded-md" onChange={(e)=>setSortOption(e.target.value)}>
-            <option className="text-center font-bold">Sort by</option>
-            <option value="LowtoHigh">low to high price</option>
-            <option value="HightoLow">Hight to low Price</option>
-            <option value="TitleAZ">Title a-z</option>
-            <option value="TitleZA">Title z-a</option>
-        </select>
-         </div>
+        
+ <div className="relative inline-block">
+  <select
+    className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg shadow-sm 
+               focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 
+               appearance-none pr-8"
+    onChange={(e) => setSortOption(e.target.value)}
+    defaultValue=""
+  >
+    <option value="" disabled className="font-medium text-gray-500">
+      Sort by
+    </option>
+    <option value="LowtoHigh">Price: Low → High</option>
+    <option value="HightoLow">Price: High → Low</option>
+    <option value="TitleAZ">Title: A → Z</option>
+    <option value="TitleZA">Title: Z → A</option>
+  </select>
+
+  {/* Icon */}
+  <ArrowUpDown className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+</div>
+</div>
+
       {/* Page Content */}
       <main className="flex-1">
     
@@ -100,7 +118,7 @@ const dispatch=useDispatch()
         <div className="flex gap-6">
             
           {/* Sidebar */}
-         <div className="w-52 flex flex-col gap-4 p-4 rounded-lg shadow-md sticky top-20 h-fit self-start bg-gray-50">
+         <div className="w-52 flex flex-col gap-4 p-4 rounded-lg shadow-md sticky top-44 h-fit self-start bg-gray-50">
   <h1 className="font-bold text-center text-gray-800">Categories</h1>
   {categories.map((cat) => {
     const isChecked = selectedCategories.includes(cat);
@@ -156,7 +174,7 @@ const dispatch=useDispatch()
           {/* Product Grid */}
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-10"
           >
-            {filteredProducts.map((product) => (
+            {combinedProduct.map((product) => (
               <div
                 key={product._id}
                 className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden hover:scale-105 transition-transform duration-500"
