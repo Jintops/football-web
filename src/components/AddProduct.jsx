@@ -122,6 +122,7 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
     <option value="glove">Glove</option>
     <option value="shinguard">Shin Guard</option>
     <option value="shorts">Shorts</option>
+    <option value="football">Ball</option>
   </select>
 </div>
 
