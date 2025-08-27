@@ -21,7 +21,7 @@ const CartPage = ({ onClose }) => {
       setLoading(true);
       const res = await axios.get(BASE_URL + "cartItems", { withCredentials: true });
 
-      dispatch(resetCart());
+      // dispatch(resetCart());
 
       if (res.data.data.items && Array.isArray(res.data.data.items)) {
         const normalizedCart = res.data.data.items.map((item) => {
@@ -37,7 +37,7 @@ const CartPage = ({ onClose }) => {
             count: item.quantity || item.count || 1,
           };
         });
-        dispatch(setCart(normalizedCart));
+        // dispatch(setCart(normalizedCart));
       }
     } catch (error) {
       console.error("Error fetching cart:", error);

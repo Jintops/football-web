@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartCountSlice";
 
 const categories = ["jersey", "boots", "glove", "shinguard", "shorts"];
 
@@ -10,6 +12,7 @@ const ViewAllProducts = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); // array
   const [products, setProducts] = useState([]);
   const [cartItems,setCartItems]=useState([])
+const dispatch=useDispatch()
 
  const navigate=useNavigate();
   const filteredProducts =
@@ -44,18 +47,19 @@ const ViewAllProducts = () => {
     navigate(`/productdetails/${id}`)
   }
 
-  const handleCart=async(e,productId)=>{
+  const handleCart=async(e,product)=>{
     e.stopPropagation();
     try{
-        const res=await axios.post(BASE_URL+"addToCart/"+productId,{},{withCredentials:true})
+        const res=await axios.post(BASE_URL+"addToCart/"+product._id,{},{withCredentials:true})
         setCartItems(res.data)
-
+        dispatch(addItem({...product,count:1}))
         toast.success("Item added to Cart",{
             position:"bottom-right",
             autoClose:3000
         })
     }catch(err){
         console.log(err)
+        dispatch(addItem({...product,count:1}))
           toast.success('Item added to Cart',{
             positon:"bottom-right",
             autoClose:3000,
@@ -153,7 +157,7 @@ const ViewAllProducts = () => {
                     ₹{product.price}
                   </p>
                   <button className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700 transition"
-                  onClick={(e)=>handleCart(e,product._id)}>
+                  onClick={(e)=>handleCart(e,product)}>
                     Add to Cart
                   </button>
                 </div>
