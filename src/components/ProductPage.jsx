@@ -7,6 +7,7 @@ import { BASE_URL } from '../utils/constants'
 import { useDispatch } from 'react-redux'
 import { addItem } from '../utils/cartCountSlice'
 import { ArrowRight } from "lucide-react";
+
 const ProductPage = () => {
 const [products,setProducts]=useState([]);
 const getAllProduct=async()=>{

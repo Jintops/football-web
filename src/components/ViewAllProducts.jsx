@@ -11,7 +11,7 @@ const categories = ["jersey", "boots", "glove", "shinguard", "shorts"];
 const ViewAllProducts = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); // array
   const [products, setProducts] = useState([]);
-  const [cartItems,setCartItems]=useState([])
+ 
 const dispatch=useDispatch()
 
  const navigate=useNavigate();
@@ -51,7 +51,7 @@ const dispatch=useDispatch()
     e.stopPropagation();
     try{
         const res=await axios.post(BASE_URL+"addToCart/"+product._id,{},{withCredentials:true})
-        setCartItems(res.data)
+        
         dispatch(addItem({...product,count:1}))
         toast.success("Item added to Cart",{
             position:"bottom-right",
@@ -59,14 +59,16 @@ const dispatch=useDispatch()
         })
     }catch(err){
         console.log(err)
+
         dispatch(addItem({...product,count:1}))
           toast.success('Item added to Cart',{
-            positon:"bottom-right",
+            position:"bottom-right",
             autoClose:3000,
           })
     }
   }
- console.log(cartItems)
+
+
   return (
     <div className="flex flex-col min-h-screen">
             <div className="">
@@ -74,6 +76,15 @@ const dispatch=useDispatch()
           All Products
         </h1>
         </div>
+        <div className="flex justify-end max-w-11/12 my-4">  
+        <select className="border border-gray-300 outline-none rounded-md">
+            <option className="text-center font-bold">Sort by</option>
+            <option>low to high price</option>
+            <option>Hight to low Price</option>
+            <option>Title a-z</option>
+            <option>Title z-a</option>
+        </select>
+         </div>
       {/* Page Content */}
       <main className="flex-1">
     
