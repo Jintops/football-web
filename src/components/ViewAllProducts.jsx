@@ -11,16 +11,28 @@ const categories = ["jersey", "boots", "glove", "shinguard", "shorts"];
 const ViewAllProducts = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); // array
   const [products, setProducts] = useState([]);
- 
+  const [sortOption,setSortOption]=useState("")
+
 const dispatch=useDispatch()
 
  const navigate=useNavigate();
+
   const filteredProducts =
     selectedCategories.length === 0 
       ? products
       : products.filter((p) => selectedCategories.includes(p.category));
 
 
+
+      const sortProduct=[...filteredProducts].sort((a,b)=>{
+        if(sortOption==="LowtoHigh") return a.price-b.price;
+        if(sortOption==="HightoLow") return b.price-a.price;
+        if(sortOption==="TitleAZ") return a.title.localeCompare(b.title);
+        if(sortOption==="TitleZA") return b.title.localeCompare(a.title);
+        return 0
+      })
+
+const combinedProduct=filteredProducts&&sortProduct
 
   const allProducts = async () => {
     try {
@@ -77,12 +89,12 @@ const dispatch=useDispatch()
         </h1>
         </div>
         <div className="flex justify-end max-w-11/12 my-4">  
-        <select className="border border-gray-300 outline-none rounded-md">
+        <select className="border border-gray-300 outline-none rounded-md" onChange={(e)=>setSortOption(e.target.value)}>
             <option className="text-center font-bold">Sort by</option>
-            <option>low to high price</option>
-            <option>Hight to low Price</option>
-            <option>Title a-z</option>
-            <option>Title z-a</option>
+            <option value="LowtoHigh">low to high price</option>
+            <option value="HightoLow">Hight to low Price</option>
+            <option value="TitleAZ">Title a-z</option>
+            <option value="TitleZA">Title z-a</option>
         </select>
          </div>
       {/* Page Content */}
@@ -148,7 +160,7 @@ const dispatch=useDispatch()
           {/* Product Grid */}
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-10"
           >
-            {filteredProducts.map((product) => (
+            {combinedProduct.map((product) => (
               <div
                 key={product._id}
                 className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden hover:scale-105 transition-transform duration-500"
