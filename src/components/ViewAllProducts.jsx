@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const categories = ["jersey", "boots", "glove", "shinguard", "shorts"];
 
@@ -48,8 +49,17 @@ const ViewAllProducts = () => {
     try{
         const res=await axios.post(BASE_URL+"addToCart/"+productId,{},{withCredentials:true})
         setCartItems(res.data)
+
+        toast.success("Item added to Cart",{
+            position:"bottom-right",
+            autoClose:3000
+        })
     }catch(err){
         console.log(err)
+          toast.success('Item added to Cart',{
+            positon:"bottom-right",
+            autoClose:3000,
+          })
     }
   }
  console.log(cartItems)
