@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
 import { ArrowUpDown } from "lucide-react";
 
-const categories = ["jersey", "boots", "glove", "shinguard", "shorts"];
+const categories = ["jersey", "boots", "glove", "shinguard", "shorts","football"];
 
 const ViewAllProducts = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); // array
@@ -84,41 +84,39 @@ const combinedProduct=filteredProducts&&sortProduct
 
   return (
     <div className="flex flex-col min-h-screen">
-            <div className="flex items-center justify-around px-6 py-2 bg-white border-b-1 border-gray-200 sticky top-[64px] z-40">
-        <h1 className="text-3xl font-bold text-center m-8 text-gray-800 ">
-          All Products
-        </h1>
-        
- <div className="relative inline-block">
-  <select
-    className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg shadow-sm 
-               focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 
-               appearance-none pr-8"
-    onChange={(e) => setSortOption(e.target.value)}
-    defaultValue=""
-  >
-    <option value="" disabled className="font-medium text-gray-500">
-      Sort by
-    </option>
-    <option value="LowtoHigh">Price: Low → High</option>
-    <option value="HightoLow">Price: High → Low</option>
-    <option value="TitleAZ">Title: A → Z</option>
-    <option value="TitleZA">Title: Z → A</option>
-  </select>
+         <div className="shadow-sm mb-6">
+    <h1 className="text-4xl font-extrabold text-center mt-6 mb-3 text-gray-800 tracking-wide">
+      Explore Our Collection
+    </h1>
+    <p className="text-center text-gray-500 ">
+      Shop the latest jerseys, boots, gloves, and more... 🏆
+    </p>
+      <div className="flex justify-end my-4 mx-6 ">
+    <div className="relative inline-block">
+      <select
+        className="px-4 py-2 text-sm border border-gray-300 rounded-xl shadow-sm 
+                   focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 
+                   appearance-none pr-10"
+        onChange={(e) => setSortOption(e.target.value)}
+        defaultValue=""
+      >
+        <option value="">Sort by</option>
+        <option value="LowtoHigh">Price: Low → High</option>
+        <option value="HightoLow">Price: High → Low</option>
+        <option value="TitleAZ">Title: A → Z</option>
+        <option value="TitleZA">Title: Z → A</option>
+      </select>
+      <ArrowUpDown className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+    </div>
+  </div>
+  </div>
 
-  {/* Icon */}
-  <ArrowUpDown className="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
-</div>
-</div>
-
-      {/* Page Content */}
       <main className="flex-1">
     
-
         <div className="flex gap-6">
             
           {/* Sidebar */}
-         <div className="w-52 flex flex-col gap-4 p-4 rounded-lg shadow-md sticky top-44 h-fit self-start bg-gray-50">
+         <div className="w-52 flex flex-col gap-4 p-4 rounded-lg shadow-md sticky top-20 h-fit self-start bg-gray-50">
   <h1 className="font-bold text-center text-gray-800">Categories</h1>
   {categories.map((cat) => {
     const isChecked = selectedCategories.includes(cat);
