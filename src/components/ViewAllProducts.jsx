@@ -8,6 +8,8 @@ const categories = ["jersey", "boots", "glove", "shinguard", "shorts"];
 const ViewAllProducts = () => {
   const [selectedCategories, setSelectedCategories] = useState([]); // array
   const [products, setProducts] = useState([]);
+  const [cartItems,setCartItems]=useState([])
+
  const navigate=useNavigate();
   const filteredProducts =
     selectedCategories.length === 0 
@@ -41,6 +43,16 @@ const ViewAllProducts = () => {
     navigate(`/productdetails/${id}`)
   }
 
+  const handleCart=async(e,productId)=>{
+    e.stopPropagation();
+    try{
+        const res=await axios.post(BASE_URL+"addToCart/"+productId,{},{withCredentials:true})
+        setCartItems(res.data)
+    }catch(err){
+        console.log(err)
+    }
+  }
+ console.log(cartItems)
   return (
     <div className="flex flex-col min-h-screen">
             <div className="">
@@ -130,7 +142,8 @@ const ViewAllProducts = () => {
                   <p className="text-green-600 font-bold mt-2">
                     ₹{product.price}
                   </p>
-                  <button className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700 transition">
+                  <button className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700 transition"
+                  onClick={(e)=>handleCart(e,product._id)}>
                     Add to Cart
                   </button>
                 </div>
