@@ -10,6 +10,7 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
   const [category, setCategory] = useState('');
   const [image, setImage] = useState(null); 
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [brand,setBrand]=useState("")
    
   
   useEffect(() => {
@@ -18,6 +19,7 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
       setDescription(selectedProduct.description || '');
       setPrice(selectedProduct.price || '');
       setCategory(selectedProduct.category || '')
+      setBrand(selectedProduct.brand || '')
       setPreviewUrl(selectedProduct.image || null); 
     }
   }, [selectedProduct]);
@@ -37,6 +39,7 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
     formData.append("description", description);
     formData.append("price", price);
     formData.append("category", category);
+    formData.append("brand", brand);
     formData.append("image", image); // This must match 'upload.single("image")' in backend
   let res;
     if(selectedProduct){
@@ -124,9 +127,27 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
     <option value="shorts">Shorts</option>
     <option value="football">Ball</option>
   </select>
-</div>
+ </div>
 
 
+        <div>
+  <label className="text-sm font-medium text-gray-700 mb-1 block">
+    Brand
+  </label>
+  <select
+    value={brand}
+    onChange={(e) => setBrand(e.target.value)}
+    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+  >
+    <option value="">Select Brand</option>
+    <option value="adidas">Adidas</option>
+    <option value="puma">Puma</option>
+    <option value="nike">Nike</option>   
+    <option value="reebok">Reebok</option>
+    <option value="nivia">Nivia</option>
+    <option value="cosco">Cosco</option>
+  </select>
+ </div>
 
           <div>
             <label className="text-sm font-medium text-gray-700 mb-1">Product Image</label>
