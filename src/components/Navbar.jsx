@@ -216,6 +216,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-// import { Eye, EyeOff, Mail, Lock, User, Shield, LogIn } from "lucide-react";

@@ -62,7 +62,7 @@ const CartProduct = ({ item,refreshCart }) => {
 
         
         <div className="flex-1 w-full sm:w-auto">
-          <h1 className="text-base font-semibold line-clamp-2 cursor-pointer" onClick={()=>navigate(`/productDetails/${_id}`)}>{title}</h1>
+          <h1 className="text-base font-semibold line-clamp-2 cursor-pointer" onClick={()=>productDetails(_id)}>{title}</h1>
           <p className="text-gray-600 mt-1">₹{price}</p>
 
           <div className="flex items-center gap-2 ">
