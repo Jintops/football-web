@@ -27,10 +27,10 @@ const dispatch=useDispatch()
 
         const filteredBrands =
      selectedBrands.length === 0 
-      ? products
-      : products.filter((p) => selectedBrands.includes(p.brand));
+      ? filteredProducts
+      : filteredProducts.filter((p) => selectedBrands.includes(p.brand));
 
-      const sortProduct=[...filteredProducts].sort((a,b)=>{
+      const sortProduct=[...filteredBrands].sort((a,b)=>{
         if(sortOption==="LowtoHigh") return a.price-b.price;
         if(sortOption==="HightoLow") return b.price-a.price;
         if(sortOption==="TitleAZ") return a.title.localeCompare(b.title);
@@ -38,9 +38,6 @@ const dispatch=useDispatch()
         return 0
       })
 
-  
-
-const combinedProduct=filteredProducts&&sortProduct&&filteredBrands
 
   const allProducts = async () => {
     try {
@@ -241,7 +238,7 @@ const combinedProduct=filteredProducts&&sortProduct&&filteredBrands
           {/* Product Grid */}
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-10"
           >
-            {combinedProduct.map((product) => (
+            {sortProduct.map((product) => (
               <div
                 key={product._id}
                 className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden hover:scale-105 transition-transform duration-500"
