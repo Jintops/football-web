@@ -46,7 +46,7 @@ const CartProduct = ({ item,refreshCart }) => {
   }
 
   const productDetails=(id)=>{
-      navigate(`/pro`)
+      navigate(`/productDetails/${id}`)
   }
 
   
@@ -58,11 +58,11 @@ const CartProduct = ({ item,refreshCart }) => {
           className="w-20 h-20 sm:w-20 sm:h-20 object-cover rounded-lg"
           src={image}
           alt={title}
-       onClick={ProductDetails(_id)} />
+         onClick={()=>productDetails(_id)} />
 
         
         <div className="flex-1 w-full sm:w-auto">
-          <h1 className="text-base font-semibold line-clamp-2">{title}</h1>
+          <h1 className="text-base font-semibold line-clamp-2 cursor-pointer" onClick={()=>navigate(`/productDetails/${_id}`)}>{title}</h1>
           <p className="text-gray-600 mt-1">₹{price}</p>
 
           <div className="flex items-center gap-2 ">
