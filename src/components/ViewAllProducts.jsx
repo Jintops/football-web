@@ -235,7 +235,7 @@ const dispatch=useDispatch()
             {sortProduct.map((product) => (
               <div
                 key={product._id}
-                className="bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden hover:scale-105 transition-transform duration-500"
+                className="bg-white h-[414px] rounded-xl shadow-md hover:shadow-xl overflow-hidden hover:scale-105 transition-transform duration-500"
                onClick={()=>detailedProduct(product._id)} >
                 <figure className="px-6 pt-6 flex justify-center">
                   <img
@@ -260,11 +260,12 @@ const dispatch=useDispatch()
             ))}
 
             {/* If no products */}
-            {filteredProducts.length === 0 && (
-              <p className="text-center text-gray-500 mt-10 col-span-full">
-                No products available in this category.
-              </p>
-            )}
+           {sortProduct.length === 0 && (
+  <div className="text-center col-span-full mt-10">
+    <p className="text-2xl font-semibold text-gray-700">No products found 🚫</p>
+    <p className="text-gray-500 mt-2">Try adjusting your filters or sorting options.</p>
+  </div>
+)}
           </div>
         </div>
       </main>
