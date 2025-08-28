@@ -126,112 +126,106 @@ const dispatch=useDispatch()
       <main className="flex-1">
     
         <div className="flex gap-6">
-            
-          {/* Sidebar */}
-         <div className="w-52 flex flex-col gap-4 p-4 rounded-lg shadow-md sticky top-20 h-fit self-start bg-gray-50">
-  <h1 className="font-bold text-center text-gray-800">Categories</h1>
-  {categories.map((cat) => {
-    const isChecked = selectedCategories.includes(cat);
-    return (
-      <label
-        key={cat}
-        className={`flex items-center gap-3 cursor-pointer px-4 py-2 rounded-lg transition ${
-          isChecked
-            ? "border border-green-300"
-            : "bg-white text-gray-700 hover:bg-green-100 "
-        }`}
-      >
-        {/* Hidden Checkbox */}
-        <input
-          type="checkbox"
-          name="category"
-          value={cat}
-          checked={isChecked}
-          onChange={() => toggleCategory(cat)}
-          className="hidden"
-        />
 
-        {/* Custom Checkbox UI */}
-        <span
-          className={`w-5 h-5 rounded-md border flex items-center justify-center ${
-            isChecked ? "bg-green-500 border-green-600" : "border-gray-400"
+{/* Sidebar */}
+<div className="w-52 flex flex-col gap-10 p-4 rounded-lg shadow-md sticky top-20 h-fit self-start bg-gray-50">
+
+  {/* Categories */}
+  <div className="flex flex-col gap-1">
+    <h1 className="font-bold text-center text-gray-800">Categories</h1>
+    {categories.map((cat) => {
+      const isChecked = selectedCategories.includes(cat);
+      return (
+        <label
+          key={cat}
+          className={`flex items-center gap-3 cursor-pointer px-4 py-2 rounded-lg transition ${
+            isChecked
+              ? "border border-green-300"
+              : "bg-white text-gray-700 hover:bg-green-100 "
           }`}
         >
-          {isChecked && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-3 h-3 text-white"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8.25 8.25a1 1 0 01-1.414 0l-4.25-4.25a1 1 0 111.414-1.414L8 12.586l7.543-7.543a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          )}
-        </span>
+          <input
+            type="checkbox"
+            name="category"
+            value={cat}
+            checked={isChecked}
+            onChange={() => toggleCategory(cat)}
+            className="hidden"
+          />
+          <span
+            className={`w-5 h-5 rounded-md border flex items-center justify-center ${
+              isChecked ? "bg-green-500 border-green-600" : "border-gray-400"
+            }`}
+          >
+            {isChecked && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-3 h-3 text-white"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8.25 8.25a1 1 0 01-1.414 0l-4.25-4.25a1 1 0 111.414-1.414L8 12.586l7.543-7.543a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}
+          </span>
+          <span>{cat.charAt(0).toUpperCase() + cat.slice(1)}</span>
+        </label>
+      );
+    })}
+  </div>
 
-        {/* Label Text */}
-        <span>{cat.charAt(0).toUpperCase() + cat.slice(1)}</span>
-      </label>
-    );
-  })}
-</div>
-
-
-
-         <div className="w-52 flex flex-col gap-4 p-4 rounded-lg shadow-md sticky top-20 h-fit self-start bg-gray-50">
-  <h1 className="font-bold text-center text-gray-800">Brands</h1>
-  {brands.map((brand) => {
-    const isChecked = selectedBrands.includes(brand);
-    return (
-      <label
-        key={brand}
-        className={`flex items-center gap-3 cursor-pointer px-4 py-2 rounded-lg transition ${
-          isChecked
-            ? "border border-green-300"
-            : "bg-white text-gray-700 hover:bg-green-100 "
-        }`}
-      >
-        {/* Hidden Checkbox */}
-        <input
-          type="checkbox"
-          name="brand"
-          value={brand}
-          checked={isChecked}
-          onChange={() => toggleBrand(brand)}
-          className="hidden"
-        />
-
-        {/* Custom Checkbox UI */}
-        <span
-          className={`w-5 h-5 rounded-md border flex items-center justify-center ${
-            isChecked ? "bg-green-500 border-green-600" : "border-gray-400"
+  {/* Brands */}
+  <div className="flex flex-col gap-1">
+    <h1 className="font-bold text-center text-gray-800">Brands</h1>
+    {brands.map((brand) => {
+      const isChecked = selectedBrands.includes(brand);
+      return (
+        <label
+          key={brand}
+          className={`flex items-center gap-3 cursor-pointer px-4 py-2 rounded-lg transition ${
+            isChecked
+              ? "border border-green-300"
+              : "bg-white text-gray-700 hover:bg-green-100 "
           }`}
         >
-          {isChecked && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-3 h-3 text-white"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8.25 8.25a1 1 0 01-1.414 0l-4.25-4.25a1 1 0 111.414-1.414L8 12.586l7.543-7.543a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          )}
-        </span>
+          <input
+            type="checkbox"
+            name="brand"
+            value={brand}
+            checked={isChecked}
+            onChange={() => toggleBrand(brand)}
+            className="hidden"
+          />
+          <span
+            className={`w-5 h-5 rounded-md border flex items-center justify-center ${
+              isChecked ? "bg-green-500 border-green-600" : "border-gray-400"
+            }`}
+          >
+            {isChecked && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-3 h-3 text-white"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8.25 8.25a1 1 0 01-1.414 0l-4.25-4.25a1 1 0 111.414-1.414L8 12.586l7.543-7.543a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            )}
+          </span>
+          <span>{brand.charAt(0).toUpperCase() + brand.slice(1)}</span>
+        </label>
+      );
+    })}
+  </div>
 
-        {/* Label Text */}
-        <span>{brand.charAt(0).toUpperCase() + brand.slice(1)}</span>
-      </label>
-    );
-  })}
 </div>
 
 

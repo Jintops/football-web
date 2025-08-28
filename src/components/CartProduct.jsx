@@ -8,6 +8,7 @@ import {
 } from "../utils/cartCountSlice";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 
 const CartProduct = ({ item,refreshCart }) => {
@@ -16,7 +17,7 @@ const CartProduct = ({ item,refreshCart }) => {
   const {_id, title, image, price,count } = product;
   
   const dispatch = useDispatch();
-  
+  const navigate=useNavigate()
 
   const deleteItems = async(_id) => {
     try{
@@ -44,6 +45,10 @@ const CartProduct = ({ item,refreshCart }) => {
     editQuantity(newCount)
   }
 
+  const productDetails=(id)=>{
+      navigate(`/pro`)
+  }
+
   
   return (
     <div className="w-full px-2 ">
@@ -53,7 +58,7 @@ const CartProduct = ({ item,refreshCart }) => {
           className="w-20 h-20 sm:w-20 sm:h-20 object-cover rounded-lg"
           src={image}
           alt={title}
-        />
+       onClick={ProductDetails(_id)} />
 
         
         <div className="flex-1 w-full sm:w-auto">
