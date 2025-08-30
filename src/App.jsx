@@ -21,6 +21,7 @@ import CheckAuth from "./components/CheckAuth"
 import AdminRestricted from "./components/AdminRestricted"
 import MyOrderDetail from "./components/MyOrderDetail"
 import ViewAllProducts from "./components/ViewAllProducts"
+import Otp from "./components/Otp"
 
 function App() {
    
@@ -42,6 +43,7 @@ function App() {
          <Route path="/myorderdetails/:id" element={<MyOrderDetail/>}></Route>
          <Route path="profile" element={<Profile/>}></Route>
          <Route path="/viewallproducts" element={<ViewAllProducts/>}></Route>
+         <Route path="/otpverify" element={<Otp/>}></Route>
           </Route>
 
          <Route path="/login" element={<Login role="User"/>}></Route>
