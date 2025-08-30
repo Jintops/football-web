@@ -33,7 +33,7 @@ const Otp = () => {
           Verify OTP
         </h1>
         <p className="text-gray-500 text-center mb-6">
-          Please enter the 4-digit code sent to your email/phone.
+          Please enter the 4-digit code sent to your email.
         </p>
 
         {/* OTP Inputs */}

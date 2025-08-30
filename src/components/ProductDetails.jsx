@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { use, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ShoppingCart,
@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../utils/constants";
-import { div } from "framer-motion/client";
+
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
@@ -156,10 +156,9 @@ const handleReview = async () => {
       { productId: id, reviewMessage: reviewMsg, rating: finalRating },
       { withCredentials: true }
     );
-
     // update local review state instantly
     if (res.data?.review) {
-      setReview((prev) => [res.data.review, ...prev]); 
+      setReview((prev) => [res?.data?.review, ...prev]); 
     } else {
       setReview((prev) => [
         {
@@ -181,12 +180,13 @@ const handleReview = async () => {
   }
 };
 
+
 const handleLikes=async (reviewId,actions)=>{
   
   try{
     const res=await axios.patch(BASE_URL+"likes/"+reviewId,{action:actions},{withCredentials:true})
     setReview((prevReviews) =>
-      prevReviews.map((rev) =>
+      prevReviews?.map((rev) =>
         rev._id === reviewId
           ? {
               ...rev,
@@ -214,7 +214,7 @@ console.log(review)
                 <div className="space-y-4">
                   <div className="aspect-square bg-gray-200 rounded-xl"></div>
                   <div className="flex gap-2">
-                    {[...Array(4)].map((_, i) => (
+                    {[...Array(4)]?.map((_, i) => (
                       <div
                         key={i}
                         className="w-16 h-16 bg-gray-200 rounded-lg"
@@ -292,9 +292,9 @@ console.log(review)
     );
   }
 
-  const images = product.images || [product.image];
-  const rating = product.rating || 0;
-  const reviewCount = product.reviewCount || 0;
+  const images = product?.images || [product?.image];
+  const rating = product?.rating || 0;
+  const reviewCount = product?.reviewCount || 0;
 
   return (
     <div className=" min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
@@ -327,9 +327,9 @@ console.log(review)
                 </div>
 
                 {/* Image indicators */}
-                {images.length > 1 && (
+                {images?.length > 1 && (
                   <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
-                    {images.map((img, index) => (
+                    {images?.map((img, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImage(index)}
@@ -384,7 +384,7 @@ console.log(review)
                 {rating > 0 && (
                   <div className="flex items-center gap-3 mb-4">
                     <div className="flex items-center gap-1">
-                      {[...Array(5)].map((_, i) => (
+                      {[...Array(5)]?.map((_, i) => (
                         <Star
                           key={i}
                           className={`w-5 h-5 ${
@@ -549,7 +549,7 @@ console.log(review)
             {/* <h2 className="text-2xl font-bold text-gray-900 mb-6">Rating & Reviews</h2> */}
 
             {/* If there are reviews */}
-            {review.length > 0 ? (
+            {review?.length > 0 ? (
               <div className="bg-white rounded-xl  p-6 mb-10 border border-gray-200">
                 <div className="grid md:grid-cols-3 gap-6">
                   {/* Average Rating */}
@@ -561,7 +561,7 @@ console.log(review)
                       ).toFixed(1)}
                     </h3>
                     <div className="flex items-center mt-2">
-                      {[...Array(5)].map((_, i) => {
+                      {[...Array(5)]?.map((_, i) => {
                         const avg =
                           review.reduce((sum, r) => sum + r.rating, 0) /
                           review.length;
@@ -578,18 +578,18 @@ console.log(review)
                       })}
                     </div>
                     <p className="text-gray-600 mt-2">
-                      {review.length} reviews
+                      {review?.length} reviews
                     </p>
                   </div>
 
                   {/* Progress Bars */}
                   <div className="md:col-span-2 space-y-2">
-                    {[5, 4, 3, 2, 1].map((star) => {
+                    {[5, 4, 3, 2, 1]?.map((star) => {
                       const count = review.filter(
                         (r) => Math.floor(r.rating) === star
                       ).length;
                       const percentage = (
-                        (count / review.length) *
+                        (count / review?.length) *
                         100
                       ).toFixed(0);
 
@@ -634,14 +634,14 @@ console.log(review)
       
         </div>
 
-        {review.length === 0 ? (
+        {review?.length === 0 ? (
          <p className="text-gray-600">
     No reviews yet.{" "}
     {reviewBtn && <span className="text-blue-600 font-semibold">Be the first to review!</span>}
   </p>
         ) : (
           <div className="space-y-4">
-            {review.map((rev, index) => (
+            {review?.map((rev, index) => (
               <div
                 key={index}
                 className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-all flex justify-between"
@@ -649,7 +649,7 @@ console.log(review)
                 {/* Header with Avatar + Name + Rating */}
                 <div className="flex flex-col  mb-4">
                   <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => {
+                    {[...Array(5)]?.map((_, i) => {
                       const filled = i < Math.floor(rev.rating);
                       const half = rev.rating - i >= 0.5 && rev.rating - i < 1;
 
@@ -699,10 +699,10 @@ console.log(review)
                 {/* Footer - likes */}
               <div className="flex items-center justify-end mt-4 gap-4">
   <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
-    <ThumbsUp className="w-4 h-4" onClick={()=>handleLikes(rev._id,"likes")} /> {rev.likes.length || 0}
+    <ThumbsUp className="w-4 h-4" onClick={()=>handleLikes(rev._id,"likes")} /> {rev.likes?.length || 0}
   </button>
   <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 transition-colors">
-    <ThumbsDown className="w-4 h-4"onClick={()=>handleLikes(rev._id,"dislikes")} /> {rev.dislikes.length || 0}
+    <ThumbsDown className="w-4 h-4"onClick={()=>handleLikes(rev._id,"dislikes")} /> {rev.dislikes?.length || 0}
   </button>
 </div>
               </div>
@@ -730,7 +730,7 @@ console.log(review)
 
       {/* Star Rating */}
       <div className="flex justify-center mb-6 space-x-2">
-        {[1, 2, 3, 4, 5].map((star) => (
+        {[1, 2, 3, 4, 5]?.map((star) => (
           <Star
             key={star}
             className={`w-10 h-10 cursor-pointer transition-transform ${
