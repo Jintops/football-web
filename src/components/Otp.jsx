@@ -1,10 +1,16 @@
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
+import { BASE_URL } from '../utils/constants';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 const OTP_COUNT = 4;
 
 const Otp = () => {
   const [inputArr, setInputArr] = useState(new Array(OTP_COUNT).fill(""));
   const inputRef = useRef([]);
+
+const navigate=useNavigate()
 
   useEffect(() => {
     inputRef.current[0]?.focus();
@@ -25,6 +31,32 @@ const Otp = () => {
     }
   };
 
+  const { state } = useLocation();
+ 
+  const userId=state?.emailId
+
+  const handleOtpVerify=async()=>{
+    const otpvalue=inputArr.join('')
+    try{
+
+    
+     const res=await axios.post(BASE_URL+"verify-otp",{emailId:userId, otp:otpvalue},{withCredentials:true})
+      if (res.data.success) {
+        toast.success("Signup successful!", {
+          position: "bottom-right",
+          autoClose: 2000,
+        });
+        navigate("/");
+      } else {
+        toast.error(res.data.message || "Signup failed", {
+          position: "bottom-right",
+          autoClose: 2000,
+        });
+      }
+  }catch(err){
+    console.log(err)
+  }
+  }
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
@@ -56,7 +88,7 @@ const Otp = () => {
         {/* Button */}
         <div className="mt-8 text-center">
           <button className="w-full py-3 bg-green-600 text-white font-semibold rounded-xl 
-                             hover:bg-green-700 transition-all shadow-md">
+                             hover:bg-green-700 transition-all shadow-md" onClick={handleOtpVerify}>
             Verify
           </button>
         </div>
