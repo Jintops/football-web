@@ -42,7 +42,7 @@ const MyOrders = () => {
             add something to your cart!
           </p>
 
-          <Link to="/" className="w-full">
+          <Link to="/viewallproducts" className="w-full">
             <button className="w-full px-5 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 active:scale-95 transition-all duration-200 shadow-md">
               Browse Products
             </button>
