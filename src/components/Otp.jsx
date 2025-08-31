@@ -30,19 +30,19 @@ const navigate=useNavigate()
       inputRef.current[index - 1]?.focus();
     }
   };
-
+  
   const { state } = useLocation();
  
-  const userId=state?.emailId
+  const userId=state?.userId
 
   const handleOtpVerify=async()=>{
     const otpvalue=inputArr.join('')
     try{
 
     
-     const res=await axios.post(BASE_URL+"verify-otp",{emailId:userId, otp:otpvalue},{withCredentials:true})
+     const res=await axios.post(BASE_URL+"verify-otp",{userId:userId, otp:otpvalue},{withCredentials:true})
       if (res.data.success) {
-        toast.success("Signup successful!", {
+        toast.success("Signup successfull", {
           position: "bottom-right",
           autoClose: 2000,
         });

@@ -21,8 +21,8 @@ const Signup = () => {
         { firstName, emailId, password },
         { withCredentials: true }
       );
-      
-      navigate('/otpverify',{ state: { emailId } })
+        const userId = res.data.userId;
+      navigate('/otpverify',{ state: { userId } })
       // if (res.data.success) {
       //   toast.success("Signup successful!", {
       //     position: "bottom-right",
