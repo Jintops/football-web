@@ -21,19 +21,20 @@ const Signup = () => {
         { firstName, emailId, password },
         { withCredentials: true }
       );
-
-      if (res.data.success) {
-        toast.success("Signup successful!", {
-          position: "bottom-right",
-          autoClose: 2000,
-        });
-        navigate("/");
-      } else {
-        toast.error(res.data.message || "Signup failed", {
-          position: "bottom-right",
-          autoClose: 2000,
-        });
-      }
+      
+      navigate('/otpverify',{ state: { emailId } })
+      // if (res.data.success) {
+      //   toast.success("Signup successful!", {
+      //     position: "bottom-right",
+      //     autoClose: 2000,
+      //   });
+      //   navigate("/");
+      // } else {
+      //   toast.error(res.data.message || "Signup failed", {
+      //     position: "bottom-right",
+      //     autoClose: 2000,
+      //   });
+      // }
     } catch (err) {
       console.log(err)
       setErrorr(err?.response?.data?.message)
@@ -125,7 +126,7 @@ const Signup = () => {
           </button>
         </form>
         <p className="mt-6 text-sm text-center text-gray-600">
-          Already have an account?{" "}
+            Already have an account?{" "}
           <Link to="/login" className="text-green-600 hover:underline">
             Login
           </Link>
