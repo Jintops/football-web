@@ -3,13 +3,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import { BASE_URL } from '../utils/constants';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 
 const OTP_COUNT = 4;
 
 const Otp = () => {
   const [inputArr, setInputArr] = useState(new Array(OTP_COUNT).fill(""));
   const inputRef = useRef([]);
-
+  const dispatch=useDispatch()
 const navigate=useNavigate()
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const navigate=useNavigate()
       inputRef.current[index - 1]?.focus();
     }
   };
-  
+
   const { state } = useLocation();
  
   const userId=state?.userId
@@ -47,6 +49,7 @@ const navigate=useNavigate()
           autoClose: 2000,
         });
         navigate("/");
+        dispatch(addUser(res.data.data))
       } else {
         toast.error(res.data.message || "Signup failed", {
           position: "bottom-right",

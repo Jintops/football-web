@@ -23,18 +23,7 @@ const Signup = () => {
       );
         const userId = res.data.userId;
       navigate('/otpverify',{ state: { userId } })
-      // if (res.data.success) {
-      //   toast.success("Signup successful!", {
-      //     position: "bottom-right",
-      //     autoClose: 2000,
-      //   });
-      //   navigate("/");
-      // } else {
-      //   toast.error(res.data.message || "Signup failed", {
-      //     position: "bottom-right",
-      //     autoClose: 2000,
-      //   });
-      // }
+      
     } catch (err) {
       console.log(err)
       setErrorr(err?.response?.data?.message)
