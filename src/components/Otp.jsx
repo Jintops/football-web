@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import js from '@eslint/js';
 
 const OTP_COUNT = 4;
 
@@ -39,9 +40,7 @@ const navigate=useNavigate()
 
   const handleOtpVerify=async()=>{
     const otpvalue=inputArr.join('')
-    try{
-
-    
+    try{   
      const res=await axios.post(BASE_URL+"verify-otp",{userId:userId, otp:otpvalue},{withCredentials:true})
       if (res.data.success) {
         toast.success("Signup successfull", {
@@ -59,6 +58,15 @@ const navigate=useNavigate()
   }catch(err){
     console.log(err)
   }
+  }
+
+
+  const handleResendOtp=async()=>{
+    try{
+      const res=await axios.post(BASE_URL+"resend-otp",{userId},{withCredentials:true})
+    }catch(err){
+        console.log(err)
+    }
   }
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100">
@@ -95,6 +103,7 @@ const navigate=useNavigate()
             Verify
           </button>
         </div>
+        <h3 className='text-center mt-5 text-lg' onClick={handleResendOtp}>resend otp</h3>
       </div>
     </div>
   );
