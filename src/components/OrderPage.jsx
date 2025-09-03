@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BASE_URL } from "../utils/constants";
@@ -37,6 +37,10 @@ const OrderPage = () => {
   );
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [allAddress,setAllAddress]=useState([])
+
+
+
 
   if (!products || products.length === 0) {
     return (
@@ -218,30 +222,22 @@ if (cartItem) dispatch(clearCart());
     }
   }
 
+const getAddress=async()=>{
+  try{
+     const res=await axios.get(BASE_URL+"allAddress",{withCredentials:true})
+     setAllAddress(res.data.data)
+  }catch(err){
+    console.log(err)
+  }
+}
+
+
+  useEffect(()=>{
+    getAddress();
+  })
+
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header with Football Theme */}
-      {/* <div className="bg-white shadow-lg border-b-4 border-green-500">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate(-1)}
-              className="p-3 hover:bg-green-50 rounded-full transition duration-200 border border-green-200"
-            >
-              <ArrowLeft className="w-5 h-5 text-green-600" />
-            </button>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center">
-                <Target className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">⚽ Complete Your Order</h1>
-                <p className="text-green-600 font-medium">{calculateItemCount()} items in your cart • ₹{calculateTotal().toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
 
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -392,7 +388,75 @@ if (cartItem) dispatch(clearCart());
                   </p>
                 )}
               </div>
+              <div className="flex justify-end mt-2">
+                <button className="px-4 py-2 bg-green-600 text-white font-semibold rounded-xl">Add New Address</button>
+              </div>
             </div>
+
+<div className="space-y-6 mt-6">
+  <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+    <MapPin className="w-5 h-5 text-green-600" />
+    Saved Addresses
+  </h3>
+
+  {allAddress.length === 0 && (
+    <p className="text-gray-600 italic">No saved addresses. Add one above 👆</p>
+  )}
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {allAddress.map((adds) => (
+      <div
+        key={adds._id}
+        className={`p-5 rounded-2xl border-2 shadow-sm transition duration-200 ${
+          adds.isDefault
+            ? "border-green-500 bg-green-50"
+            : "border-gray-200 hover:border-green-300"
+        }`}
+      >
+        <div className="flex justify-between items-start mb-3">
+          <h4 className="text-lg font-semibold text-gray-900">{adds.name}</h4>
+          {adds.isDefault && (
+            <span className="text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded-lg">
+              Default
+            </span>
+          )}
+        </div>
+
+        <p className="text-gray-700">
+          📍 {adds.fullAddress}, {adds.place}, {adds.pincode}
+        </p>
+        <p className="text-gray-700 mt-1">📞 {adds.phone}</p>
+
+        <div className="flex gap-3 mt-4">
+          <button
+            onClick={() => {
+              setName(adds.name);
+              setPincode(adds.pincode);
+              setPlace(adds.place);
+              setAddress(adds.fullAddress);
+              setPhone(adds.phone);
+            }}
+            className="flex-1 bg-green-600 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-green-700 transition"
+          >
+            Use this
+          </button>
+          <button
+            onClick={() => handleEditAddress(adds._id)}
+            className="flex-1 bg-yellow-500 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-yellow-600 transition"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => handleDeleteAddress(adds._id)}
+            className="flex-1 bg-red-500 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-red-600 transition"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
 
             {/* Payment Method */}
             <div className="bg-white rounded-2xl shadow-lg border border-green-100 p-6">
