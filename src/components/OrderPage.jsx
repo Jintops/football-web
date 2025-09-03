@@ -231,6 +231,13 @@ const getAddress=async()=>{
   }
 }
 
+const handleDeleteAddress=async(id)=>{
+  try{
+   const res=await axios.delete(BASE_URL+"deleteAddress/"+id,{withCredentials:true})
+  }catch(err){
+    console.log(err)
+  }
+}
 
   useEffect(()=>{
     getAddress();
