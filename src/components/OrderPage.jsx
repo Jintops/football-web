@@ -483,8 +483,9 @@ const handleDeleteAddress=async(id)=>{
                   </p>
                 )}
               </div>
-            <div className="flex justify-center">
-              <button className="btn btn-success" onClick={handleNewAddress}>Save</button>
+            <div className="flex justify-center gap-8 my-4">
+               <button className="px-4 py-2 font-semibold rounded-xl bg-gray-500 text-white" onClick={()=>setOpenAddress(false)}>Cancel</button>
+              <button className="px-4 py-2 font-semibold rounded-xl bg-green-500 text-white" onClick={handleNewAddress}>Save</button>
               </div>
             </div>}
 
