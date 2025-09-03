@@ -38,7 +38,7 @@ const OrderPage = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const [allAddress,setAllAddress]=useState([])
-
+  const [openAddress,setOpenAddress]=useState(false)
 
 
 
@@ -234,6 +234,7 @@ const getAddress=async()=>{
 const handleDeleteAddress=async(id)=>{
   try{
    const res=await axios.delete(BASE_URL+"deleteAddress/"+id,{withCredentials:true})
+   setAllAddress((prev) => prev.filter((addr) => addr._id !== id)); 
   }catch(err){
     console.log(err)
   }
@@ -241,21 +242,107 @@ const handleDeleteAddress=async(id)=>{
 
   useEffect(()=>{
     getAddress();
-  })
+  },[])
+
+  const handleNewAddress=async()=>{
+    try{
+     const res=await axios.post(BASE_URL+"address",{name,pincode,fullAddress:address,place,phone},{withCredentials:true})
+     setAllAddress((prev) => [...prev, res.data.data]);
+    }catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
 
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
           {/* Left Column - Shipping & Payment */}
           <div className="lg:col-span-2 space-y-6">
+            <div className="space-y-6 mt-6">
+  <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+    <MapPin className="w-5 h-5 text-green-600" />
+    Saved Addresses
+  </h3>
+
+  {allAddress.length === 0 && (
+    <p className="text-gray-600 italic">No saved addresses. Add one above 👆</p>
+  )}
+
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {allAddress.map((adds) => (
+      <div
+        key={adds._id}
+        className={`p-5 rounded-2xl border-2 shadow-sm transition duration-200 ${
+          adds.isDefault
+            ? "border-green-500 bg-green-50"
+            : "border-gray-200 hover:border-green-300"
+        }`}
+      >
+        <div className="flex justify-between items-start mb-3">
+          <h4 className="text-lg font-semibold text-gray-900">{adds.name}</h4>
+          {/* {adds.isDefault && (
+            <span className="text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded-lg">
+              Default
+            </span>
+          )} */}
+        </div>
+
+        <p className="text-gray-700">
+          📍 {adds.fullAddress}, {adds.place}, {adds.pincode}
+        </p>
+        <p className="text-gray-700 mt-1">📞 {adds.phone}</p>
+
+        <div className="flex gap-3 mt-4">
+          <button
+            onClick={() => {
+              setName(adds.name);
+              setPincode(adds.pincode);
+              setPlace(adds.place);
+              setAddress(adds.fullAddress);
+              setPhone(adds.phone);
+            }}
+            className="flex-1 bg-green-600 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-green-700 transition"
+          >
+            Use this
+          </button>
+          <button
+            onClick={() => handleEditAddress(adds._id)}
+            className="flex-1 bg-yellow-500 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-yellow-600 transition"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => handleDeleteAddress(adds._id)}
+            className="flex-1 bg-red-500 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-red-600 transition"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<button
+  className={`px-4 py-2 font-semibold rounded-xl ${
+    openAddress ? "" : "bg-blue-600"
+  } text-white`}
+  onClick={() => setOpenAddress(!openAddress)}
+>
+  {!openAddress ? "Add New Address" : ""}
+</button>
+
+
             {/* Shipping Information */}
-            <div className="bg-white rounded-2xl shadow-lg border border-green-100 p-6">
+        {openAddress &&   <div className="bg-white rounded-2xl shadow-lg border border-green-100 p-6">
               <div className="flex items-center gap-4 mb-6 pb-4 border-b border-green-100">
                 {/* <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl shadow-lg">
                   <Truck className="w-6 h-6 text-white" />
                 </div> */}
+                
                 <div>
                   <h2 className="text-xl font-bold text-gray-900">
                     🚚 Delivery Information
@@ -395,75 +482,12 @@ const handleDeleteAddress=async(id)=>{
                   </p>
                 )}
               </div>
-              <div className="flex justify-end mt-2">
-                <button className="px-4 py-2 bg-green-600 text-white font-semibold rounded-xl">Add New Address</button>
+            <div className="flex justify-center">
+              <button className="btn btn-success" onClick={handleNewAddress}>Save</button>
               </div>
-            </div>
+            </div>}
 
-<div className="space-y-6 mt-6">
-  <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-    <MapPin className="w-5 h-5 text-green-600" />
-    Saved Addresses
-  </h3>
 
-  {allAddress.length === 0 && (
-    <p className="text-gray-600 italic">No saved addresses. Add one above 👆</p>
-  )}
-
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    {allAddress.map((adds) => (
-      <div
-        key={adds._id}
-        className={`p-5 rounded-2xl border-2 shadow-sm transition duration-200 ${
-          adds.isDefault
-            ? "border-green-500 bg-green-50"
-            : "border-gray-200 hover:border-green-300"
-        }`}
-      >
-        <div className="flex justify-between items-start mb-3">
-          <h4 className="text-lg font-semibold text-gray-900">{adds.name}</h4>
-          {adds.isDefault && (
-            <span className="text-xs font-bold bg-green-100 text-green-700 px-2 py-1 rounded-lg">
-              Default
-            </span>
-          )}
-        </div>
-
-        <p className="text-gray-700">
-          📍 {adds.fullAddress}, {adds.place}, {adds.pincode}
-        </p>
-        <p className="text-gray-700 mt-1">📞 {adds.phone}</p>
-
-        <div className="flex gap-3 mt-4">
-          <button
-            onClick={() => {
-              setName(adds.name);
-              setPincode(adds.pincode);
-              setPlace(adds.place);
-              setAddress(adds.fullAddress);
-              setPhone(adds.phone);
-            }}
-            className="flex-1 bg-green-600 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-green-700 transition"
-          >
-            Use this
-          </button>
-          <button
-            onClick={() => handleEditAddress(adds._id)}
-            className="flex-1 bg-yellow-500 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-yellow-600 transition"
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => handleDeleteAddress(adds._id)}
-            className="flex-1 bg-red-500 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-red-600 transition"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
 
             {/* Payment Method */}
             <div className="bg-white rounded-2xl shadow-lg border border-green-100 p-6">
