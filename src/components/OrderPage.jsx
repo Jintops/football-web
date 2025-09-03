@@ -44,7 +44,7 @@ const OrderPage = () => {
 
   if (!products || products.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex flex-col items-center justify-center px-4">
+      <div className="min-h-screen  flex flex-col items-center justify-center px-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 text-center max-w-md w-full border border-green-100">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <Target className="w-8 h-8 text-green-600" />
@@ -57,7 +57,7 @@ const OrderPage = () => {
             products to score your perfect order.
           </p>
           <button
-            onClick={() => navigate("/products")}
+            onClick={() => navigate("/viewallproducts")}
             className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-200 shadow-lg"
           >
             Browse Football Gear
@@ -74,9 +74,9 @@ const OrderPage = () => {
     // if (!phone.trim()) newErrors.phone = "Contact number is required";
     // else if (!/^\d{10}$/.test(phone.trim()))
     //   newErrors.phone = "Contact number must be 10 digits";
-    if (!pincode.trim()) newErrors.pincode = "Pincode is required";
-    else if (!/^\d{6}$/.test(pincode.trim()))
-      newErrors.pincode = "Pincode must be 6 digits";
+    // if (!pincode.trim()) newErrors.pincode = "Pincode is required";
+    // else if (!/^\d{6}$/.test(pincode.trim()))
+    //   newErrors.pincode = "Pincode must be 6 digits";
     if (!place.trim()) newErrors.place = "City is required";
     if (!address.trim()) newErrors.address = "Delivery address is required";
     if (!paymentMethod)
@@ -135,7 +135,7 @@ const OrderPage = () => {
             address: {
               name: name.trim(),
               phone,
-              pincode: pincode.trim(),
+              pincode: pincode,
               place: place.trim(),
               fullAddress: address.trim(),
             },
@@ -248,6 +248,7 @@ const handleDeleteAddress=async(id)=>{
     try{
      const res=await axios.post(BASE_URL+"address",{name,pincode,fullAddress:address,place,phone},{withCredentials:true})
      setAllAddress((prev) => [...prev, res.data.data]);
+     setOpenAddress(false)
     }catch(err){
       console.log(err)
     }
