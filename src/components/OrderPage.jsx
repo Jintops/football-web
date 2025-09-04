@@ -40,7 +40,7 @@ const OrderPage = () => {
   const [allAddress,setAllAddress]=useState([])
   const [openAddress,setOpenAddress]=useState(false)
   const [edit,setEdit]=useState("")
-
+   const [addressValue,setAddressValue]=useState("")
 
 
   if (!products || products.length === 0) {
@@ -166,6 +166,7 @@ const OrderPage = () => {
 const handleEditAddress=async(adds)=>{
     setEdit(true)
     setOpenAddress(true)
+    setAddressValue(adds)
      setName(adds.name);
       setPincode(adds.pincode);
       setPlace(adds.place);
@@ -262,8 +263,9 @@ const handleDeleteAddress=async(id)=>{
      setAllAddress((prev) => [...prev, res.data.data]);
      setOpenAddress(false)
       }
-      else{
-        const res=await axios.put(BASE_URL+"editAddress/"+allAddress._id,{name,pincode,phone,place,fullAddress:address},{withCredentials:true})
+      else{    
+        const res=await axios.put(BASE_URL+"editAddress/"+addressValue._id,{name,pincode,phone,place,fullAddress:address},{withCredentials:true})
+       setOpenAddress(false)
       }
     }catch(err){
       console.log(err)
@@ -348,6 +350,7 @@ const handleDeleteAddress=async(id)=>{
     openAddress ? "" : "bg-blue-600"
   } text-white`}
 onClick={() => {
+   
   setOpenAddress(!openAddress);
   setEdit(false);
 }}
