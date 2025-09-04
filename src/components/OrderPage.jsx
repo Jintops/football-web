@@ -252,6 +252,17 @@ const handleDeleteAddress=async(id)=>{
   }
 }
 
+const newAddress=()=>{
+   setOpenAddress(!openAddress);
+  setEdit(false);
+   setAddressValue("");
+  setName("");
+  setPincode("");
+  setPlace("");
+  setAddress("");
+  setPhone("");
+}
+
   useEffect(()=>{
     getAddress();
   },[])
@@ -261,17 +272,33 @@ const handleDeleteAddress=async(id)=>{
       if(!edit){
      const res=await axios.post(BASE_URL+"address",{name,pincode,fullAddress:address,place,phone},{withCredentials:true})
      setAllAddress((prev) => [...prev, res.data.data]);
-     setOpenAddress(false)
+    
       }
       else{    
         const res=await axios.put(BASE_URL+"editAddress/"+addressValue._id,{name,pincode,phone,place,fullAddress:address},{withCredentials:true})
-       setOpenAddress(false)
+         setAllAddress((prev) =>
+        prev.map((addr) =>
+          addr._id === addressValue._id ? res.data.data : addr
+        )
+      );
+    
       }
+        resetForm();
     }catch(err){
       console.log(err)
     }
   }
 
+  const resetForm = () => {
+  setOpenAddress(false);
+  setEdit(false);
+  setAddressValue("");
+  setName("");
+  setPincode("");
+  setPlace("");
+  setAddress("");
+  setPhone("");
+};
   return (
     <div className="min-h-screen bg-gray-50">
 
@@ -349,11 +376,7 @@ const handleDeleteAddress=async(id)=>{
   className={`px-4 py-2 font-semibold rounded-xl ${
     openAddress ? "" : "bg-blue-600"
   } text-white`}
-onClick={() => {
-   
-  setOpenAddress(!openAddress);
-  setEdit(false);
-}}
+onClick={newAddress}
 
 >
   {!openAddress ? "Add New Address" : ""}
