@@ -39,6 +39,7 @@ const OrderPage = () => {
   const [errors, setErrors] = useState({});
   const [allAddress,setAllAddress]=useState([])
   const [openAddress,setOpenAddress]=useState(false)
+  const [edit,setEdit]=useState("")
 
 
 
@@ -162,19 +163,14 @@ const OrderPage = () => {
   };
 
 
-const handleEditAddress=async(id)=>{
-
+const handleEditAddress=async(adds)=>{
+    setEdit(true)
     setOpenAddress(true)
      setName(adds.name);
       setPincode(adds.pincode);
       setPlace(adds.place);
       setAddress(adds.fullAddress);
-     setPhone(adds.phone);
-  try{
-     
-  }catch(err){
-    console.log(err)
-  }
+     setPhone(adds.phone);  
 }
 
   const handlePaymentOrder=async()=>{
@@ -261,9 +257,14 @@ const handleDeleteAddress=async(id)=>{
 
   const handleNewAddress=async()=>{
     try{
+      if(!edit){
      const res=await axios.post(BASE_URL+"address",{name,pincode,fullAddress:address,place,phone},{withCredentials:true})
      setAllAddress((prev) => [...prev, res.data.data]);
      setOpenAddress(false)
+      }
+      else{
+        const res=await axios.put(BASE_URL+"editAddress/"+allAddress._id,{name,pincode,phone,place,fullAddress:address},{withCredentials:true})
+      }
     }catch(err){
       console.log(err)
     }
@@ -346,7 +347,11 @@ const handleDeleteAddress=async(id)=>{
   className={`px-4 py-2 font-semibold rounded-xl ${
     openAddress ? "" : "bg-blue-600"
   } text-white`}
-  onClick={() => setOpenAddress(!openAddress)}
+onClick={() => {
+  setOpenAddress(!openAddress);
+  setEdit(false);
+}}
+
 >
   {!openAddress ? "Add New Address" : ""}
 </button>
@@ -500,7 +505,8 @@ const handleDeleteAddress=async(id)=>{
               </div>
             <div className="flex justify-center gap-8 my-4">
                <button className="px-4 py-2 font-semibold rounded-xl bg-gray-500 text-white" onClick={()=>setOpenAddress(false)}>Cancel</button>
-              <button className="px-4 py-2 font-semibold rounded-xl bg-green-500 text-white" onClick={handleNewAddress}>Save</button>
+              <button className="px-4 py-2 font-semibold rounded-xl bg-green-500 text-white"
+               onClick={handleNewAddress}>{edit ? "Edit" : "Save"}</button>
               </div>
             </div>}
 
