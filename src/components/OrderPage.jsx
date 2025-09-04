@@ -162,6 +162,21 @@ const OrderPage = () => {
   };
 
 
+const handleEditAddress=async(id)=>{
+
+    setOpenAddress(true)
+     setName(adds.name);
+      setPincode(adds.pincode);
+      setPlace(adds.place);
+      setAddress(adds.fullAddress);
+     setPhone(adds.phone);
+  try{
+     
+  }catch(err){
+    console.log(err)
+  }
+}
+
   const handlePaymentOrder=async()=>{
    if (!validateForm()) {
       return;
@@ -269,7 +284,7 @@ const handleDeleteAddress=async(id)=>{
   </h3>
 
   {allAddress.length === 0 && (
-    <p className="text-gray-600 italic">No saved addresses. Add one above 👆</p>
+    <p className="text-gray-600 italic">No saved addresses. Add one below 👇</p>
   )}
 
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -310,7 +325,7 @@ const handleDeleteAddress=async(id)=>{
             Use this
           </button>
           <button
-            onClick={() => handleEditAddress(adds._id)}
+            onClick={() => handleEditAddress(adds)}
             className="flex-1 bg-yellow-500 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-yellow-600 transition"
           >
             Edit
