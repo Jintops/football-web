@@ -39,6 +39,7 @@ const OrderPage = () => {
   const [errors, setErrors] = useState({});
   const [allAddress,setAllAddress]=useState([])
   const [openAddress,setOpenAddress]=useState(false)
+  const [openAddresss,setOpenAddresss]=useState(false)
   const [edit,setEdit]=useState("")
    const [addressValue,setAddressValue]=useState("")
 
@@ -165,7 +166,7 @@ const OrderPage = () => {
 
 const handleEditAddress=async(adds)=>{
     setEdit(true)
-    setOpenAddress(true)
+    setOpenAddresss(true)
     setAddressValue(adds)
      setName(adds.name);
       setPincode(adds.pincode);
@@ -253,7 +254,7 @@ const handleDeleteAddress=async(id)=>{
 }
 
 const newAddress=()=>{
-   setOpenAddress(!openAddress);
+   setOpenAddress(true);
   setEdit(false);
    setAddressValue("");
   setName("");
@@ -291,6 +292,7 @@ const newAddress=()=>{
 
   const resetForm = () => {
   setOpenAddress(false);
+  setOpenAddresss(false)
   setEdit(false);
   setAddressValue("");
   setName("");
@@ -358,7 +360,7 @@ const newAddress=()=>{
             onClick={() => handleEditAddress(adds)}
             className="flex-1 bg-yellow-500 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-yellow-600 transition"
           >
-            Edit
+            Edit 
           </button>
           <button
             onClick={() => handleDeleteAddress(adds._id)}
@@ -374,7 +376,7 @@ const newAddress=()=>{
 
 <button
   className={`px-4 py-2 font-semibold rounded-xl ${
-    openAddress ? "" : "bg-blue-600"
+    openAddress ? "" : "bg-gradient-to-r from-blue-900 to-blue-400"
   } text-white`}
 onClick={newAddress}
 
@@ -384,7 +386,7 @@ onClick={newAddress}
 
 
             {/* Shipping Information */}
-        {openAddress &&   <div className="bg-white rounded-2xl shadow-lg border border-green-100 p-6">
+        {(openAddress || openAddresss) &&   <div className="bg-white rounded-2xl shadow-lg border border-green-100 p-6">
               <div className="flex items-center gap-4 mb-6 pb-4 border-b border-green-100">
                 {/* <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl shadow-lg">
                   <Truck className="w-6 h-6 text-white" />
@@ -530,9 +532,12 @@ onClick={newAddress}
                 )}
               </div>
             <div className="flex justify-center gap-8 my-4">
-               <button className="px-4 py-2 font-semibold rounded-xl bg-gray-500 text-white" onClick={()=>setOpenAddress(false)}>Cancel</button>
+               <button className="px-4 py-2 font-semibold rounded-xl bg-gray-500 text-white" onClick={()=>{
+                setOpenAddress(false)
+                setOpenAddresss(false)
+               }}>Cancel</button>
               <button className="px-4 py-2 font-semibold rounded-xl bg-green-500 text-white"
-               onClick={handleNewAddress}>{edit ? "Edit" : "Save"}</button>
+               onClick={handleNewAddress}>{edit ? "Edit Address" : "Save New Address"}</button>
               </div>
             </div>}
 
