@@ -42,7 +42,7 @@ const OrderPage = () => {
   const [openAddresss,setOpenAddresss]=useState(false)
   const [edit,setEdit]=useState("")
    const [addressValue,setAddressValue]=useState("")
-
+const [selectedAddressId, setSelectedAddressId] = useState(null);
 
   if (!products || products.length === 0) {
     return (
@@ -167,6 +167,7 @@ const OrderPage = () => {
 const handleEditAddress=async(adds)=>{
     setEdit(true)
     setOpenAddresss(true)
+    setOpenAddress(false)
     setAddressValue(adds)
      setName(adds.name);
       setPincode(adds.pincode);
@@ -322,12 +323,12 @@ const newAddress=()=>{
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
     {allAddress.map((adds) => (
       <div
-        key={adds._id}
-        className={`p-5 rounded-2xl border-2 shadow-sm transition duration-200 ${
-          adds.isDefault
-            ? "border-green-500 bg-green-50"
-            : "border-gray-200 hover:border-green-300"
-        }`}
+         key={adds._id}
+  className={`p-5 rounded-2xl border-2 shadow-sm transition duration-200 ${
+    selectedAddressId === adds._id
+      ? "border-green-500 bg-green-50 shadow-md scale-[1.02]" // selected style
+      : "border-gray-200 hover:border-blue-300"
+  }`}
       >
         <div className="flex justify-between items-start mb-3">
           <h4 className="text-lg font-semibold text-gray-900">{adds.name}</h4>
@@ -351,6 +352,7 @@ const newAddress=()=>{
               setPlace(adds.place);
               setAddress(adds.fullAddress);
               setPhone(adds.phone);
+              setSelectedAddressId(adds._id)
             }}
             className="flex-1 bg-green-600 text-white py-2 px-4 rounded-xl text-sm font-medium hover:bg-green-700 transition"
           >
@@ -376,12 +378,12 @@ const newAddress=()=>{
 
 <button
   className={`px-4 py-2 font-semibold rounded-xl ${
-    openAddress ? "" : "bg-gradient-to-r from-blue-900 to-blue-400"
+    openAddress ? "" : "px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-semibold shadow"
   } text-white`}
 onClick={newAddress}
 
 >
-  {!openAddress ? "Add New Address" : ""}
+  {!openAddress ? " + Add New Address" : ""}
 </button>
 
 
@@ -532,12 +534,25 @@ onClick={newAddress}
                 )}
               </div>
             <div className="flex justify-center gap-8 my-4">
-               <button className="px-4 py-2 font-semibold rounded-xl bg-gray-500 text-white" onClick={()=>{
-                setOpenAddress(false)
-                setOpenAddresss(false)
-               }}>Cancel</button>
-              <button className="px-4 py-2 font-semibold rounded-xl bg-green-500 text-white"
-               onClick={handleNewAddress}>{edit ? "Edit Address" : "Save New Address"}</button>
+            <button
+  onClick={() => {
+    setOpenAddress(false);
+    setOpenAddresss(false);
+  }}
+  className="px-4 py-2 rounded-xl bg-gray-100 text-gray-700 font-medium 
+             border border-gray-300 hover:bg-gray-200 active:bg-gray-300 
+             transition"
+>
+  Cancel
+</button>
+           <button onClick={handleNewAddress}
+            className="px-5 py-2.5 rounded-xl bg-green-600 text-white font-medium 
+             shadow-sm hover:bg-green-700 active:bg-green-800 
+             disabled:opacity-50 disabled:cursor-not-allowed 
+             transition">
+  {edit ? "Update Address" : "Save Address"}
+</button>
+
               </div>
             </div>}
 
