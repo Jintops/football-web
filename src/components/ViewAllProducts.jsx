@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../utils/cartCountSlice";
 import { ArrowUpDown, Filter, X } from "lucide-react";
 
@@ -16,9 +16,13 @@ const ViewAllProducts = () => {
   const [products, setProducts] = useState([]);
   const [sortOption, setSortOption] = useState("");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
-
+ 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+ const searchTerm=useSelector((store)=>store.search)
+//   const searchProduct=selectedCategories.filter((product)=>{
+//        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+//   })
 
   const filteredProducts =
     selectedCategories.length === 0
@@ -30,7 +34,15 @@ const ViewAllProducts = () => {
       ? filteredProducts
       : filteredProducts.filter((p) => selectedBrands.includes(p.brand));
 
-  const sortProduct = [...filteredBrands].sort((a, b) => {
+
+        const searchedProducts =
+    searchTerm.trim() === ""
+      ? filteredBrands
+      : filteredBrands.filter((p) =>
+          p.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+
+  const sortProduct = [...searchedProducts].sort((a, b) => {
     if (sortOption === "LowtoHigh") return a.price - b.price;
     if (sortOption === "HightoLow") return b.price - a.price;
     if (sortOption === "TitleAZ") return a.title.localeCompare(b.title);

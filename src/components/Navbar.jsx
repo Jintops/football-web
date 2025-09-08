@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { removeUser } from '../utils/userSlice';
 import { clearCart, addItem } from '../utils/cartCountSlice';
+import { searchInput } from '../utils/searchItemSlice';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -121,6 +122,7 @@ const Navbar = () => {
               type="text"
               className="w-full h-10 pl-10 pr-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Search jersey, boots..."
+              onChange={(e)=>dispatch(searchInput(e.target.value))}
             />
           </div>
         </div>

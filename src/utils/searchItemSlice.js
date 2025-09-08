@@ -5,7 +5,7 @@ const searchItemSlice=createSlice({
     initialState:"",
     reducers:{
         searchInput:(state,action)=>{
-            state=action.payload
+            return action.payload
         }
     }
 })
