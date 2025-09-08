@@ -3,7 +3,7 @@ import { Search, ShoppingCart, User, Menu, X } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import CartPage from './CartPage';
 import { BASE_URL, LOGO } from '../utils/constants';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { removeUser } from '../utils/userSlice';
 import { clearCart, addItem } from '../utils/cartCountSlice';
@@ -16,6 +16,9 @@ const Navbar = () => {
   const profileRef = useRef(null);
   const dispatch = useDispatch();
   const { user } = useSelector(store => store.user);
+
+  const location=useLocation();
+ const showSearch = location.pathname === "/viewallproducts";
 
  const navigate=useNavigate()
   const cartItems = useSelector((store) => store.cartCount.items);
@@ -115,7 +118,7 @@ const Navbar = () => {
         </ul>
 
         {/* Search Input */}
-        <div className="hidden lg:flex items-center">
+      {showSearch && <div className="hidden lg:flex items-center">
           <div className="relative w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
@@ -125,7 +128,7 @@ const Navbar = () => {
               onChange={(e)=>dispatch(searchInput(e.target.value))}
             />
           </div>
-        </div>
+        </div>}
 
         {/* Icons */}
         <div className="flex items-center gap-3 sm:gap-4 md:gap-6 relative">
