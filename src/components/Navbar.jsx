@@ -116,7 +116,7 @@ const Navbar = () => {
           <li className="hover:text-green-500">Equipments</li> */}
           <li className="hover:text-green-500">Contact</li>
         </ul>
-
+        {!showSearch &&  <div></div>}
         {/* Search Input */}
       {showSearch && <div className="hidden lg:flex items-center">
           <div className="relative w-64">
