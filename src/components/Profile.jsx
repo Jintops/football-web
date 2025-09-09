@@ -4,6 +4,8 @@ import { BASE_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
 import { UserX, Edit2, Save, X, User } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 
 const Profile = () => {
   const [data, setData] = useState(null);
@@ -18,7 +20,7 @@ const Profile = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('');
-
+  const dispatch=useDispatch()
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -83,6 +85,7 @@ const Profile = () => {
       setOpenEdit(false);
       setPreviewUrl(null);
     setImage(null);
+    dispatch(addUser(res?.data?.data))
     toast.success("Profile updated successfully!", {
   position: "bottom-right",
   autoClose: 2000,
