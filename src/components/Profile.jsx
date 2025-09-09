@@ -44,7 +44,7 @@ const Profile = () => {
       setFirstName(res.data.data?.firstName || '');
       setLastName(res.data.data?.lastName || '');
       setGender(res.data.data?.gender || '')
-      setCurrentImageUrl(res.data.data?.imageUrl || '');
+      setCurrentImageUrl(res.data.data?.photoUrl || '');
     } catch (err) {
       console.log(err);
       setError('Failed to load profile data');
@@ -207,6 +207,29 @@ const Profile = () => {
             )}
 
             <div className='space-y-4'>
+                       <div className="relative inline-block">
+  <img
+    src={previewUrl || currentImageUrl || 'https://via.placeholder.com/100'}
+    alt="Profile"
+    className="h-24 w-24 rounded-full object-cover border-4 border-green-500 shadow-md"
+  />
+  
+  {/* Edit icon overlay */}
+  <label
+    htmlFor="profileImageInput"
+    className="absolute bottom-0 right-0 bg-green-500 p-2 rounded-full cursor-pointer shadow-md hover:bg-green-600"
+  >
+    <Edit2 size={16} className="text-white" />
+  </label>
+
+  <input
+    id="profileImageInput"
+    type="file"
+    accept="image/*"
+    className="hidden"
+    onChange={handleImageChange}
+  />
+</div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -235,22 +258,7 @@ const Profile = () => {
                 </div>
               </div>
 
- <div>
-            <label className="text-sm font-medium text-gray-700 mb-1">Edit Profile Image</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded file:text-sm file:bg-green-100 file:text-green-700 hover:file:bg-green-200"
-            />
-            {previewUrl && (
-              <img
-                src={previewUrl || currentImageUrl }
-                alt="Preview"
-                className="mt-3 h-40 w-full object-cover rounded-md border"
-              />
-            )}
-          </div>
+
 
 
               <div>
@@ -268,6 +276,8 @@ const Profile = () => {
                   <option value="other">Other</option>
                 </select>
               </div>
+
+
 
               <div className="flex gap-3 pt-4">
                 <button 
