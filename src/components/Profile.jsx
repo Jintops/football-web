@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BASE_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
 import { UserX, Edit2, Save, X, User } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   const [data, setData] = useState(null);
@@ -74,6 +75,10 @@ const Profile = () => {
       setOpenEdit(false);
       setPreviewUrl(null);
     setImage(null);
+    toast.success("Profile updated successfully!", {
+  position: "bottom-right",
+  autoClose: 2000,
+});
     } catch (err) {
       console.log(err);
       setError(err.response?.data?.message || 'Failed to update profile');
