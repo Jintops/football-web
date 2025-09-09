@@ -10,11 +10,20 @@ const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const [editLoading, setEditLoading] = useState(false);
   const [error, setError] = useState('');
-  
+  const [image,setImage]=useState(null)
+  const [previewUrl,setPreviewUrl]=useState(null)
   // Form state
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('');
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
 
   const profileData = async () => {
     try {
@@ -42,16 +51,29 @@ const Profile = () => {
     }
 
     try {
+      const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("gender", gender);
+    if(image){
+    formData.append("image", image);
+    }
       setEditLoading(true);
       setError('');
       const res = await axios.put(
         BASE_URL + "profile/edit",
-        { firstName: firstName.trim(), lastName: lastName.trim(), gender },
-        { withCredentials: true }
+       formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    }
       );
       
       await profileData(); // Refresh profile data
       setOpenEdit(false);
+      setPreviewUrl(null);
+    setImage(null);
     } catch (err) {
       console.log(err);
       setError(err.response?.data?.message || 'Failed to update profile');
@@ -197,6 +219,24 @@ const Profile = () => {
                   />
                 </div>
               </div>
+
+ <div>
+            <label className="text-sm font-medium text-gray-700 mb-1">Profile Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:rounded file:text-sm file:bg-green-100 file:text-green-700 hover:file:bg-green-200"
+            />
+            {previewUrl && (
+              <img
+                src={previewUrl}
+                alt="Preview"
+                className="mt-3 h-40 w-full object-cover rounded-md border"
+              />
+            )}
+          </div>
+
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">

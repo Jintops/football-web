@@ -12,7 +12,7 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [brand,setBrand]=useState("")
    
-  
+
   useEffect(() => {
     if (selectedProduct) {
       setTitle(selectedProduct.title || '');
@@ -24,6 +24,7 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
     }
   }, [selectedProduct]);
 
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
