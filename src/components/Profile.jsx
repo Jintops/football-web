@@ -13,6 +13,7 @@ const Profile = () => {
   const [error, setError] = useState('');
   const [image,setImage]=useState(null)
   const [previewUrl,setPreviewUrl]=useState(null)
+  const [currentImageUrl, setCurrentImageUrl] = useState("");
   // Form state
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -26,6 +27,12 @@ const Profile = () => {
     }
   };
 
+  const hasChanges =
+  firstName !== (data?.firstName || "") ||
+  lastName !== (data?.lastName || "") ||
+  gender !== (data?.gender || "") ||
+  image !== null;
+
   const profileData = async () => {
     try {
       setLoading(true);
@@ -36,7 +43,8 @@ const Profile = () => {
       // Initialize form fields when data is loaded
       setFirstName(res.data.data?.firstName || '');
       setLastName(res.data.data?.lastName || '');
-      setGender(res.data.data?.gender || '');
+      setGender(res.data.data?.gender || '')
+      setCurrentImageUrl(res.data.data?.imageUrl || '');
     } catch (err) {
       console.log(err);
       setError('Failed to load profile data');
@@ -94,6 +102,8 @@ const Profile = () => {
     setGender(data?.gender || '');
     setOpenEdit(false);
     setError('');
+    setImage(null)
+    setPreviewUrl(null)
   };
 
   useEffect(() => {
@@ -226,7 +236,7 @@ const Profile = () => {
               </div>
 
  <div>
-            <label className="text-sm font-medium text-gray-700 mb-1">Profile Image</label>
+            <label className="text-sm font-medium text-gray-700 mb-1">Edit Profile Image</label>
             <input
               type="file"
               accept="image/*"
@@ -235,7 +245,7 @@ const Profile = () => {
             />
             {previewUrl && (
               <img
-                src={previewUrl}
+                src={previewUrl || currentImageUrl }
                 alt="Preview"
                 className="mt-3 h-40 w-full object-cover rounded-md border"
               />
@@ -267,7 +277,7 @@ const Profile = () => {
                       : 'bg-green-500 hover:bg-green-600 text-white'
                   }`}
                   onClick={handleEditProfile}
-                  disabled={editLoading}
+                  disabled={editLoading || !hasChanges}
                 >
                   <Save size={16} />
                   {editLoading ? 'Saving...' : 'Save Changes'}
