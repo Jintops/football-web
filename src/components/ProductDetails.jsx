@@ -319,7 +319,7 @@ console.log(review)
                   <img
                     src={images[selectedImage]}
                     alt={product.title}
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     onError={(e) => {
                       e.target.src = "/api/placeholder/400/400";
                     }}
