@@ -1,9 +1,18 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { PHOTO_1, PHOTO_2 } from '../utils/constants';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+
 
 const FrontPage = () => {
+  const navigate=useNavigate()
+   const cartItems = useSelector((store) => store.cartCount.items);
+   const handleOrder = () => {
+    navigate("/orders", { state: { cartItem: cartItems } });
+    onClose();
+  };
   return (
     <div className="relative bg-gradient-to-r from-green-600 to-blue-700 w-full h-auto min-h-[600px] flex flex-col md:flex-row items-center justify-center px-4 md:px-8 py-12">
 
@@ -19,7 +28,8 @@ const FrontPage = () => {
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row gap-4 md:ml-6">
-          <button className="w-full sm:w-48 h-12 md:h-18 bg-white rounded-lg hover:bg-green-200 text-green-500 font-bold flex items-center justify-center hover:shadow-2xl transition-all duration-200 transform hover:scale-105">
+          <button className="w-full sm:w-48 h-12 md:h-18 bg-white rounded-lg hover:bg-green-200 text-green-500 font-bold flex items-center justify-center hover:shadow-2xl transition-all duration-200 transform hover:scale-105"
+          onClick={handleOrder}>
             Shop Now 
             <ArrowRight className="ml-2 h-5 w-5" />
           </button>
