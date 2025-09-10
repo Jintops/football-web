@@ -24,7 +24,7 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
     }
   }, [selectedProduct]);
 
-  
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -162,7 +162,7 @@ const AddProduct = ({ onClose, onProductAdded,selectedProduct }) => {
               <img
                 src={previewUrl}
                 alt="Preview"
-                className="mt-3 h-40 w-full object-cover rounded-md border"
+                className=" mt-3 h-48 w-60 object-cover rounded-md border border-gray-200"
               />
             )}
           </div>
