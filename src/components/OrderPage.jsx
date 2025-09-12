@@ -149,7 +149,8 @@ const [selectedAddressId, setSelectedAddressId] = useState(null);
           { withCredentials: true }
         );
       }
-
+      
+      clearCartt(); 
       if (cartItem) dispatch(clearCart());
       navigate("/myorders");
     } catch (err) {
@@ -163,6 +164,13 @@ const [selectedAddressId, setSelectedAddressId] = useState(null);
     }
   };
 
+  const clearCartt=async()=>{
+    try{
+     await axios.delete(BASE_URL+"removeCart",{withCredentials:true})
+    }catch(err){
+      console.log(err)
+    }
+  }
 
 const handleEditAddress=async(adds)=>{
     setEdit(true)
