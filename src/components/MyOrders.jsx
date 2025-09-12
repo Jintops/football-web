@@ -83,7 +83,7 @@ const MyOrders = () => {
                   Quantity: {order.cartItems[0]?.quantity}
                 </p>
                 <p className="text-sm text-gray-700">
-                  Total: ₹ {order.totalAmount}
+                  Total: ₹ {order.cartItems[0]?.price*order.cartItems[0]?.quantity}
                 </p>
                 <p className="text-sm font-medium text-green-700">
                   Payment: {order.paymentMethod}
