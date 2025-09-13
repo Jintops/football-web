@@ -27,7 +27,7 @@ const MyOrders = () => {
   useEffect(() => {
     fetchOrders();
   }, [page]);
-  if (orders.length === 0) {
+  if (orders?.length === 0) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-gray-50 to-gray-100 px-4">
         <div className="bg-white shadow-lg rounded-2xl p-10 flex flex-col items-center max-w-md w-full border border-gray-200">
@@ -53,7 +53,8 @@ const MyOrders = () => {
   }
 
   const orderDetail = (orders) => {
-    navigate(`/myorderdetails/${orders._id}`);
+    console.log(orders)
+    navigate(`/myorderdetails/${orders?._id}`);
   };
 
   return (

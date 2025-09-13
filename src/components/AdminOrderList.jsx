@@ -77,7 +77,7 @@ const AdminOrderList = () => {
               </div>
 
               <div className="w-full md:w-[15%] text-sm text-gray-700">
-                <p><span className="font-medium">Price:</span> ₹{item.cartItems[0].price}</p>
+                <p><span className="font-medium">Price:</span> ₹{item.cartItems[0].price*item.cartItems[0].quantity}</p>
               </div>
 
             

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 
 const MyOrderDetail = () => {
@@ -29,9 +29,10 @@ const MyOrderDetail = () => {
       </div>
     );
   }
-
+ 
   const { orderStatus, totalAmount, paymentMethod, createdAt } = orderDetails;
   const firstItem = orderDetails?.cartItems?.[0];
+ 
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
@@ -43,11 +44,12 @@ const MyOrderDetail = () => {
 
         {/* Product Section */}
         <div className="flex flex-col sm:flex-row gap-6">
-          <img
+        <Link to={`/productDetails/${firstItem?.productId}`} >
+         <img 
             src={firstItem?.imageUrl}
             alt={firstItem?.title}
             className="w-full sm:w-48 h-48 object-contain border rounded-md bg-gray-50"
-          />
+           /></Link>
           <div className="flex-1 space-y-2">
             <h2 className="text-lg font-semibold text-gray-800">
               {firstItem?.title}
