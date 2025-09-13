@@ -91,8 +91,29 @@ const MyOrders = () => {
                 </p>
                 <p>Date: {new Date(order.createdAt).toLocaleDateString()}</p>
               </div>
+<div className="flex flex-col items-end bg-green-100 px-4 py-2 rounded-lg shadow-sm">
+  <h3 className="text-xs font-semibold text-gray-400 tracking-wide uppercase">
+    Order Status
+  </h3>
+  <p
+    className={`mt-1 text-sm font-bold ${
+      order?.orderStatus === "delivered"
+        ? "text-green-600"
+        : order?.orderStatus === "shipping"
+        ? " text-blue-700  "
+        : order?.orderStatus === "pending"
+        ? "text-yellow-600"
+        : "text-red-600"
+    }`}
+  >
+    {order?.orderStatus}
+  </p>
+</div>
+
             </div>
+         
           </div>
+          
         ))}
       </div>
 
