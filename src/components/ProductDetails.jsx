@@ -299,16 +299,14 @@ console.log(review)
   return (
     <div className=" min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-8">
-          <button
-            onClick={() => navigate("/")}
-            className="hover:text-blue-600 transition-colors"
-          >
-            Home
-          </button>
-          <span>/</span>
-          <span className="text-gray-900">{product.title}</span>
-        </nav>
+        <nav className="mb-8">
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center space-x-2 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+      >
+        ← Back
+      </button>
+    </nav>
 
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="grid lg:grid-cols-2 gap-12 p-8 lg:p-12">
