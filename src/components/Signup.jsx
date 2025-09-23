@@ -4,6 +4,7 @@ import { Link, redirect, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Eye, EyeOff, Mail, Lock, User, Shield, LogIn } from "lucide-react";
+import { BASE_URL } from "../utils/constants";
 
 const Signup = () => {
   const [emailId, setEmailId] = useState("");
@@ -17,7 +18,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:7777/signup",
+        BASE_URL+"signup",
         { firstName, emailId, password },
         { withCredentials: true }
       );
