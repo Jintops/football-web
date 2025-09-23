@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { addUser } from "../utils/userSlice";
 import { Eye, EyeOff, Mail, Lock, User, Shield, LogIn } from "lucide-react";
+import { BASE_URL } from "../utils/constants";
 const Login = ({ role }) => {
   const [emailId, setEmailId] = useState("jps2003@gmail.com");
   const [password, setPassword] = useState("Jinto@2003");
@@ -28,8 +29,7 @@ const cartItem = location.state?.from?.state?.cartItem;
   const handleLogin = async (e) => {
     try {
       e.preventDefault();
-      const res = await axios.post(
-        "http://localhost:7777/login",
+      const res = await axios.post(BASE_URL+"/login",
         { emailId, password },
         { withCredentials: true }
       );
