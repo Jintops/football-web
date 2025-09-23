@@ -29,7 +29,7 @@ const cartItem = location.state?.from?.state?.cartItem;
   const handleLogin = async (e) => {
     try {
       e.preventDefault();
-      const res = await axios.post(BASE_URL+"/login",
+      const res = await axios.post(BASE_URL+"login",
         { emailId, password },
         { withCredentials: true }
       );
