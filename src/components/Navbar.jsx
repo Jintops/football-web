@@ -103,10 +103,10 @@ const Navbar = () => {
     <nav className="w-full sticky top-0 z-50 bg-white shadow-md">
       <div className="flex items-center justify-between h-16 px-4 sm:px-6 md:px-10">
         {/* Logo */}
-        <div className="flex items-center space-x-2">
+        <Link to="/"><div className="flex items-center space-x-2">
           <img className="w-12 h-10 object-contain" src={LOGO} alt="Logo" />
           <h1 className="font-bold text-xl sm:text-2xl text-black">SoccerGear</h1>
-        </div>
+        </div></Link>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex gap-6 lg:gap-8 font-bold text-gray-600">
