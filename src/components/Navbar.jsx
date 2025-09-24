@@ -198,12 +198,12 @@ const Navbar = () => {
         <div className="md:hidden px-4 pb-4 space-y-4 animate-slide-down">
           <ul className="flex flex-col gap-3 text-gray-700 font-medium">
             <li className="hover:text-green-500"><Link to="/">Home</Link></li>
-            <li className="hover:text-green-500">Jersey</li>
-            <li className="hover:text-green-500">Boots</li>
-            <li className="hover:text-green-500">Equipments</li>
+            
+            <li className="hover:text-green-500">Collections</li>
+          
             <li className="hover:text-green-500">Contact</li>
           </ul>
-          <div className="relative">
+         {showSearch && <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
               type="text"
@@ -211,7 +211,7 @@ const Navbar = () => {
               placeholder="Search..."
               onChange={(e)=>dispatch(searchInput(e.target.value))}
             />
-          </div>
+          </div>}
         </div>
       )}
 
