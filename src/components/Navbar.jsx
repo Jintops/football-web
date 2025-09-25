@@ -20,6 +20,11 @@ const Navbar = () => {
   const location=useLocation();
  const showSearch = location.pathname === "/viewallproducts";
 
+const scrollToFooter = () => {
+    const footer = document.getElementById("footer");
+    footer?.scrollIntoView({ behavior: "smooth" });
+  };
+
  const navigate=useNavigate()
   const cartItems = useSelector((store) => store.cartCount.items);
   const cartCount = cartItems.length;
@@ -114,7 +119,7 @@ const Navbar = () => {
           <li className="hover:text-green-500"><Link to="/viewallproducts">Collections</Link></li>
           {/* <li className="hover:text-green-500">Boots</li>
           <li className="hover:text-green-500">Equipments</li> */}
-          <li className="hover:text-green-500">Contact</li>
+          <li className="hover:text-green-500"onClick={scrollToFooter}>Contact</li>
         </ul>
         {!showSearch &&  <div></div>}
         {/* Search Input */}
@@ -201,9 +206,9 @@ const Navbar = () => {
             
             <li className="hover:text-green-500">Collections</li>
           
-            <li className="hover:text-green-500">Contact</li>
+            <li className="hover:text-green-500"onClick={scrollToFooter}>Contact</li>
           </ul>
-         {showSearch && <div className="relative">
+           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
               type="text"
@@ -211,7 +216,7 @@ const Navbar = () => {
               placeholder="Search..."
               onChange={(e)=>dispatch(searchInput(e.target.value))}
             />
-          </div>}
+          </div>
         </div>
       )}
 
